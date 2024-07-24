@@ -1,13 +1,9 @@
----
-name: "\U0001F41E 버그 리포트"
-about: 버그가 발생했나요?
+name: "🐞 버그 리포트"
+description: "버그가 발생했나요?"
 title: "[버그] "
-labels: 버그
-assignees: ''
-
----
-
-- type: textarea
+labels: "버그"
+body:
+  - type: textarea
     attributes:
       label: 🐞설명
       description: 버그에 대한 설명을 작성해 주세요.
