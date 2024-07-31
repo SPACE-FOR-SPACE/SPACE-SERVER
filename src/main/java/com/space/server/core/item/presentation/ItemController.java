@@ -1,7 +1,7 @@
-package com.space.server.core.presentation.item;
+package com.space.server.core.item.presentation;
 
-import com.space.server.core.presentation.item.dto.response.ItemResponse;
-import com.space.server.core.service.item.QueryItemService;
+import com.space.server.core.item.presentation.dto.response.ItemResponse;
+import com.space.server.core.item.service.QueryItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +13,6 @@ import java.util.List;
 public class ItemController {
 
   private final QueryItemService queryItemService;
-
 
   @GetMapping("/{item-id}")
   public ItemResponse getItem(@PathVariable("item-id") Long id) {

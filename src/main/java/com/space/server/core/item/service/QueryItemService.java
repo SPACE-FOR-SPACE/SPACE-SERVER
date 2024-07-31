@@ -1,7 +1,7 @@
-package com.space.server.core.service.item;
+package com.space.server.core.item.service;
 
-import com.space.server.core.domain.item.Item;
-import com.space.server.core.service.implementation.item.ItemReader;
+import com.space.server.core.item.domain.Item;
+import com.space.server.core.item.service.implementation.ItemReader;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

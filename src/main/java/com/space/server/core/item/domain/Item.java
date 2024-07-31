@@ -1,6 +1,6 @@
-package com.space.server.core.domain.item;
+package com.space.server.core.item.domain;
 
-import com.space.server.core.domain.item.value.Category;
+import com.space.server.core.item.domain.value.Category;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;

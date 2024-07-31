@@ -1,7 +1,7 @@
-package com.space.server.core.presentation.item.dto.response;
+package com.space.server.core.item.presentation.dto.response;
 
-import com.space.server.core.domain.item.Item;
-import com.space.server.core.domain.item.value.Category;
+import com.space.server.core.item.domain.Item;
+import com.space.server.core.item.domain.value.Category;
 import lombok.Builder;
 
 @Builder
