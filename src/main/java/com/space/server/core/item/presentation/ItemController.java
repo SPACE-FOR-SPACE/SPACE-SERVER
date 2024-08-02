@@ -16,20 +16,20 @@ public class ItemController {
 
   @GetMapping("/{item-id}")
   public ItemResponse getItem(@PathVariable("item-id") Long id) {
-    return ItemResponse.of(queryItemService.findOne(id));
+    return ItemResponse.from(queryItemService.findOne(id));
   }
 
   @GetMapping
   public List<ItemResponse> findAll() {
     return queryItemService.findAll().stream()
-        .map(ItemResponse::of)
+        .map(ItemResponse::from)
         .toList();
   }
 
   @GetMapping("{category}")
   public List<ItemResponse> findByCategory(@PathVariable("category") String category) {
     return queryItemService.findAllByCategory(category).stream()
-        .map(ItemResponse::of)
+        .map(ItemResponse::from)
         .toList();
   }
 }

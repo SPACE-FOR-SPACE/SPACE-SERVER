@@ -12,7 +12,7 @@ public record ItemResponse(
     String image,
     Category category
 ) {
-  public static ItemResponse of(Item item) {
+  public static ItemResponse from(Item item) {
     return new ItemResponse(item.getId(), item.getName(), item.getPrice(), item.getImage(), item.getCategory());
   }
 }
