@@ -16,8 +16,8 @@ public class InventoryController {
   private final QueryInventoryService queryInventoryService;
 
   @GetMapping("/{inventory-id}")
-  public InventoryResponse readOne(@PathVariable("inventory-id") Long characgterId) {
-    return InventoryResponse.from(queryInventoryService.fineOne(characgterId));
+  public InventoryResponse readOne(@PathVariable("inventory-id") Long inventoryId) {
+    return InventoryResponse.from(queryInventoryService.fineOne(inventoryId));
   }
 
   @PutMapping("/{inventory-id}")
