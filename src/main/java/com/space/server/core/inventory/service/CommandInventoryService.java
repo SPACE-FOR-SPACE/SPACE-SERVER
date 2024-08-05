@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CommandInventoryService {
 
   private final InventoryCreator inventoryCreator;
+  private final InventoryDeleter inventoryDeleter;
   private final InventoryUpdater inventoryUpdater;
   private final InventoryReader inventoryReader;
 
@@ -25,5 +26,10 @@ public class CommandInventoryService {
   public void updateInventory(Long inventoryId, Inventory inventory) {
     Inventory updatableInventory = inventoryReader.read(inventoryId);
     inventoryUpdater.update(updatableInventory, inventory);
+  }
+
+  public void deleteInventory(Long inventoryId) {
+    Inventory inventory = inventoryReader.read(inventoryId);
+    inventoryDeleter.delete(inventory);
   }
 }
