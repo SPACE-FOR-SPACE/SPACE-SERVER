@@ -1,4 +1,4 @@
-package com.space.server.core.equip.domain;
+package com.space.server.core.inventory.domain;
 
 import com.space.server.core.item.domain.Item;
 import jakarta.persistence.*;
@@ -6,14 +6,14 @@ import lombok.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "equip")
+@Table(name = "inventory")
 @Entity
-public class Equip {
+public class Inventory {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "character_id")
-  private Long Id;
+  @Column(name = "id")
+  private Long id;
 
 //  @ManyToOne
 //  @JoinColumn(name = "user_id")
@@ -29,14 +29,14 @@ public class Equip {
 
   private int point;
 
-  public Equip(Item head, Item theme, int point) {
+  public Inventory(Item head, Item theme, int point) {
     this.head = head;
     this.theme = theme;
     this.point = point;
   }
 
-  public void update(Equip equip) {
-    this.head = equip.getHead();
-    this.theme = equip.getTheme();
+  public void update(Inventory inventory) {
+    this.head = inventory.getHead();
+    this.theme = inventory.getTheme();
   }
 }
