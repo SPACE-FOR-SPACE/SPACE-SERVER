@@ -20,11 +20,11 @@ public class Inventory {
 //  private User user;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "head", referencedColumnName = "item_id")
+  @JoinColumn(name = "head", referencedColumnName = "id")
   private Item head;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "theme", referencedColumnName = "item_id")
+  @JoinColumn(name = "theme", referencedColumnName = "id")
   private Item theme;
 
   private int point;
@@ -38,5 +38,6 @@ public class Inventory {
   public void update(Inventory inventory) {
     this.head = inventory.getHead();
     this.theme = inventory.getTheme();
+    this.point = inventory.getPoint();
   }
 }

@@ -4,11 +4,8 @@ import com.space.server.core.inventory.domain.Inventory;
 import com.space.server.core.item.domain.Item;
 
 public record UpdateInventoryRequest(
-    Item head,
-    Item theme,
+    Long headId,
+    Long themeId,
     int point
 ) {
-  public Inventory toEntity() {
-    return new Inventory(head, theme, point);
-  }
 }

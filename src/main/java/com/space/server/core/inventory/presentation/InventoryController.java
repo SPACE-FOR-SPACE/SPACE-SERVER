@@ -25,6 +25,6 @@ public class InventoryController {
       @PathVariable(name = "inventory-id") Long inventoryId,
       @RequestBody UpdateInventoryRequest request
   ) {
-    commandInventoryService.updateInventory(inventoryId, request.toEntity());
+    commandInventoryService.updateInventory(inventoryId, request);
   }
 }
