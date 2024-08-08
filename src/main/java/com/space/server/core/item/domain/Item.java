@@ -12,7 +12,7 @@ public class Item {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "item_id")
+  @Column(name = "id")
   private Long id;
 
   private String name;
@@ -31,6 +31,13 @@ public class Item {
     this.price = price;
     this.image = image;
     this.category = category;
+  }
+
+  @Builder
+  public void update(Item item) {
+    this.name = item.name;
+    this.price = item.price;
+    this.image = item.image;
   }
 }
 
