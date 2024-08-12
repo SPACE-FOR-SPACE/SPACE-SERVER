@@ -28,9 +28,9 @@ public class CommandInventoryService {
   }
 
   public void updateInventory(Long inventoryId, UpdateInventoryRequest request) {
-    Item head = itemReader.read(request.headId());
-    Item theme = itemReader.read(request.themeId());
-    inventoryUpdater.update(inventoryReader.read(inventoryId), new Inventory(head, theme, request.point()));
+    Item item = itemReader.read(request.itemId());
+    Inventory inventory = request.toEntity(item);
+    inventoryUpdater.update(inventoryReader.read(inventoryId), inventory);
   }
 
   public void deleteInventory(Long inventoryId) {

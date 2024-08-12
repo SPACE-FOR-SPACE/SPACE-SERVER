@@ -6,13 +6,11 @@ import lombok.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "item")
 @Entity
 public class Item {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id")
   private Long id;
 
   private String name;
@@ -33,7 +31,6 @@ public class Item {
     this.category = category;
   }
 
-  @Builder
   public void update(Item item) {
     this.name = item.name;
     this.price = item.price;

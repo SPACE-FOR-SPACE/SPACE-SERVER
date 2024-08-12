@@ -7,13 +7,14 @@ import com.space.server.core.item.domain.Item;
 public record InventoryResponse(
     Long id,
     //User user,
-    @JsonIgnore
-    Item head,
-    @JsonIgnore
-    Item theme,
+    Long itemId,
     int point
 ) {
   public static InventoryResponse from(Inventory inventory) {
-    return new InventoryResponse(inventory.getId(), inventory.getHead(), inventory.getTheme(), inventory.getPoint());
+    return new InventoryResponse(
+        inventory.getId(),
+        inventory.getItem().getId(),
+        inventory.getPoint()
+    );
   }
 }
