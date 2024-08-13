@@ -26,7 +26,7 @@ public class CommandInventoryService {
 
   public void createInventory(CreateInventoryRequest request) {
     Item item = itemReader.read(request.itemId());
-    Inventory inventory = new Inventory(item);
+    Inventory inventory = request.toEntity(item);
     inventoryCreator.create(inventory);
   }
 

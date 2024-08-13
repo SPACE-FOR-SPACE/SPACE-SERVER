@@ -5,4 +5,8 @@ import com.space.server.core.item.domain.Item;
 
 public record CreateInventoryRequest(
     Long itemId
-) { }
+) {
+  public Inventory toEntity(Item item) {
+    return new Inventory(item);
+  }
+}

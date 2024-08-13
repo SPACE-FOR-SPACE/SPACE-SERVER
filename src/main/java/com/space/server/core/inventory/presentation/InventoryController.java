@@ -23,7 +23,7 @@ public class InventoryController {
 
   @GetMapping("/{inventory-id}")
   public InventoryResponse readOne(@PathVariable("inventory-id") Long inventoryId) {
-    return InventoryResponse.from(queryInventoryService.fineOne(inventoryId));
+    return InventoryResponse.from(queryInventoryService.readOne(inventoryId));
   }
 
   @PutMapping("/{inventory-id}")

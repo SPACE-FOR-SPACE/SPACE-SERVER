@@ -13,7 +13,7 @@ public class QueryInventoryService {
 
   private final InventoryReader inventoryReader;
 
-  public Inventory fineOne(Long inventoryId) {
+  public Inventory readOne(Long inventoryId) {
     return inventoryReader.read(inventoryId);
   }
 }
