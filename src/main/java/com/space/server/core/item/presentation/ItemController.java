@@ -1,6 +1,5 @@
 package com.space.server.core.item.presentation;
 
-import com.space.server.core.inventory.presentation.dto.request.UpdateInventoryRequest;
 import com.space.server.core.item.presentation.dto.request.CreateItemRequest;
 import com.space.server.core.item.presentation.dto.request.UpdateItemRequest;
 import com.space.server.core.item.presentation.dto.response.ItemResponse;

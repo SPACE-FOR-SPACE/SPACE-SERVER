@@ -10,6 +10,6 @@ public record UpdateItemRequest(
     Category category
 ) {
   public Item toEntity() {
-    return new Item(name,price,image,category);
+    return new Item(name, price, image, category);
   }
 }

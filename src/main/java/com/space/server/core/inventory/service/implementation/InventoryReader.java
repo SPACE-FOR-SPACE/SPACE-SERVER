@@ -11,7 +11,7 @@ public class InventoryReader {
 
   private final InventoryRepository inventoryRepository;
 
-  public Inventory read(Long equipId) {
-    return inventoryRepository.getById(equipId);
+  public Inventory read(Long inventoryId) {
+    return inventoryRepository.getById(inventoryId);
   }
 }

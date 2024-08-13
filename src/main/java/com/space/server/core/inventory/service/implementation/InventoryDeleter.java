@@ -11,7 +11,7 @@ public class InventoryDeleter {
 
   private final InventoryRepository inventoryRepository;
 
-  public void delete(Inventory equip) {
-    inventoryRepository.delete(equip);
+  public void delete(Inventory inventory) {
+    inventoryRepository.delete(inventory);
   }
 }
