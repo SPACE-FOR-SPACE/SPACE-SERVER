@@ -23,7 +23,7 @@ public class QueryItemService {
     return itemReader.readAll();
   }
 
-  public Item findOne(Long itemId) {
+  public Item readOne(Long itemId) {
     return itemReader.read(itemId);
   }
 }

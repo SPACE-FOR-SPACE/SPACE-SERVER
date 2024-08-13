@@ -11,7 +11,7 @@ public class InventoryCreator {
 
   private final InventoryRepository inventoryRepository;
 
-  public void create(Inventory equip) {
-    inventoryRepository.save(equip);
+  public void create(Inventory inventory) {
+    inventoryRepository.save(inventory);
   }
 }

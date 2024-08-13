@@ -1,5 +1,6 @@
 package com.space.server.core.inventory.presentation;
 
+import com.space.server.core.inventory.presentation.dto.request.CreateInventoryRequest;
 import com.space.server.core.inventory.presentation.dto.request.UpdateInventoryRequest;
 import com.space.server.core.inventory.presentation.dto.response.InventoryResponse;
 import com.space.server.core.inventory.service.CommandInventoryService;
@@ -15,6 +16,11 @@ public class InventoryController {
   private final CommandInventoryService commandInventoryService;
   private final QueryInventoryService queryInventoryService;
 
+  @PostMapping("/inventory")
+  public void createInventory(@RequestBody CreateInventoryRequest request) {
+    commandInventoryService.createInventory(request);
+  }
+
   @GetMapping("/{inventory-id}")
   public InventoryResponse readOne(@PathVariable("inventory-id") Long inventoryId) {
     return InventoryResponse.from(queryInventoryService.fineOne(inventoryId));
@@ -26,5 +32,10 @@ public class InventoryController {
       @RequestBody UpdateInventoryRequest request
   ) {
     commandInventoryService.updateInventory(inventoryId, request);
+  }
+
+  @DeleteMapping("/{inventory-id}")
+  public void deleteInventory(@PathVariable(name = "inventory-id") Long inventoryId) {
+    commandInventoryService.deleteInventory(inventoryId);
   }
 }

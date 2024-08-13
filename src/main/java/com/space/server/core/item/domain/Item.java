@@ -35,6 +35,7 @@ public class Item {
     this.name = item.name;
     this.price = item.price;
     this.image = item.image;
+    this.category = item.category;
   }
 }
 
