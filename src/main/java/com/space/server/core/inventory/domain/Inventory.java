@@ -21,20 +21,16 @@ public class Inventory {
   @JoinColumn(name = "item_id")
   private Item item;
 
-  private int point;
-
   private boolean isEquipped;
 
   @Builder
-  public Inventory(Item item, int point) {
+  public Inventory(Item item) {
     this.item = item;
-    this.point = point;
     this.isEquipped = false;
   }
 
   public void update(Inventory inventory) {
     this.item = inventory.getItem();
-    this.point = inventory.getPoint();
     this.isEquipped = inventory.isEquipped();
   }
 }
