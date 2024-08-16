@@ -28,8 +28,8 @@ public class Inventory {
 //    this.user = user;
 //  }
 
-  public void update(Inventory inventory) {
-    this.item = inventory.getItem();
+  public void update(Item item) {
+    this.item = item;
     this.isEquipped = false;
   }
 }
