@@ -1,7 +1,6 @@
 package com.space.server.core.inventory.service;
 
 import com.space.server.core.inventory.domain.Inventory;
-import com.space.server.core.inventory.presentation.dto.request.CreateInventoryRequest;
 import com.space.server.core.inventory.presentation.dto.request.UpdateInventoryRequest;
 import com.space.server.core.inventory.service.implementation.InventoryCreator;
 import com.space.server.core.inventory.service.implementation.InventoryDeleter;
@@ -24,16 +23,13 @@ public class CommandInventoryService {
   private final InventoryReader inventoryReader;
   private final ItemReader itemReader;
 
-  public void createInventory(CreateInventoryRequest request) {
-    Item item = itemReader.read(request.itemId());
-    Inventory inventory = request.toEntity(item);
+  public void createInventory(Inventory inventory) {
     inventoryCreator.create(inventory);
   }
 
   public void updateInventory(Long inventoryId, UpdateInventoryRequest request) {
     Item item = itemReader.read(request.itemId());
-    Inventory inventory = request.toEntity(item);
-    inventoryUpdater.update(inventoryReader.read(inventoryId), inventory);
+    inventoryUpdater.update(inventoryReader.read(inventoryId), item);
   }
 
   public void deleteInventory(Long inventoryId) {

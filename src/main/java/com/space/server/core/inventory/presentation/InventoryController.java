@@ -18,7 +18,7 @@ public class InventoryController {
 
   @PostMapping("/inventory")
   public void createInventory(@RequestBody CreateInventoryRequest request) {
-    commandInventoryService.createInventory(request);
+    commandInventoryService.createInventory(request.toEntity());
   }
 
   @GetMapping("/{inventory-id}")

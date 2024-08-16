@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Entity
 public class Inventory {
 
@@ -23,14 +23,13 @@ public class Inventory {
 
   private boolean isEquipped;
 
-  @Builder
-  public Inventory(Item item) {
-    this.item = item;
-    this.isEquipped = false;
-  }
+//  @Builder
+//  public Inventory(User user) {
+//    this.user = user;
+//  }
 
   public void update(Inventory inventory) {
     this.item = inventory.getItem();
-    this.isEquipped = inventory.isEquipped();
+    this.isEquipped = false;
   }
 }
