@@ -25,7 +25,7 @@ public class InventoryController {
     return InventoryResponse.from(queryInventoryService.readOne(inventoryId));
   }
 
-  @PutMapping("/")
+  @PutMapping
   public void updateInventory(
       @RequestParam Long inventoryId,
       @RequestParam Long itemId

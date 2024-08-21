@@ -13,7 +13,7 @@ public class Inventory {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-//  @OneToOne
+//  @ManyToOne
 //  @JoinColumn(name = "user_id")
 //  private User user;
 
@@ -30,6 +30,6 @@ public class Inventory {
 
   public void update(Item item) {
     this.item = item;
-    this.isEquipped = false;
+    this.isEquipped = true;
   }
 }
