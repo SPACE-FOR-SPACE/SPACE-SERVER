@@ -7,6 +7,7 @@ import com.space.server.core.inventory.service.implementation.InventoryReader;
 import com.space.server.core.inventory.service.implementation.InventoryUpdater;
 import com.space.server.core.item.domain.Item;
 import com.space.server.core.item.service.implementation.ItemReader;
+import com.space.server.core.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,18 @@ public class CommandInventoryService {
 
   public void createInventory(Inventory inventory) {
     inventoryCreator.create(inventory);
+  }
+
+  public void buyItem(Long itemId, User user) {
+    Item item = itemReader.read(itemId);
+    if(item.getPrice() < user.getPoint()) {
+      Inventory inventory = new Inventory(user);
+      inventoryCreator.create(inventory);
+      inventoryUpdater.update(inventory, item);
+    }
+    else {
+      System.out.println("포인트 부족");
+    }
   }
 
   public void updateInventory(Long inventoryId, Long itemId) {
