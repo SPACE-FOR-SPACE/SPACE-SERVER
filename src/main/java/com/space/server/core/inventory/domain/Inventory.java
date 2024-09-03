@@ -31,6 +31,6 @@ public class Inventory {
 
   public void update(Item item) {
     this.item = item;
-    this.isEquipped = false;
+    this.isEquipped = true;
   }
 }

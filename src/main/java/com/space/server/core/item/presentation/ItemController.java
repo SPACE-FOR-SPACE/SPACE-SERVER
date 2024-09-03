@@ -26,8 +26,8 @@ public class ItemController {
     commandItemService.createItem(request.toEntity());
   }
 
-  @PostMapping
-  public void buyItem(@RequestParam Long itemId) {
+  @PostMapping("/{item-id}")
+  public void buyItem(@PathVariable("item-id") Long itemId) {
     commandInventoryService.buyItem(itemId, new User());
   }
 

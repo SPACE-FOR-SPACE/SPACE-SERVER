@@ -17,7 +17,7 @@ public class InventoryController {
 
   @PostMapping("/inventory")
   public void createInventory(@RequestBody CreateInventoryRequest request) {
-    commandInventoryService.createInventory(request.toEntity());
+    commandInventoryService.createInventory(request.user(), request.itemId());
   }
 
   @GetMapping("/{inventory-id}")
@@ -25,10 +25,10 @@ public class InventoryController {
     return InventoryResponse.from(queryInventoryService.readOne(inventoryId));
   }
 
-  @PutMapping
+  @PutMapping("/{inventory-id}/{item-id}")
   public void updateInventory(
-      @RequestParam Long inventoryId,
-      @RequestParam Long itemId
+      @PathVariable("inventory-id") Long inventoryId,
+      @PathVariable("item-id") Long itemId
   ) {
     commandInventoryService.updateInventory(inventoryId, itemId);
   }

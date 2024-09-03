@@ -23,19 +23,31 @@ public class CommandInventoryService {
   private final InventoryReader inventoryReader;
   private final ItemReader itemReader;
 
-  public void createInventory(Inventory inventory) {
+  public void createInventory(User user, Long itemId) {
+    Inventory inventory = new Inventory(user);
+    Item item = itemReader.read(itemId);
+    addItemToInventory(inventory, item);
     inventoryCreator.create(inventory);
+  }
+
+  private void addItemToInventory(Inventory inventory, Item item) {
+    inventoryUpdater.update(inventory, item);
   }
 
   public void buyItem(Long itemId, User user) {
     Item item = itemReader.read(itemId);
-    if(item.getPrice() < user.getPoint()) {
-      Inventory inventory = new Inventory(user);
-      inventoryCreator.create(inventory);
-      inventoryUpdater.update(inventory, item);
+
+    if(inventoryReader.findByUserAndInventory(user, item)) {
+      throw new IllegalArgumentException("이미 존재하는 아이템");
+    }
+
+    if(item.getPrice() > user.getPoint()) {
+      throw new IllegalStateException("포인트 부족");
     }
     else {
-      System.out.println("포인트 부족");
+      Inventory inventory = new Inventory(user);
+      addItemToInventory(inventory, item);
+      inventoryCreator.create(inventory);
     }
   }
 
