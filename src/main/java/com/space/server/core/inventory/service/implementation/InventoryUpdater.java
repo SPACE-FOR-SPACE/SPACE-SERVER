@@ -12,4 +12,8 @@ public class InventoryUpdater {
   public void update(Inventory updatableInventory, Item item) {
     updatableInventory.update(item);
   }
+
+  public void unEquip(Inventory inventory) {
+    inventory.unEquip();
+  }
 }

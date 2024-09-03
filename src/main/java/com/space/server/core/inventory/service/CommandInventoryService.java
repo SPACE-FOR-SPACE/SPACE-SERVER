@@ -23,21 +23,17 @@ public class CommandInventoryService {
   private final InventoryReader inventoryReader;
   private final ItemReader itemReader;
 
-  public void createInventory(User user, Long itemId) {
+  public void createInventory(Long itemId, User user) {
     Inventory inventory = new Inventory(user);
     Item item = itemReader.read(itemId);
     addItemToInventory(inventory, item);
     inventoryCreator.create(inventory);
   }
 
-  private void addItemToInventory(Inventory inventory, Item item) {
-    inventoryUpdater.update(inventory, item);
-  }
-
   public void buyItem(Long itemId, User user) {
     Item item = itemReader.read(itemId);
 
-    if(inventoryReader.findByUserAndInventory(user, item)) {
+    if(isItemInInventory(user, item)) {
       throw new IllegalArgumentException("이미 존재하는 아이템");
     }
 
@@ -51,13 +47,30 @@ public class CommandInventoryService {
     }
   }
 
-  public void updateInventory(Long inventoryId, Long itemId) {
+  public void updateInventory(User user, Long inventoryId, Long itemId) {
     Item item = itemReader.read(itemId);
-    inventoryUpdater.update(inventoryReader.read(inventoryId), item);
+    Inventory inventory = inventoryReader.read(inventoryId);
+
+    if(!isItemInInventory(user, item)) {
+      throw new IllegalStateException("해당 아이템을 가지고 있지 않습니다.");
+    }
+
+    inventoryUpdater.update(inventory, item);
+
+    Inventory unequippedInventory = inventoryReader.findByUserAndCategoryAndIsEquipped(new User(), item.getCategory());
+    inventoryUpdater.unEquip(unequippedInventory);
   }
 
   public void deleteInventory(Long inventoryId) {
     Inventory inventory = inventoryReader.read(inventoryId);
     inventoryDeleter.delete(inventory);
+  }
+
+  private void addItemToInventory(Inventory inventory, Item item) {
+    inventoryUpdater.update(inventory, item);
+  }
+
+  private boolean isItemInInventory(User user, Item item) {
+    return inventoryReader.findByUserAndItem(user, item);
   }
 }

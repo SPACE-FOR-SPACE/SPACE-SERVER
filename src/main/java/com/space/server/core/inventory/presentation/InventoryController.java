@@ -4,6 +4,7 @@ import com.space.server.core.inventory.presentation.dto.request.CreateInventoryR
 import com.space.server.core.inventory.presentation.dto.response.InventoryResponse;
 import com.space.server.core.inventory.service.CommandInventoryService;
 import com.space.server.core.inventory.service.QueryInventoryService;
+import com.space.server.core.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class InventoryController {
 
   @PostMapping("/inventory")
   public void createInventory(@RequestBody CreateInventoryRequest request) {
-    commandInventoryService.createInventory(request.user(), request.itemId());
+    commandInventoryService.createInventory(request.itemId(), request.user());
   }
 
   @GetMapping("/{inventory-id}")
@@ -30,7 +31,7 @@ public class InventoryController {
       @PathVariable("inventory-id") Long inventoryId,
       @PathVariable("item-id") Long itemId
   ) {
-    commandInventoryService.updateInventory(inventoryId, itemId);
+    commandInventoryService.updateInventory(new User(), inventoryId, itemId);
   }
 
   @DeleteMapping("/{inventory-id}")

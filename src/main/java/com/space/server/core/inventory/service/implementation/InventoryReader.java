@@ -3,6 +3,7 @@ package com.space.server.core.inventory.service.implementation;
 import com.space.server.core.inventory.domain.Inventory;
 import com.space.server.core.inventory.domain.repository.InventoryRepository;
 import com.space.server.core.item.domain.Item;
+import com.space.server.core.item.domain.value.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.space.server.core.user.User;
@@ -23,7 +24,11 @@ public class InventoryReader {
     return inventoryRepository.findByUser(user);
   }
 
-  public boolean findByUserAndInventory(User user, Item item) {
+  public boolean findByUserAndItem(User user, Item item) {
     return inventoryRepository.findByUserAndItem(user, item);
+  }
+
+  public Inventory findByUserAndCategoryAndIsEquipped(User user, Category category) {
+    return inventoryRepository.findByUserAndCategoryAndIsEquipped(user, category);
   }
 }
