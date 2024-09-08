@@ -4,10 +4,7 @@ package com.space.server.user.domain;
 import com.space.server.user.domain.value.Role;
 import com.space.server.user.domain.value.SocialType;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,7 +27,7 @@ public class User {
 
     private String nickname;
 
-    private int age;
+    private Integer age;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -45,12 +42,20 @@ public class User {
     @CreatedDate
     private LocalDateTime createdAt;
 
-    @Builder
-    public User(String email, String password, String nickname, int age) {
+    @Builder(builderMethodName = "normalUserBuilder")
+    public User(String email, String password, String nickname, Integer age) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
         this.age = age;
+    }
+    @Builder(builderMethodName = "socialUserBuilder")
+    public User(SocialType socialType, String socialId, String email, String nickname, Role role) {
+        this.socialType = socialType;
+        this.socialId = socialId;
+        this.email = email;
+        this.nickname = nickname;
+        this.role = role;
     }
 
     // 유저 권한 설정 메소드
