@@ -1,5 +1,7 @@
 package com.space.server.core.inventory.service.implementation;
 
+import com.space.server.common.exception.ErrorCode;
+import com.space.server.common.exception.SpaceException;
 import com.space.server.core.inventory.domain.Inventory;
 import com.space.server.core.inventory.domain.repository.InventoryRepository;
 import com.space.server.core.item.domain.Item;
@@ -16,19 +18,24 @@ public class InventoryReader {
 
   private final InventoryRepository inventoryRepository;
 
-  public Inventory read(Long inventoryId) {
-    return inventoryRepository.getById(inventoryId);
+  public Inventory findById(Long inventoryId) {
+    return inventoryRepository.findById(inventoryId)
+        .orElseThrow(() -> new SpaceException(ErrorCode.INVENTORY_NOT_FOUND));
   }
 
   public List<Inventory> findByUser(User user) {
     return inventoryRepository.findByUser(user);
   }
 
-  public boolean findByUserAndItem(User user, Item item) {
-    return inventoryRepository.findByUserAndItem(user, item);
+  public Inventory findByItemAndUser(Item item, User user) {
+    return inventoryRepository.findByItemAndUser(item, user);
   }
 
-  public Inventory findByUserAndCategoryAndIsEquipped(User user, Category category) {
-    return inventoryRepository.findByUserAndCategoryAndIsEquipped(user, category);
+  public List<Inventory> findByIsEquippedAndUser(User user) {
+    return inventoryRepository.findByIsEquippedAndUser(user);
+  }
+
+  public Inventory findByCategoryAndUserAndIsEquipped(Category category, User user) {
+    return inventoryRepository.findByCategoryAndUserAndIsEquipped(category, user);
   }
 }

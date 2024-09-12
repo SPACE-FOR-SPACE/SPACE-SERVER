@@ -2,6 +2,7 @@ package com.space.server.core.item.domain;
 
 import com.space.server.core.item.domain.value.Category;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Getter
@@ -13,14 +14,19 @@ public class Item {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Column(length = 10)
+  @NotNull
   private String name;
 
+  @NotNull
   private int price;
 
-  @Column(name = "item_image")
+  @Column(name = "item_image", length = 100)
+  @NotNull
   private String image;
 
   @Enumerated(EnumType.STRING)
+  @NotNull
   private Category category;
 
   @Builder
