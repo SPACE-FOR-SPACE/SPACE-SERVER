@@ -1,6 +1,7 @@
 package com.space.server.core.item.presentation;
 
 import com.space.server.core.inventory.service.CommandInventoryService;
+import com.space.server.core.item.domain.value.Category;
 import com.space.server.core.item.presentation.dto.request.CreateItemRequest;
 import com.space.server.core.item.presentation.dto.request.UpdateItemRequest;
 import com.space.server.core.item.presentation.dto.response.ItemResponse;
@@ -37,14 +38,14 @@ public class ItemController {
   }
 
   @GetMapping
-  public List<ItemResponse> findAll() {
-    return queryItemService.findAll().stream()
+  public List<ItemResponse> readAll() {
+    return queryItemService.readAll().stream()
         .map(ItemResponse::from)
         .toList();
   }
 
   @GetMapping("/categories/{category}")
-  public List<ItemResponse> findByCategory(@PathVariable("category") String category) {
+  public List<ItemResponse> findByCategory(@PathVariable("category") Category category) {
     return queryItemService.findAllByCategory(category).stream()
         .map(ItemResponse::from)
         .toList();

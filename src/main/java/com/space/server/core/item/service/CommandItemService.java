@@ -24,12 +24,12 @@ public class CommandItemService {
   }
 
   public void updateItem(Long itemId, Item item) {
-    Item updatableItem = itemReader.read(itemId);
+    Item updatableItem = itemReader.findById(itemId);
     itemUpdater.update(updatableItem, item);
   }
 
   public void deleteItem(Long itemId) {
-    Item item = itemReader.read(itemId);
+    Item item = itemReader.findById(itemId);
     itemDeleter.delete(item);
   }
 }
