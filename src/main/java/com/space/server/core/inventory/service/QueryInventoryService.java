@@ -2,8 +2,6 @@ package com.space.server.core.inventory.service;
 
 import com.space.server.core.inventory.domain.Inventory;
 import com.space.server.core.inventory.service.implementation.InventoryReader;
-import com.space.server.core.item.domain.Item;
-import com.space.server.core.item.domain.value.Category;
 import com.space.server.core.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,18 +17,14 @@ public class QueryInventoryService {
   private final InventoryReader inventoryReader;
 
   public Inventory readOne(Long inventoryId) {
-    return inventoryReader.read(inventoryId);
+    return inventoryReader.findById(inventoryId);
   }
 
-  public List<Inventory> findByUser(User user) {
+  public List<Inventory> readMine(User user) {
     return inventoryReader.findByUser(user);
   }
 
-  public boolean findByUserAndItem(User user, Item item) {
-    return inventoryReader.findByUserAndItem(user, item);
-  }
-
-  public Inventory findByUserAndCategoryAndIsEquipped(User user, Category category) {
-    return inventoryReader.findByUserAndCategoryAndIsEquipped(user, category);
+  public List<Inventory> readIsEquipped(User user) {
+    return inventoryReader.findByIsEquippedAndUser(user);
   }
 }
