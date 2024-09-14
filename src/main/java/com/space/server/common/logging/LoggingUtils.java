@@ -17,7 +17,7 @@ public class LoggingUtils {
         log.warn(message + "\n \t {}", exception);
     }
 
-    public static void warn(MethodArgumentNotValidException exception) {
+    public static void warn(IllegalArgumentException exception) {
         String message = getExceptionMessage(exception.getMessage());
         log.warn(message + "\n \t {}", exception);
     }

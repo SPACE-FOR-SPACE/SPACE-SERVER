@@ -2,6 +2,7 @@ package com.space.server.core.item.presentation;
 
 import com.space.server.core.inventory.service.CommandInventoryService;
 import com.space.server.core.item.domain.value.Category;
+import com.space.server.core.item.presentation.converter.CategoryConverter;
 import com.space.server.core.item.presentation.dto.request.CreateItemRequest;
 import com.space.server.core.item.presentation.dto.request.UpdateItemRequest;
 import com.space.server.core.item.presentation.dto.response.ItemResponse;
@@ -21,6 +22,7 @@ public class ItemController {
   private final CommandItemService commandItemService;
   private final QueryItemService queryItemService;
   private final CommandInventoryService commandInventoryService;
+  private final CategoryConverter categoryConverter;
 
   @PostMapping("/item")
   public void createItem(@RequestBody CreateItemRequest request) {
@@ -45,8 +47,8 @@ public class ItemController {
   }
 
   @GetMapping("/categories/{category}")
-  public List<ItemResponse> findByCategory(@PathVariable("category") Category category) {
-    return queryItemService.findAllByCategory(category).stream()
+  public List<ItemResponse> findByCategory(@PathVariable("category") String category) {
+    return queryItemService.findAllByCategory(categoryConverter.convert(category)).stream()
         .map(ItemResponse::from)
         .toList();
   }

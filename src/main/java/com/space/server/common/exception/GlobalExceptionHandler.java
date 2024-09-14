@@ -32,20 +32,20 @@ public class GlobalExceptionHandler {
     }
 
 
-    @ExceptionHandler({MethodArgumentNotValidException.class})
-    public ResponseEntity<ErrorResponse> handleDefineException(MethodArgumentNotValidException exception) {
+    @ExceptionHandler({IllegalArgumentException.class})
+    public ResponseEntity<ErrorResponse> handleDefineException(IllegalArgumentException exception) {
         LoggingUtils.warn(exception);
 
         String message;
 
-        if (exception.getFieldError() == null) {
+        if (exception.getCause() == null) {
             message = "";
         } else {
-            message = exception.getFieldError().getDefaultMessage();
+            message = exception.getCause().getMessage();
         }
 
         return ResponseEntity.status(400)
-                .body(ErrorResponse.from(400, "INVALID_INPUT" ,message));
+                .body(ErrorResponse.from(400, "INVALID_INPUT" ,"잘못된 값이 들어왔습니다."));
     }
 
     @ExceptionHandler({RuntimeException.class})
