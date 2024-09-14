@@ -35,7 +35,7 @@ public class InventoryController {
         .toList();
   }
 
-  @GetMapping
+  @GetMapping("/equip")
   public List<InventoryResponse> readIsEquipped() {
     return queryInventoryService.readIsEquipped(new User()).stream()
         .map((InventoryResponse::from))
