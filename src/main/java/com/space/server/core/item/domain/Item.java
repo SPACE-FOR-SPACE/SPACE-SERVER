@@ -38,10 +38,10 @@ public class Item {
   }
 
   public void update(Item item) {
-    this.name = item.name;
-    this.price = item.price;
-    this.image = item.image;
-    this.category = item.category;
+    this.name = item.getName();
+    this.price = item.getPrice();
+    this.image = item.getImage();
+    this.category = item.getCategory();
   }
 }
 
