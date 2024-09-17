@@ -19,6 +19,10 @@ public enum ErrorCode {
 
     // chapter
     CHAPTER_NOT_FOUND(HttpStatus.NOT_FOUND, "챕터를 찾을 수 없습니다."),
+
+    // quiz
+    QUIZ_NOT_FOUND(HttpStatus.NOT_FOUND, "문제를 찾을 수 없습니다."),
+    STEP_NOT_FOUND(HttpStatus.NOT_FOUND, "단게를 찾을 수 없습니다."),
     ;
 
     private final HttpStatus status;
