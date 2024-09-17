@@ -29,7 +29,6 @@ public class Chapter {
   }
 
   public void update(Chapter chapter) {
-    System.out.println("update");
     this.explanation = chapter.getExplanation();
   }
 }

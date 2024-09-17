@@ -27,7 +27,7 @@ public class ChapterController {
     return ChapterResponse.from(queryChapterService.readOne(chapterId));
   }
 
-  @GetMapping("chapter")
+  @GetMapping
   public List<ChapterResponse> readAll() {
     return queryChapterService.readAll().stream()
         .map(ChapterResponse::from)
