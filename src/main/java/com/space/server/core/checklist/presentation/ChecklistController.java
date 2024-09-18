@@ -34,7 +34,7 @@ public class ChecklistController {
         .toList();
   }
 
-  @GetMapping("/{quiz-id}")
+  @GetMapping("/quiz/{quiz-id}")
   public List<ChecklistResponse> findByQuiz(@PathVariable(name = "quiz-id") Long quizId) {
     return queryChecklistService.findByQuiz(quizId).stream()
         .map(ChecklistResponse::from)

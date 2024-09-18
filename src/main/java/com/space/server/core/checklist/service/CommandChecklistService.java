@@ -34,11 +34,11 @@ public class CommandChecklistService {
   }
 
   public void updateChecklist(Long checklistId, ChecklistRequest request) {
-    Checklist checklist = checklistReader.readOne(checklistId);
+    Checklist updatablechecklist = checklistReader.readOne(checklistId);
     Quiz quiz = quizReader.findById(request.quizId());
     Chapter chapter = chapterReader.findById(request.chapterId());
-    Checklist updateableChecklist = new Checklist(quiz, chapter, request.content());
-    checklistUpdater.update(updateableChecklist, checklist);
+    Checklist checklist = new Checklist(quiz, chapter, request.content());
+    checklistUpdater.update(updatablechecklist, checklist);
   }
 
   public void deleteChecklist(Long checklistId) {
