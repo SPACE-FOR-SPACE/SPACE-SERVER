@@ -25,6 +25,7 @@ public class Chapter {
 
   @Type(PostgreSQLHStoreType.class)
   @Column(columnDefinition = "hstore")
+  @NotNull
   private Map<String, String> mapObject;
 
   @Builder
