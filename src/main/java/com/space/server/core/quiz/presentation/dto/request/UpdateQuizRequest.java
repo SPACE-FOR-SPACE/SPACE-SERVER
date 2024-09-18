@@ -4,9 +4,10 @@ import com.space.server.core.quiz.domain.Quiz;
 import com.space.server.core.quiz.domain.value.CharacterDirection;
 
 public record UpdateQuizRequest(
+    Integer[][] map,
     CharacterDirection characterDirection
 ) {
   public Quiz toEntity() {
-    return new Quiz(characterDirection);
+    return new Quiz(map, characterDirection);
   }
 }

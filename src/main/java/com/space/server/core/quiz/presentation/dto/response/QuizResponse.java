@@ -10,6 +10,7 @@ public record QuizResponse(
     Long npcId,
     String title,
     String content,
+    Integer[][] map,
     CharacterDirection characterDirection
 ) {
   public static QuizResponse from(Quiz quiz) {
@@ -19,6 +20,7 @@ public record QuizResponse(
         quiz.getNpcId(),
         quiz.getTitle(),
         quiz.getContent(),
+        quiz.getMap(),
         quiz.getCharacterDirection()
     );
   }

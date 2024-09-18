@@ -10,9 +10,10 @@ public record QuizRequest(
     Long npcId,
     String title,
     String content,
+    Integer[][] map,
     CharacterDirection characterDirection
 ) {
   public Quiz toEntity() {
-    return new Quiz(chapter, stepId, npcId, title, content, characterDirection);
+    return new Quiz(chapter, stepId, npcId, title, content, map, characterDirection);
   }
 }
