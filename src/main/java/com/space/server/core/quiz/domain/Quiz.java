@@ -63,7 +63,12 @@ public class Quiz {
   }
 
   public void update(Quiz quiz) {
-    this.map = quiz.getMap().clone();
+    if (quiz.getMap() != null) {
+      this.map = new Integer[7][7];
+      for (int i = 0; i < 7; i++) {
+        System.arraycopy(quiz.getMap()[i], 0, this.map[i], 0, 7);
+      }
+    }
     this.characterDirection = quiz.getCharacterDirection();
   }
 }
