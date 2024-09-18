@@ -48,4 +48,9 @@ public class ChecklistController {
       ) {
     commandChecklistService.updateChecklist(checklistId, request);
   }
+
+  @DeleteMapping("/{checklist-id}")
+  public void deleteChecklist(@PathVariable(name = "checklist-id") Long checklistId) {
+    commandChecklistService.deleteChecklist(checklistId);
+  }
 }
