@@ -22,6 +22,11 @@ public class ChecklistController {
     commandChecklistService.createChecklist(request);
   }
 
+  @GetMapping("/{checklist-id}")
+  public ChecklistResponse readOne(@PathVariable(name = "checklist-id") Long checklistId) {
+    return ChecklistResponse.from(queryChecklistService.readOne(checklistId));
+  }
+
   @GetMapping
   public List<ChecklistResponse> readAll() {
     return queryChecklistService.readAll().stream()
@@ -34,5 +39,13 @@ public class ChecklistController {
     return queryChecklistService.findByQuiz(quizId).stream()
         .map(ChecklistResponse::from)
         .toList();
+  }
+
+  @PutMapping("/{checklist-id}")
+  public void updateChecklist(
+      @PathVariable(name = "checklist-id") Long checklistId,
+      @RequestBody ChecklistRequest request
+      ) {
+    commandChecklistService.updateChecklist(checklistId, request);
   }
 }

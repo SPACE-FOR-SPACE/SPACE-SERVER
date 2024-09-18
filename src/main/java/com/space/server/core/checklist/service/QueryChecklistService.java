@@ -18,6 +18,10 @@ public class QueryChecklistService {
   private final ChecklistReader checklistReader;
   private final QuizReader quizReader;
 
+  public Checklist readOne(Long checklistId) {
+    return checklistReader.readOne(checklistId);
+  }
+
   public List<Checklist> readAll() {
     return checklistReader.readALL();
   }
