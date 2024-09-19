@@ -48,6 +48,22 @@ public class GlobalExceptionHandler {
                 .body(ErrorResponse.from(400, "INVALID_INPUT" ,"잘못된 값이 들어왔습니다."));
     }
 
+    @ExceptionHandler({NullPointerException.class})
+    public ResponseEntity<ErrorResponse> handleDefineException(NullPointerException exception) {
+        LoggingUtils.warn(exception);
+
+        String message;
+
+        if (exception.getCause() == null) {
+            message = "";
+        } else {
+            message = exception.getCause().getMessage();
+        }
+
+        return ResponseEntity.status(400)
+            .body(ErrorResponse.from(400, "INVALID_INPUT" ,message));
+    }
+
     @ExceptionHandler({RuntimeException.class})
     public ResponseEntity<ErrorResponse> handleDefineException(RuntimeException exception) {
         LoggingUtils.error(exception);

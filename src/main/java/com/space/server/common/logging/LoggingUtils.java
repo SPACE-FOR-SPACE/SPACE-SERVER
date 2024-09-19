@@ -22,6 +22,11 @@ public class LoggingUtils {
         log.warn(message + "\n \t {}", exception);
     }
 
+    public static void warn(NullPointerException exception) {
+        String message = getExceptionMessage(exception.getMessage());
+        log.warn(message + "\n \t {}", exception);
+    }
+
     private static String getExceptionMessage(String message) {
         if (message == null || message.isBlank()) {
             return "";
