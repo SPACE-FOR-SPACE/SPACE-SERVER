@@ -23,6 +23,10 @@ spring:
         show_sql: true
   jwt:
     secret: ${JWT_SECRET_KEY}
+    access:
+      expiration: ${ACCESS_TIME}
+    refresh:
+      expiration: ${REFRESH_TIME}
 
   security:
     oauth2:
