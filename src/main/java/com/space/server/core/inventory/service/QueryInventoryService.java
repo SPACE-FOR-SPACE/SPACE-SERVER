@@ -2,7 +2,7 @@ package com.space.server.core.inventory.service;
 
 import com.space.server.core.inventory.domain.Inventory;
 import com.space.server.core.inventory.service.implementation.InventoryReader;
-import com.space.server.core.user.User;
+import com.space.server.core.user.Users;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,11 +20,11 @@ public class QueryInventoryService {
     return inventoryReader.findById(inventoryId);
   }
 
-  public List<Inventory> readMine(User user) {
+  public List<Inventory> readMine(Users user) {
     return inventoryReader.findByUser(user);
   }
 
-  public List<Inventory> readIsEquipped(User user) {
+  public List<Inventory> readIsEquipped(Users user) {
     return inventoryReader.findByIsEquippedAndUser(user);
   }
 }

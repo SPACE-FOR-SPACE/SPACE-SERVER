@@ -1,14 +1,13 @@
 package com.space.server.core.item.presentation;
 
 import com.space.server.core.inventory.service.CommandInventoryService;
-import com.space.server.core.item.domain.value.Category;
 import com.space.server.core.item.presentation.converter.CategoryConverter;
 import com.space.server.core.item.presentation.dto.request.CreateItemRequest;
 import com.space.server.core.item.presentation.dto.request.UpdateItemRequest;
 import com.space.server.core.item.presentation.dto.response.ItemResponse;
 import com.space.server.core.item.service.CommandItemService;
 import com.space.server.core.item.service.QueryItemService;
-import com.space.server.core.user.User;
+import com.space.server.core.user.Users;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +30,7 @@ public class ItemController {
 
   @PostMapping("/{item-id}")
   public void buyItem(@PathVariable("item-id") Long itemId) {
-    commandInventoryService.buyItem(itemId, new User());
+    commandInventoryService.buyItem(itemId, new Users());
   }
 
   @GetMapping("/{item-id}")

@@ -4,7 +4,7 @@ import com.space.server.core.inventory.presentation.dto.request.InventoryRequest
 import com.space.server.core.inventory.presentation.dto.response.InventoryResponse;
 import com.space.server.core.inventory.service.CommandInventoryService;
 import com.space.server.core.inventory.service.QueryInventoryService;
-import com.space.server.core.user.User;
+import com.space.server.core.user.Users;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,21 +30,21 @@ public class InventoryController {
 
   @GetMapping
   public List<InventoryResponse> readAll() {
-    return queryInventoryService.readMine(new User()).stream()
+    return queryInventoryService.readMine(new Users()).stream()
         .map(InventoryResponse::from)
         .toList();
   }
 
   @GetMapping("/equip")
   public List<InventoryResponse> readIsEquipped() {
-    return queryInventoryService.readIsEquipped(new User()).stream()
+    return queryInventoryService.readIsEquipped(new Users()).stream()
         .map((InventoryResponse::from))
         .toList();
   }
 
-@PutMapping("/inventory")
-  public void equipItem(@RequestBody InventoryRequest request) {
-    commandInventoryService.equipInventory(request.itemId(), request.user());
+@PutMapping("/inventory/{inventory-id}")
+  public void equipItem(@PathVariable(name = "inventory-id") Long inventoryId) {
+    commandInventoryService.equipInventory(inventoryId, new Users());
   }
 
   @DeleteMapping("/{inventory-id}")

@@ -1,7 +1,7 @@
 package com.space.server.core.inventory.domain;
 
 import com.space.server.core.item.domain.Item;
-import com.space.server.core.user.User;
+import com.space.server.core.user.Users;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -18,7 +18,7 @@ public class Inventory {
   @ManyToOne
   @JoinColumn(name = "user_id")
   @NotNull
-  private User user;
+  private Users user;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "item_id")
@@ -28,13 +28,12 @@ public class Inventory {
   private boolean isEquipped;
 
   @Builder
-  public Inventory(User user) {
+  public Inventory(Item item, Users user) {
     this.user = user;
   }
 
-  public void update(Item item) {
-    this.item = item;
-    this.isEquipped = true;
+  public void equip() {
+    isEquipped = true;
   }
 
   public void unEquip() {

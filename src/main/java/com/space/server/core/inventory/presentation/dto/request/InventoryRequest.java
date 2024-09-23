@@ -1,8 +1,8 @@
 package com.space.server.core.inventory.presentation.dto.request;
 
-import com.space.server.core.user.User;
+import com.space.server.core.user.Users;
 
 public record InventoryRequest(
-    User user,
+    Users user,
     Long itemId
     ) {}

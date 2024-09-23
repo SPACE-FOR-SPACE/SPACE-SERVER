@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Entity
-public class User {
+public class Users {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
