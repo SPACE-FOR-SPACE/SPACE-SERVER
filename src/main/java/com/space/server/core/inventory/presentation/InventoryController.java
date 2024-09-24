@@ -1,11 +1,12 @@
 package com.space.server.core.inventory.presentation;
 
+import com.space.server.common.jwt.util.AuthenticationUtil;
 import com.space.server.core.inventory.presentation.dto.request.InventoryRequest;
 import com.space.server.core.inventory.presentation.dto.response.InventoryResponse;
 import com.space.server.core.inventory.service.CommandInventoryService;
 import com.space.server.core.inventory.service.QueryInventoryService;
-import com.space.server.core.user.Users;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class InventoryController {
 
   @PostMapping("/inventory")
   public void createInventory(@RequestBody InventoryRequest request) {
-    commandInventoryService.createInventory(request.itemId(), request.user());
+    commandInventoryService.createInventory(request.itemId(), SecurityContextHolder.getContext().getAuthentication());
   }
 
   @GetMapping("/{inventory-id}")
@@ -30,21 +31,21 @@ public class InventoryController {
 
   @GetMapping
   public List<InventoryResponse> readAll() {
-    return queryInventoryService.readMine(new Users()).stream()
+    return queryInventoryService.readMine(AuthenticationUtil.getMemberId()).stream()
         .map(InventoryResponse::from)
         .toList();
   }
 
   @GetMapping("/equip")
   public List<InventoryResponse> readIsEquipped() {
-    return queryInventoryService.readIsEquipped(new Users()).stream()
+    return queryInventoryService.readIsEquipped(AuthenticationUtil.getMemberId()).stream()
         .map((InventoryResponse::from))
         .toList();
   }
 
 @PutMapping("/inventory/{inventory-id}")
   public void equipItem(@PathVariable(name = "inventory-id") Long inventoryId) {
-    commandInventoryService.equipInventory(inventoryId, new Users());
+    commandInventoryService.equipInventory(inventoryId, SecurityContextHolder.getContext().getAuthentication().getPrincipal());
   }
 
   @DeleteMapping("/{inventory-id}")

@@ -5,9 +5,9 @@ import com.space.server.common.exception.SpaceException;
 import com.space.server.core.inventory.domain.Inventory;
 import com.space.server.core.inventory.domain.repository.InventoryRepository;
 import com.space.server.core.item.domain.value.Category;
+import com.space.server.user.domain.Users;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.space.server.core.user.Users;
 
 import java.util.List;
 

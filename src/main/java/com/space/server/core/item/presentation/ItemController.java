@@ -7,8 +7,8 @@ import com.space.server.core.item.presentation.dto.request.UpdateItemRequest;
 import com.space.server.core.item.presentation.dto.response.ItemResponse;
 import com.space.server.core.item.service.CommandItemService;
 import com.space.server.core.item.service.QueryItemService;
-import com.space.server.core.user.Users;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,7 +30,7 @@ public class ItemController {
 
   @PostMapping("/{item-id}")
   public void buyItem(@PathVariable("item-id") Long itemId) {
-    commandInventoryService.buyItem(itemId, new Users());
+    commandInventoryService.buyItem(itemId, SecurityContextHolder.getContext().getAuthentication().getPrincipal());
   }
 
   @GetMapping("/{item-id}")

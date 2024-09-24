@@ -1,7 +1,7 @@
 package com.space.server.core.inventory.domain;
 
 import com.space.server.core.item.domain.Item;
-import com.space.server.core.user.Users;
+import com.space.server.user.domain.Users;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -29,6 +29,7 @@ public class Inventory {
 
   @Builder
   public Inventory(Item item, Users user) {
+    this.item = item;
     this.user = user;
   }
 

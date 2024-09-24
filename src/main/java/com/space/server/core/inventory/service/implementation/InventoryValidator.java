@@ -4,7 +4,7 @@ import com.space.server.common.exception.ErrorCode;
 import com.space.server.common.exception.SpaceException;
 import com.space.server.core.inventory.domain.repository.InventoryRepository;
 import com.space.server.core.item.domain.Item;
-import com.space.server.core.user.Users;
+import com.space.server.user.domain.Users;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +19,9 @@ public class InventoryValidator {
     }
   }
   
-  public void canBuyItem(Item item, Users user) {
-    if(item.getPrice() > user.getPoint()) {
-      throw new SpaceException(ErrorCode.INSUFFICIENT_POINTS);
-    }
-  }
+//  public void canBuyItem(Item item, Users user) {
+//    if(item.getPrice() > user.getPoint()) {
+//      throw new SpaceException(ErrorCode.INSUFFICIENT_POINTS);
+//    }
+//  }
 }

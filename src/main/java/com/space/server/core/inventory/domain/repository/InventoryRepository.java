@@ -3,7 +3,7 @@ package com.space.server.core.inventory.domain.repository;
 import com.space.server.core.inventory.domain.Inventory;
 import com.space.server.core.item.domain.Item;
 import com.space.server.core.item.domain.value.Category;
-import com.space.server.core.user.Users;
+import com.space.server.user.domain.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
