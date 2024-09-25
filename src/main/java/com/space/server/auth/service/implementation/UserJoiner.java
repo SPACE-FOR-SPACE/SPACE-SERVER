@@ -30,7 +30,7 @@ public class UserJoiner {
 
         Users user = Users.normalUserBuilder()
                 .username(joinUserRequest.username())
-                .type("NORMAL")
+                .type("normal")
                 .email(email)
                 .password(passwordEncoder.encode(password))
                 .age(joinUserRequest.age())
