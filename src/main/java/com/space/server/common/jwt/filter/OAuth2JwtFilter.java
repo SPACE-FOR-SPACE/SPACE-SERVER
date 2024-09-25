@@ -27,9 +27,21 @@ public class OAuth2JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
+        String requestUri = request.getRequestURI();
+        log.warn("오어스 JWT 필터 uri" + requestUri);
+
+        if (requestUri.matches("^\\/login(?:\\/.*)?$")) {
+
+            filterChain.doFilter(request, response);
+            return;
+        }
+        if (requestUri.matches("^\\/oauth2(?:\\/.*)?$")) {
+
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         String accessToken = jwtUtil.getTokenFromCookies(request, "access_social");
-
-
 
         if (accessToken == null) {
             log.info("Access token not found in cookies.");
@@ -37,10 +49,8 @@ public class OAuth2JwtFilter extends OncePerRequestFilter {
             return;
         }
 
-        try {
-            jwtUtil.isExpired(accessToken);
-        } catch (ExpiredJwtException e) {
-            log.warn("Access token expired: {}", e.getMessage());
+        if (jwtUtil.isExpired(accessToken)) {
+            log.warn("Access token expired");
             respondWithUnauthorized(response, "Access token expired");
             return;
         }
