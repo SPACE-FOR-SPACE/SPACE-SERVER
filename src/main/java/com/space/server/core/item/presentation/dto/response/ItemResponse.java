@@ -13,6 +13,12 @@ public record ItemResponse(
     Category category
 ) {
   public static ItemResponse from(Item item) {
-    return new ItemResponse(item.getId(), item.getName(), item.getPrice(), item.getImage(), item.getCategory());
+    return ItemResponse.builder()
+        .id(item.getId())
+        .name(item.getName())
+        .price(item.getPrice())
+        .image(item.getImage())
+        .category(item.getCategory())
+        .build();
   }
 }

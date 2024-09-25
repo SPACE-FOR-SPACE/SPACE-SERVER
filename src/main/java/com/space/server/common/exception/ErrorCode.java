@@ -16,6 +16,18 @@ public enum ErrorCode {
 
     // user
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "유저를 찾을 수 없습니다."),
+    INSUFFICIENT_POINTS(HttpStatus.FORBIDDEN, "포인트가 부족합니다."),
+
+    // item
+    ITEM_NOT_FOUND(HttpStatus.NOT_FOUND, "아이템을 찾을 수 없습니다."),
+    IMAGE_NOT_FOUND(HttpStatus.NOT_FOUND, "이미지를 조회할 수 없습니다."),
+    CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "카테고리를 찾을 수 없습니다."),
+
+    // inventory
+    INVENTORY_NOT_FOUND(HttpStatus.NOT_FOUND, "인벤토리를 찾을 수 없습니다."),
+    INVENTORY_ITEM_NOT_FOUND(HttpStatus.NOT_FOUND, "아이템을 가지고 있지 않습니다."),
+    INVENTORY_ITEM_FOUND(HttpStatus.FOUND, "아이템을 이미 가지고 있습니다."),
+    ITEM_ALREADY_EQUIPPED(HttpStatus.CONFLICT, "아이템이 이미 장착되었습니다."),
 
     // chapter
     CHAPTER_NOT_FOUND(HttpStatus.NOT_FOUND, "챕터를 찾을 수 없습니다."),

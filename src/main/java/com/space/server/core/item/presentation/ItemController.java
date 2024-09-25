@@ -1,11 +1,14 @@
 package com.space.server.core.item.presentation;
 
+import com.space.server.core.inventory.service.CommandInventoryService;
+import com.space.server.core.item.presentation.converter.CategoryConverter;
 import com.space.server.core.item.presentation.dto.request.CreateItemRequest;
 import com.space.server.core.item.presentation.dto.request.UpdateItemRequest;
 import com.space.server.core.item.presentation.dto.response.ItemResponse;
 import com.space.server.core.item.service.CommandItemService;
 import com.space.server.core.item.service.QueryItemService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,10 +20,17 @@ public class ItemController {
 
   private final CommandItemService commandItemService;
   private final QueryItemService queryItemService;
+  private final CommandInventoryService commandInventoryService;
+  private final CategoryConverter categoryConverter;
 
   @PostMapping("/item")
   public void createItem(@RequestBody CreateItemRequest request) {
     commandItemService.createItem(request.toEntity());
+  }
+
+  @PostMapping("/{item-id}")
+  public void buyItem(@PathVariable("item-id") Long itemId) {
+    commandInventoryService.buyItem(itemId, SecurityContextHolder.getContext().getAuthentication());
   }
 
   @GetMapping("/{item-id}")
@@ -29,15 +39,15 @@ public class ItemController {
   }
 
   @GetMapping
-  public List<ItemResponse> findAll() {
-    return queryItemService.findAll().stream()
+  public List<ItemResponse> readAll() {
+    return queryItemService.readAll().stream()
         .map(ItemResponse::from)
         .toList();
   }
 
   @GetMapping("/categories/{category}")
   public List<ItemResponse> findByCategory(@PathVariable("category") String category) {
-    return queryItemService.findAllByCategory(category).stream()
+    return queryItemService.findAllByCategory(categoryConverter.convert(category)).stream()
         .map(ItemResponse::from)
         .toList();
   }

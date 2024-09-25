@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -22,20 +23,29 @@ public class GlobalExceptionHandler {
                 .body(response);
     }
 
-    @ExceptionHandler({MethodArgumentNotValidException.class})
-    public ResponseEntity<ErrorResponse> handleDefineException(MethodArgumentNotValidException exception) {
+    @ExceptionHandler({MethodArgumentTypeMismatchException.class})
+    public ResponseEntity<ErrorResponse> handleDefineException(MethodArgumentTypeMismatchException exception) {
+        LoggingUtils.warn(exception);
+
+        return ResponseEntity.status(400)
+            .body(ErrorResponse.from(400, "INVALID_INPUT" ,exception.getMessage()));
+    }
+
+
+    @ExceptionHandler({IllegalArgumentException.class})
+    public ResponseEntity<ErrorResponse> handleDefineException(IllegalArgumentException exception) {
         LoggingUtils.warn(exception);
 
         String message;
 
-        if (exception.getFieldError() == null) {
+        if (exception.getCause() == null) {
             message = "";
         } else {
-            message = exception.getFieldError().getDefaultMessage();
+            message = exception.getCause().getMessage();
         }
 
         return ResponseEntity.status(400)
-                .body(ErrorResponse.from(400, "INVALID_INPUT" ,message));
+                .body(ErrorResponse.from(400, "INVALID_INPUT" ,"잘못된 값이 들어왔습니다."));
     }
 
     @ExceptionHandler({NullPointerException.class})
