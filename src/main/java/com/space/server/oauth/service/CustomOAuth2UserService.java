@@ -5,12 +5,14 @@ import com.space.server.user.domain.Users;
 import com.space.server.user.domain.repository.UserRepository;
 import com.space.server.user.domain.value.Role;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
@@ -22,10 +24,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
-        System.out.println(oAuth2User);
-
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
         OAuth2Response oAuth2Response = null;
+
+        log.warn("오어스 서비스 registrationId : " + registrationId);
 
         if (registrationId.equals("google")){
             oAuth2Response = new GoogleResponse(oAuth2User.getAttributes());
@@ -40,6 +42,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             return null;
         }
 
+        log.warn("오어스 서비스 oAuth2Response : " + oAuth2Response.toString());
         String type = oAuth2Response.getProvider()+" "+oAuth2Response.getProviderId();
 
         Users existData = userRepository.findByEmail(oAuth2Response.getEmail());
@@ -57,7 +60,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             role = Role.GUEST;
         } else {
 
-            if (existData.getType().equals("NORMAL")) {
+            if (existData.getType().equals("normal")) {
+                log.warn("이미 존재합니다.");
                 throw new OAuth2AuthenticationException("Normal user already exists");
             }
 
@@ -70,7 +74,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                 .email(oAuth2Response.getEmail())
                 .role(role)
                 .build();
-
+        log.warn("오어스 서비스 userDto : " + userDto.toString());
         return new CustomOAuth2User(userDto);
     }
 }
