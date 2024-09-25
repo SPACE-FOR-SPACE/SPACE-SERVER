@@ -30,6 +30,7 @@ public class CommandInventoryService {
     Users user = userRepository.findByEmail(details.getEmail());
     Item item = itemReader.findById(itemId);
     Inventory inventory = new Inventory(item, user);
+    inventoryUpdater.equip(inventory);
     inventoryCreator.create(inventory);
   }
 
