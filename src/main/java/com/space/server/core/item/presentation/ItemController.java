@@ -30,7 +30,7 @@ public class ItemController {
 
   @PostMapping("/{item-id}")
   public void buyItem(@PathVariable("item-id") Long itemId) {
-    commandInventoryService.buyItem(itemId, SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    commandInventoryService.buyItem(itemId, SecurityContextHolder.getContext().getAuthentication());
   }
 
   @GetMapping("/{item-id}")

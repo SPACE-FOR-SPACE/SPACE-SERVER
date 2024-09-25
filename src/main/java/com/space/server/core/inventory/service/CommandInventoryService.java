@@ -1,5 +1,6 @@
 package com.space.server.core.inventory.service;
 
+import com.space.server.auth.service.dto.CustomUserDetails;
 import com.space.server.core.inventory.domain.Inventory;
 import com.space.server.core.inventory.service.implementation.*;
 import com.space.server.core.item.domain.Item;
@@ -24,27 +25,29 @@ public class CommandInventoryService {
   private final ItemReader itemReader;
   private final UserRepository userRepository;
 
-  public void createInventory(Long itemId, Authentication email) {
-    System.out.println("email = " + email);
+  public void createInventory(Long itemId, Authentication auth) {
+    CustomUserDetails details = (CustomUserDetails) auth.getPrincipal();
+    Users user = userRepository.findByEmail(details.getEmail());
     Item item = itemReader.findById(itemId);
-    Users user = userRepository.findByEmail(String.valueOf(email));
     Inventory inventory = new Inventory(item, user);
     inventoryCreator.create(inventory);
   }
 
-  public void buyItem(Long itemId, Object email) {
+  public void buyItem(Long itemId, Authentication auth) {
+    CustomUserDetails details = (CustomUserDetails) auth.getPrincipal();
+    Users user = userRepository.findByEmail(details.getEmail());
     Item item = itemReader.findById(itemId);
-    Users user = userRepository.findByEmail(email.toString());
     inventoryValidator.hasItem(item, user);
 //    inventoryValidator.canBuyItem(item, user);
     Inventory inventory = new Inventory(item, user);
     inventoryCreator.create(inventory);
   }
 
-  public void equipInventory(Long inventoryId, Object email) {
+  public void equipInventory(Long inventoryId, Authentication auth) {
+    CustomUserDetails details = (CustomUserDetails) auth.getPrincipal();
+    Users user = userRepository.findByEmail(details.getEmail());
     Inventory inventory = inventoryReader.findById(inventoryId);
     Item item = inventory.getItem();
-    Users user = userRepository.findByEmail(email.toString());
     inventoryUpdater.equip(inventory);
 
     Inventory unequipInventory = inventoryReader.findByCategoryAndUserAndIsEquipped(item.getCategory(), user);

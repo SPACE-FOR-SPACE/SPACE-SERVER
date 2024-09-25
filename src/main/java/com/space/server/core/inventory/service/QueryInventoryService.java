@@ -1,10 +1,12 @@
 package com.space.server.core.inventory.service;
 
+import com.space.server.auth.service.dto.CustomUserDetails;
 import com.space.server.core.inventory.domain.Inventory;
 import com.space.server.core.inventory.service.implementation.InventoryReader;
 import com.space.server.user.domain.Users;
-import com.space.server.user.service.implementation.UserReader;
+import com.space.server.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,19 +18,20 @@ import java.util.List;
 public class QueryInventoryService {
 
   private final InventoryReader inventoryReader;
-  private final UserReader userReader;
-
+  private final UserRepository userRepository;
   public Inventory readOne(Long inventoryId) {
     return inventoryReader.findById(inventoryId);
   }
 
-  public List<Inventory> readMine(Long userId) {
-    Users user = userReader.findById(userId);
+  public List<Inventory> readMine(Authentication auth) {
+    CustomUserDetails details = (CustomUserDetails) auth.getPrincipal();
+    Users user = userRepository.findByEmail(details.getEmail());
     return inventoryReader.findByUser(user);
   }
 
-  public List<Inventory> readIsEquipped(Long userId) {
-    Users user = userReader.findById(userId);
+  public List<Inventory> readIsEquipped(Authentication auth) {
+    CustomUserDetails details = (CustomUserDetails) auth.getPrincipal();
+    Users user = userRepository.findByEmail(details.getEmail());
     return inventoryReader.findByIsEquippedAndUser(user);
   }
 }

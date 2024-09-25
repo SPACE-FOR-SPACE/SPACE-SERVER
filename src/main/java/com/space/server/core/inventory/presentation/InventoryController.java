@@ -1,6 +1,5 @@
 package com.space.server.core.inventory.presentation;
 
-import com.space.server.common.jwt.util.AuthenticationUtil;
 import com.space.server.core.inventory.presentation.dto.request.InventoryRequest;
 import com.space.server.core.inventory.presentation.dto.response.InventoryResponse;
 import com.space.server.core.inventory.service.CommandInventoryService;
@@ -31,21 +30,21 @@ public class InventoryController {
 
   @GetMapping
   public List<InventoryResponse> readAll() {
-    return queryInventoryService.readMine(AuthenticationUtil.getMemberId()).stream()
+    return queryInventoryService.readMine(SecurityContextHolder.getContext().getAuthentication()).stream()
         .map(InventoryResponse::from)
         .toList();
   }
 
   @GetMapping("/equip")
   public List<InventoryResponse> readIsEquipped() {
-    return queryInventoryService.readIsEquipped(AuthenticationUtil.getMemberId()).stream()
+    return queryInventoryService.readIsEquipped(SecurityContextHolder.getContext().getAuthentication()).stream()
         .map((InventoryResponse::from))
         .toList();
   }
 
-@PutMapping("/inventory/{inventory-id}")
+  @PutMapping("/{inventory-id}")
   public void equipItem(@PathVariable(name = "inventory-id") Long inventoryId) {
-    commandInventoryService.equipInventory(inventoryId, SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    commandInventoryService.equipInventory(inventoryId, SecurityContextHolder.getContext().getAuthentication());
   }
 
   @DeleteMapping("/{inventory-id}")
