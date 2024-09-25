@@ -29,9 +29,9 @@ public class CustomJwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         String requestUri = request.getRequestURI();
+        log.warn("자체 JWT 필터 uri : " + requestUri);
 
-        if (requestUri.matches("^\\/login(?:\\/.*)?$")) {
-
+        if (requestUri.matches("^\\/login")) {
             filterChain.doFilter(request, response);
             return;
         }
