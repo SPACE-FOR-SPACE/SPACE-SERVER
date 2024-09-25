@@ -46,6 +46,12 @@ public class AuthenticationUtil {
         return extractRoleFromAuthorities(authentication.getAuthorities());
     }
 
+    public static String getEmail() {
+        Authentication authentication = getAuthentication();
+        CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
+        return principal.getEmail();
+    }
+
     private static Role extractRoleFromAuthorities(Collection<? extends GrantedAuthority> authorities) {
         return authorities.stream()
                 .map(GrantedAuthority::getAuthority)

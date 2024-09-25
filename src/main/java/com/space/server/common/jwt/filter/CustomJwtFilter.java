@@ -28,6 +28,19 @@ public class CustomJwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
+        String requestUri = request.getRequestURI();
+
+        if (requestUri.matches("^\\/login(?:\\/.*)?$")) {
+
+            filterChain.doFilter(request, response);
+            return;
+        }
+        if (requestUri.matches("^\\/oauth2(?:\\/.*)?$")) {
+
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         String accessToken = jwtUtil.getTokenFromCookies(request, "access_normal");
 
         if (accessToken == null) {
@@ -36,10 +49,8 @@ public class CustomJwtFilter extends OncePerRequestFilter {
             return;
         }
 
-        try {
-            jwtUtil.isExpired(accessToken);
-        } catch (ExpiredJwtException e) {
-            log.warn("Access token expired: {}", e.getMessage());
+        if (jwtUtil.isExpired(accessToken)) {
+            log.warn("Access token expired");
             respondWithUnauthorized(response, "Access token expired");
             return;
         }
