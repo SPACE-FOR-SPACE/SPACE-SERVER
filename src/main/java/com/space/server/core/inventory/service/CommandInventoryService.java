@@ -48,10 +48,9 @@ public class CommandInventoryService {
     Users user = userRepository.findByEmail(details.getEmail());
     Inventory inventory = inventoryReader.findById(inventoryId);
     Item item = inventory.getItem();
-    inventoryUpdater.equip(inventory);
-
     Inventory unequipInventory = inventoryReader.findByCategoryAndUserAndIsEquipped(item.getCategory(), user);
     inventoryUpdater.unEquip(unequipInventory);
+    inventoryUpdater.equip(inventory);
   }
 
   public void deleteInventory(Long inventoryId) {
