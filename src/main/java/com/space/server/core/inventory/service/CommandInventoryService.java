@@ -4,6 +4,7 @@ import com.space.server.auth.service.dto.CustomUserDetails;
 import com.space.server.core.inventory.domain.Inventory;
 import com.space.server.core.inventory.service.implementation.*;
 import com.space.server.core.item.domain.Item;
+import com.space.server.core.item.domain.value.Category;
 import com.space.server.core.item.service.implementation.ItemReader;
 import com.space.server.user.domain.Users;
 import com.space.server.user.domain.repository.UserRepository;
@@ -39,7 +40,7 @@ public class CommandInventoryService {
     Users user = userRepository.findByEmail(details.getEmail());
     Item item = itemReader.findById(itemId);
     inventoryValidator.hasItem(item, user);
-//    inventoryValidator.canBuyItem(item, user);
+    inventoryValidator.buyItem(item, user);
     Inventory inventory = new Inventory(item, user);
     inventoryCreator.create(inventory);
   }
@@ -48,8 +49,8 @@ public class CommandInventoryService {
     CustomUserDetails details = (CustomUserDetails) auth.getPrincipal();
     Users user = userRepository.findByEmail(details.getEmail());
     Inventory inventory = inventoryReader.findById(inventoryId);
-    Item item = inventory.getItem();
-    Inventory unequipInventory = inventoryReader.findByCategoryAndUserAndIsEquipped(item.getCategory(), user);
+    Category category = inventory.getItem().getCategory();
+    Inventory unequipInventory = inventoryReader.findByCategoryAndUserAndIsEquipped(category, user);
     inventoryUpdater.unEquip(unequipInventory);
     inventoryUpdater.equip(inventory);
   }
