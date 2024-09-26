@@ -39,7 +39,7 @@ public class CommandInventoryService {
     Users user = userRepository.findByEmail(details.getEmail());
     Item item = itemReader.findById(itemId);
     inventoryValidator.hasItem(item, user);
-//    inventoryValidator.canBuyItem(item, user);
+    inventoryValidator.canBuyItem(item, user);
     Inventory inventory = new Inventory(item, user);
     inventoryCreator.create(inventory);
   }

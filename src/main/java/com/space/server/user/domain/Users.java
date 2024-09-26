@@ -33,6 +33,8 @@ public class Users {
 
     private Integer age;
 
+    private Integer point;
+
     @CreatedDate
     private LocalDateTime createdAt;
 
@@ -44,6 +46,7 @@ public class Users {
         this.email = email;
         this.password = password;
         this.age = age;
+        this.point = 0;
     }
 
     @Builder(builderMethodName = "socialUserBuilder")
@@ -51,6 +54,7 @@ public class Users {
         this.type = type;
         this.email = email;
         this.role = role;
+        this.point = 0;
     }
 
     @Builder(builderMethodName = "jwtUserBuilder")
@@ -71,5 +75,9 @@ public class Users {
 
     public void updateRole(Role role) {
         this.role = role;
+    }
+
+    public void payPoint(Integer point) {
+        this. point -= point;
     }
 }

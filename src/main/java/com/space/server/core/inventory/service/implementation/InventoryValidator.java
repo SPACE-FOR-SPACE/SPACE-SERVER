@@ -19,9 +19,9 @@ public class InventoryValidator {
     }
   }
   
-//  public void canBuyItem(Item item, Users user) {
-//    if(item.getPrice() > user.getPoint()) {
-//      throw new SpaceException(ErrorCode.INSUFFICIENT_POINTS);
-//    }
-//  }
+  public void canBuyItem(Item item, Users user) {
+    if(item.getPrice() > user.getPoint()) {
+      throw new SpaceException(ErrorCode.INSUFFICIENT_POINTS);
+    }
+  }
 }
