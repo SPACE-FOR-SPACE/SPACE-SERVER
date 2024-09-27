@@ -5,13 +5,13 @@ import lombok.Builder;
 
 public record UserDto(
         Role role,
-        String email
+        Long id
 ) {
 
     @Builder
-    public UserDto(Role role, String email) {
+    public UserDto(Role role, Long id) {
         this.role = role;
-        this.email = email;
+        this.id = id;
     }
 
 }
