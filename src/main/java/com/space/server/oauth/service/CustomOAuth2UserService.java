@@ -47,6 +47,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         Users existData = userRepository.findByEmail(oAuth2Response.getEmail());
         Role role;
+        Long id;
 
 
         if (existData == null) {
@@ -58,6 +59,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
             userRepository.save(users);
             role = Role.GUEST;
+            id = users.getId();
         } else {
 
             if (existData.getType().equals("normal")) {
@@ -68,10 +70,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             existData.updateSocial(oAuth2Response.getEmail(), type);
             userRepository.save(existData);
             role = existData.getAge() == null ? Role.GUEST : existData.getRole();
+            id = existData.getId();
         }
 
         UserDto userDto = UserDto.builder()
-                .email(oAuth2Response.getEmail())
+                .id(id)
                 .role(role)
                 .build();
         log.warn("오어스 서비스 userDto : " + userDto.toString());
