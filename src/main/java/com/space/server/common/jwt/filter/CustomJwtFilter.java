@@ -3,8 +3,10 @@ package com.space.server.common.jwt.filter;
 import com.space.server.auth.service.dto.CustomUserDetails;
 import com.space.server.common.jwt.util.JwtUtil;
 import com.space.server.user.domain.Users;
+import com.space.server.user.domain.repository.UserRepository;
 import com.space.server.user.domain.value.Role;
 import io.jsonwebtoken.ExpiredJwtException;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,11 +15,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collections;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -62,18 +67,13 @@ public class CustomJwtFilter extends OncePerRequestFilter {
             return;
         }
 
-        String email = jwtUtil.getEmail(accessToken);
+        Long id = jwtUtil.getId(accessToken);
         Role role = jwtUtil.getRole(accessToken);
 
-        Users user = Users.jwtUserBuilder()
-                .email(email)
-                .password("temppassword")
-                .role(role)
-                .build();
+        GrantedAuthority authority = new SimpleGrantedAuthority(role.getValue());
 
-        CustomUserDetails customUserDetails = new CustomUserDetails(user);
+        Authentication authToken = new UsernamePasswordAuthenticationToken(id, null, Collections.singletonList(authority));
 
-        Authentication authToken = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authToken);
 
         filterChain.doFilter(request, response);
