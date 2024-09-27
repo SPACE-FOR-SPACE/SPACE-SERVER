@@ -30,8 +30,8 @@ public class JwtUtil {
         this.refreshRepository = refreshRepository;
     }
 
-    public String getEmail(String token) {
-        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("email", String.class);
+    public Long getId(String token) {
+        return Long.valueOf(Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("sub", String.class));
     }
 
     public String getCategory(String token) {
@@ -47,12 +47,12 @@ public class JwtUtil {
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration().before(new Date());
     }
 
-    public String createAccessToken(String email, Role role) {
-        return createJwt("access", email, role, accessTokenExpiration);
+    public String createAccessToken(Long id, Role role) {
+        return createJwt("access", id, role, accessTokenExpiration);
     }
 
-    public String createRefreshToken(String email, Role role) {
-        return createJwt("refresh", email, role, refreshTokenExpiration);
+    public String createRefreshToken(Long id, Role role) {
+        return createJwt("refresh", id, role, refreshTokenExpiration);
     }
 
     public Cookie createAccessCookie(String key, String value){
@@ -63,12 +63,16 @@ public class JwtUtil {
         return createCookie(key, value, (int) refreshTokenExpiration);
     }
 
-    public void addRefreshToken(String email, String refreshToken) {
+    public Cookie invalidCookie(String key){
+        return createCookie(key, null, 0);
+    }
+
+    public void addRefreshToken(Long userId, String refreshToken) {
 
         Date date = new Date(System.currentTimeMillis() + refreshTokenExpiration);
 
         Refresh refresh = Refresh.builder()
-                .email(email)
+                .userId(userId)
                 .refreshToken(refreshToken)
                 .expiration(date.toString())
                 .build();
@@ -87,10 +91,10 @@ public class JwtUtil {
         return null;
     }
 
-    private String createJwt(String category, String email, Role role, long expiredMs) {
+    private String createJwt(String category, Long id, Role role, long expiredMs) {
         return Jwts.builder()
                 .claim("category", category)
-                .claim("email", email)
+                .claim("sub", String.valueOf(id))
                 .claim("role", role.getValue())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + expiredMs))
