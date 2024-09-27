@@ -63,7 +63,7 @@ public class SecurityConfig {
 
                             CorsConfiguration configuration = new CorsConfiguration();
 
-                            configuration.setAllowedOrigins(Collections.singletonList("*"));
+                            configuration.setAllowedOriginPatterns(Collections.singletonList("*"));
                             configuration.setAllowedMethods(Collections.singletonList("*"));
                             configuration.setAllowCredentials(true);
                             configuration.setAllowedHeaders(Collections.singletonList("*"));
@@ -98,8 +98,13 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/login","/","/join","/reissue").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/user").hasRole("GUEST")
+                        .requestMatchers("/user","/my").hasRole("GUEST")
                         .anyRequest().hasRole("USER"));
+
+        http
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                );
 
         http
                 .addFilterAfter(new CustomJwtFilter(jwtUtil), LoginFilter.class);
