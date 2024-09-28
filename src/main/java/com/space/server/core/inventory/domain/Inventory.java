@@ -15,7 +15,7 @@ public class Inventory {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Schema(description = "인벤토리 ID", example = "1")
+  @Schema(description = "인벤토리 ID")
   private Long id;
 
   @ManyToOne
