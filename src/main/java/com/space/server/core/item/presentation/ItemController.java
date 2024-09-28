@@ -7,6 +7,8 @@ import com.space.server.core.item.presentation.dto.request.UpdateItemRequest;
 import com.space.server.core.item.presentation.dto.response.ItemResponse;
 import com.space.server.core.item.service.CommandItemService;
 import com.space.server.core.item.service.QueryItemService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -24,21 +26,25 @@ public class ItemController {
   private final CategoryConverter categoryConverter;
 
   @PostMapping("/item")
+  @Operation(summary = "아이템 생성", description = "아이템을 생성합니다.")
   public void createItem(@RequestBody CreateItemRequest request) {
     commandItemService.createItem(request.toEntity());
   }
 
   @PostMapping("/{item-id}")
-  public void buyItem(@PathVariable("item-id") Long itemId) {
+  @Operation(summary = "아이템 구매", description = "해당 아이템을 구매합니다.")
+  public void buyItem(@PathVariable("item-id") @Parameter(description = "구매할 아이템 ID") Long itemId) {
     commandInventoryService.buyItem(itemId, SecurityContextHolder.getContext().getAuthentication());
   }
 
   @GetMapping("/{item-id}")
-  public ItemResponse readOne(@PathVariable("item-id") Long itemId) {
+  @Operation(summary = "아이템 조회", description = "해당 아이템을 조회합니다.")
+  public ItemResponse readOne(@PathVariable("item-id") @Parameter(description = "조회할 아이템 ID") Long itemId) {
     return ItemResponse.from(queryItemService.readOne(itemId));
   }
 
   @GetMapping
+  @Operation(summary = "아이템 전체 조회", description = "전체 아이템을 조회합니다.")
   public List<ItemResponse> readAll() {
     return queryItemService.readAll().stream()
         .map(ItemResponse::from)
@@ -46,22 +52,25 @@ public class ItemController {
   }
 
   @GetMapping("/categories/{category}")
-  public List<ItemResponse> findByCategory(@PathVariable("category") String category) {
+  @Operation(summary = "카테고리별 아이템 조회", description = "카테고리별 아이템을 조회합니다.")
+  public List<ItemResponse> findByCategory(@PathVariable("category") @Parameter(description = "조회할 카테고리") String category) {
     return queryItemService.findAllByCategory(categoryConverter.convert(category)).stream()
         .map(ItemResponse::from)
         .toList();
   }
 
   @PutMapping("/{item-id}")
+  @Operation(summary = "아이템 업데이트", description = "해당 아이템을 업데이트합니다.")
   public void updateItem(
-      @PathVariable("item-id") Long itemId,
+      @PathVariable("item-id") @Parameter(description = "업데이트할 아이템 ID") Long itemId,
       @RequestBody UpdateItemRequest request
   ) {
-      commandItemService.updateItem(itemId, request.toEntity());
+    commandItemService.updateItem(itemId, request.toEntity());
   }
 
   @DeleteMapping("/{item-id}")
-  public void deleteItem(@PathVariable("item-id") Long itemId) {
+  @Operation(summary = "아이템 삭제", description = "해당 아이템을 삭제합니다.")
+  public void deleteItem(@PathVariable("item-id") @Parameter(description = "삭제할 아이템 ID") Long itemId) {
     commandItemService.deleteItem(itemId);
   }
 }
