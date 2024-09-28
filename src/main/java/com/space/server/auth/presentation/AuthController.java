@@ -21,13 +21,8 @@ public class AuthController {
     private final ReIssuer reIssuer;
 
     @PostMapping("/login")
-    public ResponseEntity<?> customLogin(@RequestBody LoginRequest loginRequest, HttpServletResponse response) {
-        try {
-            userLoginer.login(loginRequest, response);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
-        }
+    public void LoginProcess(@RequestBody LoginRequest loginRequest, HttpServletResponse response) {
+        userLoginer.login(loginRequest, response);
     }
 
     @PostMapping("/join")
