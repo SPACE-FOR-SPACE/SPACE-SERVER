@@ -1,9 +1,7 @@
 package com.space.server.auth.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.space.server.user.domain.Users;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,17 +13,18 @@ public class Refresh {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    private String email;
+
+    private Long userId;
 
     private String refreshToken;
 
     private String expiration;
 
     @Builder
-    public Refresh(String email, String refreshToken, String expiration) {
-        this.email = email;
+    public Refresh(Long userId, String refreshToken, String expiration) {
+        this.userId = userId;
         this.refreshToken = refreshToken;
         this.expiration = expiration;
     }

@@ -51,13 +51,13 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
 
-        String email = customUserDetails.getEmail();
+        Long id = customUserDetails.getId();
 
-        String accessToken = jwtUtil.createAccessToken(email, Role.USER);
-        String refreshToken = jwtUtil.createRefreshToken(email, Role.USER);
+        String accessToken = jwtUtil.createAccessToken(id, Role.USER);
+        String refreshToken = jwtUtil.createRefreshToken(id, Role.USER);
 
 
-        jwtUtil.addRefreshToken(email, refreshToken);
+        jwtUtil.addRefreshToken(id, refreshToken);
 
         response.addCookie(jwtUtil.createAccessCookie("access_normal", accessToken));
         response.addCookie(jwtUtil.createRefreshCookie("refresh_normal", refreshToken));

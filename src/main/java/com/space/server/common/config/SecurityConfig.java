@@ -13,13 +13,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -28,7 +31,7 @@ import java.util.Collections;
 
 
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
 
@@ -60,12 +63,13 @@ public class SecurityConfig {
 
                             CorsConfiguration configuration = new CorsConfiguration();
 
-                            configuration.setAllowedOrigins(Collections.singletonList("*"));
+                            configuration.setAllowedOriginPatterns(Collections.singletonList("*"));
                             configuration.setAllowedMethods(Collections.singletonList("*"));
                             configuration.setAllowCredentials(true);
                             configuration.setAllowedHeaders(Collections.singletonList("*"));
                             configuration.setMaxAge(3600L);
 
+                            configuration.setExposedHeaders(Collections.singletonList("Set-Cookie"));
                             configuration.setExposedHeaders(Collections.singletonList("Authorization"));
 
                             return configuration;
@@ -94,14 +98,19 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/login","/","/join","/reissue").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/user").hasRole("GUEST")
+                        .requestMatchers("/user","/my").hasRole("GUEST")
                         .anyRequest().hasRole("USER"));
 
         http
-                .addFilterBefore(new CustomJwtFilter(jwtUtil), LoginFilter.class);
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                );
 
         http
-                .addFilterBefore(new OAuth2JwtFilter(jwtUtil), LoginFilter.class);
+                .addFilterAfter(new CustomJwtFilter(jwtUtil), LoginFilter.class);
+
+        http
+                .addFilterAfter(new OAuth2JwtFilter(jwtUtil), LoginFilter.class);
 
         http
                 .addFilterBefore(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil, objectMapper), UsernamePasswordAuthenticationFilter.class);
@@ -112,6 +121,7 @@ public class SecurityConfig {
         http
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
 
 
         return http.build();

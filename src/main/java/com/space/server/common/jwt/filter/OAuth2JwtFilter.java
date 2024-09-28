@@ -13,11 +13,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collections;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -27,9 +30,21 @@ public class OAuth2JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
+        String requestUri = request.getRequestURI();
+        log.warn("오어스 JWT 필터 uri" + requestUri);
+
+        if (requestUri.matches("^\\/login(?:\\/.*)?$")) {
+
+            filterChain.doFilter(request, response);
+            return;
+        }
+        if (requestUri.matches("^\\/oauth2(?:\\/.*)?$")) {
+
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         String accessToken = jwtUtil.getTokenFromCookies(request, "access_social");
-
-
 
         if (accessToken == null) {
             log.info("Access token not found in cookies.");
@@ -37,10 +52,8 @@ public class OAuth2JwtFilter extends OncePerRequestFilter {
             return;
         }
 
-        try {
-            jwtUtil.isExpired(accessToken);
-        } catch (ExpiredJwtException e) {
-            log.warn("Access token expired: {}", e.getMessage());
+        if (jwtUtil.isExpired(accessToken)) {
+            log.warn("Access token expired");
             respondWithUnauthorized(response, "Access token expired");
             return;
         }
@@ -52,21 +65,17 @@ public class OAuth2JwtFilter extends OncePerRequestFilter {
             return;
         }
 
-        String email = jwtUtil.getEmail(accessToken);
+        Long id = jwtUtil.getId(accessToken);
         Role role = jwtUtil.getRole(accessToken);
 
-        //userDTO를 생성하여 값 set
-        UserDto userDTO = UserDto.builder()
-                .email(email)
-                .role(role)
-                .build();
+        log.warn("오어스 JWT 필터 : "+id+role);
 
-        //UserDetails에 회원 정보 객체 담기
-        CustomOAuth2User customOAuth2User = new CustomOAuth2User(userDTO);
+        GrantedAuthority authority = new SimpleGrantedAuthority(role.getValue());
 
-        //스프링 시큐리티 인증 토큰 생성
-        Authentication authToken = new UsernamePasswordAuthenticationToken(customOAuth2User, null, customOAuth2User.getAuthorities());
-        //세션에 사용자 등록
+        Authentication authToken = new UsernamePasswordAuthenticationToken(id, null, Collections.singletonList(authority));
+
+        log.warn("오어스 JWT 필터 : "+authToken);
+
         SecurityContextHolder.getContext().setAuthentication(authToken);
 
         filterChain.doFilter(request, response);
