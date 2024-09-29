@@ -4,6 +4,9 @@ import com.space.server.core.checklist.presentation.dto.request.ChecklistRequest
 import com.space.server.core.checklist.presentation.dto.response.ChecklistResponse;
 import com.space.server.core.checklist.service.CommandChecklistService;
 import com.space.server.core.checklist.service.QueryChecklistService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,16 +21,19 @@ public class ChecklistController {
   private final QueryChecklistService queryChecklistService;
 
   @PostMapping("/checklist")
+  @Operation(summary = "체크리스트 생성", description = "체크리스트를 생성합니다.")
   public void createChecklist(@RequestBody ChecklistRequest request) {
     commandChecklistService.createChecklist(request);
   }
 
   @GetMapping("/{checklist-id}")
-  public ChecklistResponse readOne(@PathVariable(name = "checklist-id") Long checklistId) {
+  @Operation(summary = "체크리스트 조회", description = "해당 체크리스트를 조회합니다.")
+  public ChecklistResponse readOne(@PathVariable(name = "checklist-id") @Parameter(description = "체크리스트 ID") Long checklistId) {
     return ChecklistResponse.from(queryChecklistService.readOne(checklistId));
   }
 
   @GetMapping
+  @Operation(summary = "모든 체크리스트 조회", description = "모든 체크리스트를 조회합니다.")
   public List<ChecklistResponse> readAll() {
     return queryChecklistService.readAll().stream()
         .map(ChecklistResponse::from)
@@ -35,22 +41,25 @@ public class ChecklistController {
   }
 
   @GetMapping("/quiz/{quiz-id}")
-  public List<ChecklistResponse> findByQuiz(@PathVariable(name = "quiz-id") Long quizId) {
+  @Operation(summary = "퀴즈로 체크리스트 조회", description = "해당 퀴즈의 전체 체크리스트를 조회합니다.")
+  public List<ChecklistResponse> findByQuiz(@PathVariable(name = "quiz-id") @Parameter(description = "퀴즈 ID") Long quizId) {
     return queryChecklistService.findByQuiz(quizId).stream()
         .map(ChecklistResponse::from)
         .toList();
   }
 
   @PutMapping("/{checklist-id}")
+  @Operation(summary = "체크리스트 수정", description = "해당 체크리스트를 업데이트합니다.")
   public void updateChecklist(
-      @PathVariable(name = "checklist-id") Long checklistId,
+      @PathVariable(name = "checklist-id") @Parameter(description = "체크리스트 ID") Long checklistId,
       @RequestBody ChecklistRequest request
-      ) {
+  ) {
     commandChecklistService.updateChecklist(checklistId, request);
   }
 
   @DeleteMapping("/{checklist-id}")
-  public void deleteChecklist(@PathVariable(name = "checklist-id") Long checklistId) {
+  @Operation(summary = "체크리스트 삭제", description = "헤당 체크리스트를 삭제합니다.")
+  public void deleteChecklist(@PathVariable(name = "checklist-id") @Parameter(description = "체크리스트 ID") Long checklistId) {
     commandChecklistService.deleteChecklist(checklistId);
   }
 }
