@@ -22,7 +22,7 @@ public class QuizController {
   public void createQuiz(
       @RequestBody QuizRequest request
   ) {
-    commandQuizService.create(request.toEntity());
+    commandQuizService.create(request);
   }
 
   @GetMapping("/chapters/{chapter-id}/steps/{step-id}")
