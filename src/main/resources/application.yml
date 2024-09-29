@@ -72,7 +72,7 @@ spring:
             user-name-attribute: id
 
 server:
-  port: ${PORT:8080}
+  port: ${PORT}
 
 groq:
   api:
