@@ -52,15 +52,15 @@ public class ReIssuer {
             return new ResponseEntity<>("refresh token not found", HttpStatus.BAD_REQUEST);
         }
 
-        String email = jwtUtil.getEmail(refresh);
+        Long id = jwtUtil.getId(refresh);
         Role role = jwtUtil.getRole(refresh);
 
 
-        String newAccess = jwtUtil.createAccessToken(email, role);
-        String newRefresh = jwtUtil.createRefreshToken(email, role);
+        String newAccess = jwtUtil.createAccessToken(id, role);
+        String newRefresh = jwtUtil.createRefreshToken(id, role);
 
         refreshRepository.deleteByRefreshToken(refresh);
-        jwtUtil.addRefreshToken(email, newRefresh);
+        jwtUtil.addRefreshToken(id, newRefresh);
 
         response.addCookie(jwtUtil.createAccessCookie("access_normal", newAccess));
         response.addCookie(jwtUtil.createRefreshCookie("refresh_normal", newRefresh));

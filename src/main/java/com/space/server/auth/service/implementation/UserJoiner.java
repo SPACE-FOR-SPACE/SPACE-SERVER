@@ -1,6 +1,8 @@
 package com.space.server.auth.service.implementation;
 
 import com.space.server.auth.presentation.dto.request.JoinUserRequest;
+import com.space.server.common.exception.ErrorCode;
+import com.space.server.common.exception.SpaceException;
 import com.space.server.core.inventory.domain.Inventory;
 import com.space.server.core.inventory.service.implementation.InventoryCreator;
 import com.space.server.core.inventory.service.implementation.InventoryUpdater;
@@ -33,13 +35,12 @@ public class UserJoiner {
         Boolean isExist = userRepository.existsByEmail(email);
 
         if (isExist) {
-
-            return;
+            throw new SpaceException(ErrorCode.USER_EXISTED);
         }
 
         Users user = Users.normalUserBuilder()
                 .username(joinUserRequest.username())
-                .type("NORMAL")
+                .type("normal")
                 .email(email)
                 .password(passwordEncoder.encode(password))
                 .age(joinUserRequest.age())
