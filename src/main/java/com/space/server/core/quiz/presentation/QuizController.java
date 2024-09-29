@@ -46,7 +46,7 @@ public class QuizController {
   }
 
   @GetMapping("/quizzes/{quiz-id}")
-  @Operation(summary = "퀴즈Id로 조회", description = "해당 ID의 퀴즈를 조회합니다.")
+  @Operation(summary = "퀴즈Id로 조회", description = "해당 퀴즈를 조회합니다.")
   public QuizResponse readOne(
       @Parameter(description = "퀴즈 ID", required = true) @PathVariable("quiz-id") Long quizId
   ) {
@@ -62,7 +62,7 @@ public class QuizController {
   }
 
   @PutMapping("/quizzes/{quiz-id}")
-  @Operation(summary = "퀴즈 수정", description = "해당 ID의 퀴즈를 수정합니다.")
+  @Operation(summary = "퀴즈 수정", description = "해당 퀴즈를 업데이트합니다.")
   public void updateQuiz(
       @Parameter(description = "퀴즈 ID", required = true) @PathVariable("quiz-id") Long quizId,
       @RequestBody UpdateQuizRequest request
@@ -71,7 +71,7 @@ public class QuizController {
   }
 
   @DeleteMapping("/quizzes/{quiz-id}")
-  @Operation(summary = "퀴즈 삭제", description = "해당 ID의 퀴즈를 삭제합니다.")
+  @Operation(summary = "퀴즈 삭제", description = "해당 퀴즈를 삭제합니다.")
   public void deleteQuiz(
       @Parameter(description = "퀴즈 ID", required = true) @PathVariable("quiz-id") Long quizId
   ) {
