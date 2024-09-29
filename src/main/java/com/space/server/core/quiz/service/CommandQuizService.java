@@ -25,7 +25,7 @@ public class CommandQuizService {
 
   public void create(QuizRequest request) {
     Chapter chapter = chapterReader.findById(request.chapterId());
-    Quiz quiz = new Quiz(chapter, request.stepId(), request.npcId(), request.title(), request.content(), request.map(), request.characterDirection());
+    Quiz quiz = request.toEntity(chapter);
     quizCreator.create(quiz);
   }
 
