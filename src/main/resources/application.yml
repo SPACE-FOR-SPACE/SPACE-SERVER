@@ -74,6 +74,10 @@ spring:
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
 
+springdoc:
+  show-login-endpoint: true
+  show-oauth2-endpoints: true
+
 server:
   port: ${PORT}
 

@@ -109,7 +109,6 @@ public class JwtUtil {
         cookie.setPath("/");
         cookie.setHttpOnly(true);
         //cookie.setSecure(true);
-
         return cookie;
 
     }
