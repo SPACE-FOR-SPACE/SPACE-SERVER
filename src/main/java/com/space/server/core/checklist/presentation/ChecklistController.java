@@ -41,7 +41,7 @@ public class ChecklistController {
   }
 
   @GetMapping("/quiz/{quiz-id}")
-  @Operation(summary = "퀴즈로 체크리스트 조회", description = "해당 퀴즈의 전체 체크리스트를 조회합니다.")
+  @Operation(summary = "퀴즈 내 모든 체크리스트 조회", description = "해당 퀴즈의 전체 체크리스트를 조회합니다.")
   public List<ChecklistResponse> findByQuiz(@PathVariable(name = "quiz-id") @Parameter(description = "퀴즈 ID") Long quizId) {
     return queryChecklistService.findByQuiz(quizId).stream()
         .map(ChecklistResponse::from)
@@ -49,7 +49,7 @@ public class ChecklistController {
   }
 
   @PutMapping("/{checklist-id}")
-  @Operation(summary = "체크리스트 수정", description = "해당 체크리스트를 업데이트합니다.")
+  @Operation(summary = "체크리스트 업데이트", description = "해당 체크리스트를 업데이트합니다.")
   public void updateChecklist(
       @PathVariable(name = "checklist-id") @Parameter(description = "체크리스트 ID") Long checklistId,
       @RequestBody ChecklistRequest request

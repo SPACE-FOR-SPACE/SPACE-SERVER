@@ -42,7 +42,7 @@ public class ChapterController {
   }
 
   @PutMapping("/{chapter-id}")
-  @Operation(summary = "챕터 수정", description = "해당 챕터를 업데이트합니다.")
+  @Operation(summary = "챕터 업데이트", description = "해당 챕터를 업데이트합니다.")
   public void updateChapter(
       @Parameter(description = "챕터 ID", required = true) @PathVariable(name = "chapter-id") Long chapterId,
       @RequestBody ChapterRequest request) {

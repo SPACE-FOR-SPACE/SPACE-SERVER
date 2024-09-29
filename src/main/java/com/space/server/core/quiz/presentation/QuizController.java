@@ -62,7 +62,7 @@ public class QuizController {
   }
 
   @PutMapping("/quizzes/{quiz-id}")
-  @Operation(summary = "퀴즈 수정", description = "해당 퀴즈를 업데이트합니다.")
+  @Operation(summary = "퀴즈 업데이트", description = "해당 퀴즈를 업데이트합니다.")
   public void updateQuiz(
       @Parameter(description = "퀴즈 ID", required = true) @PathVariable("quiz-id") Long quizId,
       @RequestBody UpdateQuizRequest request
