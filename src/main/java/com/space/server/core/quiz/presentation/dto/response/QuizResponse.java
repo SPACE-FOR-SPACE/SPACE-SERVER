@@ -7,26 +7,26 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 public record QuizResponse(
 
-    @Schema(description = "챕터 정보", required = true)
+    @Schema(description = "챕터 정보", example = "1", required = true)
     Chapter chapter,
 
-    @Schema(description = "스텝 ID", required = true)
+    @Schema(description = "스텝 ID", example = "!", required = true)
     Long stepId,
 
-    @Schema(description = "NPC ID", required = true)
+    @Schema(description = "NPC ID", example = "1", required = true)
     Long npcId,
 
 
-    @Schema(description = "퀴즈 제목", required = true)
+    @Schema(description = "퀴즈 제목", example = "바다거북이가 위험해", required = true)
     String title,
 
-    @Schema(description = "퀴즈 내용", required = true)
+    @Schema(description = "퀴즈 내용", example = "바다거북이가 위험에 빠졌어요.", required = true)
     String content,
 
-    @Schema(description = "맵 정보", required = true)
+    @Schema(description = "맵 정보", example = "7x7 2차원 배열", required = true)
     Integer[][] map,
 
-    @Schema(description = "캐릭터 방향", required = true)
+    @Schema(description = "캐릭터 방향", example = "RIGHT", required = true)
     CharacterDirection characterDirection
 ) {
   public static QuizResponse from(Quiz quiz) {
