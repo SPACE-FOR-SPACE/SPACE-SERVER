@@ -34,8 +34,8 @@ public class CustomLogoutFilter extends GenericFilterBean {
             return;
         }
 
-        String refreshNormal = getTokenFromCookies(request, "refresh_normal");
-        String refreshSocial = getTokenFromCookies(request, "refresh_social");
+        String refreshNormal = jwtUtil.getTokenFromCookies(request, "refresh_normal");
+        String refreshSocial = jwtUtil.getTokenFromCookies(request, "refresh_social");
 
         if (refreshNormal != null) {
             processLogout(refreshNormal, "refresh_normal", response);
@@ -68,33 +68,13 @@ public class CustomLogoutFilter extends GenericFilterBean {
 
         refreshRepository.deleteByRefreshToken(refreshToken);
 
-        Cookie refreshCookie = createCookie(cookieName, null, 0);
+        Cookie refreshCookie = jwtUtil.invalidCookie(cookieName);
         response.addCookie(refreshCookie);
 
         String accessCookieName = cookieName.replace("refresh", "access");
-        Cookie accessCookie = createCookie(accessCookieName, null, 0);
+        Cookie accessCookie = jwtUtil.invalidCookie(accessCookieName);
         response.addCookie(accessCookie);
 
         response.setStatus(HttpServletResponse.SC_OK);
-    }
-
-    private Cookie createCookie(String key, String value, int maxAge) {
-        Cookie cookie = new Cookie(key, value);
-        cookie.setMaxAge(maxAge);
-        cookie.setPath("/");
-        cookie.setHttpOnly(true);
-        // cookie.setSecure(true);
-        return cookie;
-    }
-
-    private String getTokenFromCookies(HttpServletRequest request, String tokenName) {
-        if (request.getCookies() != null) {
-            return Arrays.stream(request.getCookies())
-                    .filter(cookie -> tokenName.equals(cookie.getName()))
-                    .map(Cookie::getValue)
-                    .findFirst()
-                    .orElse(null);
-        }
-        return null;
     }
 }

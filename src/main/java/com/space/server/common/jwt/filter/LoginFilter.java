@@ -1,17 +1,13 @@
 package com.space.server.common.jwt.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.space.server.auth.domain.Refresh;
-import com.space.server.auth.domain.repository.RefreshRepository;
 import com.space.server.auth.service.dto.CustomUserDetails;
 import com.space.server.common.jwt.dto.LoginRequest;
 import com.space.server.common.jwt.util.JwtUtil;
 import com.space.server.user.domain.value.Role;
 import jakarta.servlet.FilterChain;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,13 +17,18 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import java.io.IOException;
 
-@RequiredArgsConstructor
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
     private final ObjectMapper objectMapper;
 
+    public LoginFilter(AuthenticationManager authenticationManager, JwtUtil jwtUtil, ObjectMapper objectMapper) {
+        this.authenticationManager = authenticationManager;
+        this.jwtUtil = jwtUtil;
+        this.objectMapper = objectMapper;
+        setUsernameParameter("email");
+    }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
@@ -51,13 +52,13 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
 
-        String email = customUserDetails.getEmail();
+        Long id = customUserDetails.getId();
 
-        String accessToken = jwtUtil.createAccessToken(email, Role.USER);
-        String refreshToken = jwtUtil.createRefreshToken(email, Role.USER);
+        String accessToken = jwtUtil.createAccessToken(id, Role.USER);
+        String refreshToken = jwtUtil.createRefreshToken(id, Role.USER);
 
 
-        jwtUtil.addRefreshToken(email, refreshToken);
+        jwtUtil.addRefreshToken(id, refreshToken);
 
         response.addCookie(jwtUtil.createAccessCookie("access_normal", accessToken));
         response.addCookie(jwtUtil.createRefreshCookie("refresh_normal", refreshToken));

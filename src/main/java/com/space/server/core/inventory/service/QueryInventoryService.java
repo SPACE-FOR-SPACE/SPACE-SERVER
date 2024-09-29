@@ -23,15 +23,15 @@ public class QueryInventoryService {
     return inventoryReader.findById(inventoryId);
   }
 
-  public List<Inventory> readMine(Authentication auth) {
-    CustomUserDetails details = (CustomUserDetails) auth.getPrincipal();
-    Users user = userRepository.findByEmail(details.getEmail());
+  public List<Inventory> readMine(Long userId) {
+    Users user = userRepository.findById(userId)
+        .orElse(null);
     return inventoryReader.findByUser(user);
   }
 
-  public List<Inventory> readIsEquipped(Authentication auth) {
-    CustomUserDetails details = (CustomUserDetails) auth.getPrincipal();
-    Users user = userRepository.findByEmail(details.getEmail());
+  public List<Inventory> readIsEquipped(Long userId) {
+    Users user = userRepository.findById(userId)
+        .orElse(null);
     return inventoryReader.findByIsEquippedAndUser(user);
   }
 }

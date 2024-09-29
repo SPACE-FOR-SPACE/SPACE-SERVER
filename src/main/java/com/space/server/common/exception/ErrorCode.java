@@ -17,6 +17,7 @@ public enum ErrorCode {
     // user
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "유저를 찾을 수 없습니다."),
     INSUFFICIENT_POINTS(HttpStatus.FORBIDDEN, "포인트가 부족합니다."),
+    USER_EXISTED(HttpStatus.CONFLICT, "유저가 이미 존재합니다."),
 
     // item
     ITEM_NOT_FOUND(HttpStatus.NOT_FOUND, "아이템을 찾을 수 없습니다."),
