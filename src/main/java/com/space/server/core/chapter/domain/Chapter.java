@@ -28,10 +28,16 @@ public class Chapter {
   @NotNull
   private Map<String, String> mapObject;
 
+  @Type(PostgreSQLHStoreType.class)
+  @Column(columnDefinition = "hstore")
+  @NotNull
+  private Map<String, String> mapObjectImage;
+
   @Builder
-  public Chapter(String explanation, Map<String, String> mapObject) {
+  public Chapter(String explanation, Map<String, String> mapObject, Map<String, String> mapObjectImage) {
     this.explanation = explanation;
     this.mapObject = mapObject;
+    this.mapObjectImage = mapObjectImage;
   }
 
   public void update(Chapter chapter) {
