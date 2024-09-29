@@ -10,10 +10,11 @@ import com.space.server.core.item.service.QueryItemService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static com.space.server.common.jwt.util.AuthenticationUtil.getMemberId;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,7 +35,7 @@ public class ItemController {
   @PostMapping("/{item-id}")
   @Operation(summary = "아이템 구매", description = "해당 아이템을 구매합니다.")
   public void buyItem(@PathVariable("item-id") @Parameter(description = "구매할 아이템 ID") Long itemId) {
-    commandInventoryService.buyItem(itemId, SecurityContextHolder.getContext().getAuthentication());
+    commandInventoryService.buyItem(itemId, getMemberId());
   }
 
   @GetMapping("/{item-id}")
