@@ -72,4 +72,8 @@ spring:
             user-name-attribute: id
 
 server:
-  port: ${PORT}
+  port: ${PORT:8080}
+
+groq:
+  api:
+    key: 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

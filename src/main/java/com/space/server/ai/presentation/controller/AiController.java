@@ -1,6 +1,10 @@
 package com.space.server.ai.presentation.controller;
 
+import com.space.server.ai.presentation.dto.request.AiChat;
 import com.space.server.ai.presentation.dto.request.AiCodeRequest;
+import com.space.server.ai.presentation.dto.request.AiRequest;
+import com.space.server.ai.presentation.dto.request.ResponseFormat;
+import com.space.server.ai.service.GroqApiClientImpl;
 import com.space.server.core.chapter.domain.Chapter;
 import com.space.server.core.chapter.service.QueryChapterService;
 import com.space.server.core.checklist.domain.Checklist;
@@ -10,6 +14,7 @@ import com.space.server.core.quiz.service.QueryQuizService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,6 +25,7 @@ public class AiController {
     private final QueryChapterService queryChapterService;
     private final QueryChecklistService queryChecklistService;
     // CommandService들 연결
+    private final GroqApiClientImpl groqApiClientImpl;
 
     @PostMapping("/result")
     public void aiResult(@RequestBody AiCodeRequest aiCodeRequest){
@@ -38,7 +44,14 @@ public class AiController {
                         "일 때 정답인지 아닌지와 문제 조건들의 맞는 퍼센트를 백분율로 나타내고, 피드백과 움직임을 나타낸 맵을 JSON 형태로 만들어줘";
 
         //AI 연결 코드
-        //결과 저장 코드
-        //결과 반환 코드
+        ArrayList<AiChat> aiChats = new ArrayList<>();
+        aiChats.add(new AiChat("system", "The response format is JSON."));
+        aiChats.add(new AiChat("system", prompt));
+
+        AiRequest aiRequest = new AiRequest("llama-3.1-8b-instant", aiChats, 1F, 2048L, 1L, false, new ResponseFormat("json_object"), null);
+        System.out.println(groqApiClientImpl.createChatCompletion(aiRequest));
+
+        //AI 저장 코드
+        //AI 반환 코드
     }
 }
