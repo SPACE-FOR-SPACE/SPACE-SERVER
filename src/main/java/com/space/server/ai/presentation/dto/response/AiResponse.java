@@ -5,7 +5,7 @@ public record AiResponse (
     Long consistency,
     String feedback,
     Integer[][] map
-){ }
+){}
 
 //{
 //         "isSuccess" : false,

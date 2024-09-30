@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public record AiRequest (
     String model,
-    ArrayList<AiChat> message,
+    ArrayList<AiChat> messages,
     Float temperature,
     Long max_tokens,
     Long top_p,
@@ -15,7 +15,7 @@ public record AiRequest (
     String stop
 ){
     public AiRequest toEntity() {
-        return new AiRequest(model, message, temperature, max_tokens, top_p, stream, response_format, stop);
+        return new AiRequest(model, messages, temperature, max_tokens, top_p, stream, response_format, stop);
     }
 }
 

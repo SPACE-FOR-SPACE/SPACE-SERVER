@@ -5,6 +5,8 @@ import com.space.server.ai.presentation.dto.response.AiResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 @Service
 public class GroqApiClientImpl {
     private final GroqApiClient groqApiClient;
@@ -15,7 +17,7 @@ public class GroqApiClientImpl {
         this.apiKey = apiKey;
     }
 
-    public AiResponse createChatCompletion(AiRequest request) {
+    public Map createChatCompletion(AiRequest request) {
         return groqApiClient.createChatCompletion(request, "Bearer " + apiKey);
     }
 }

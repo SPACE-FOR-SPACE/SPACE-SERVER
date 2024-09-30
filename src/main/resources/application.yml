@@ -87,4 +87,4 @@ logging:
 
 groq:
   api:
-    key: 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
+    key: ${GROQ_API_KEY}
