@@ -4,6 +4,9 @@ import com.space.server.core.chapter.presentation.dto.request.ChapterRequest;
 import com.space.server.core.chapter.presentation.dto.response.ChapterResponse;
 import com.space.server.core.chapter.service.CommandChapterService;
 import com.space.server.core.chapter.service.QueryChapterService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,16 +21,20 @@ public class ChapterController {
   private final QueryChapterService queryChapterService;
 
   @PostMapping("/chapter")
+  @Operation(summary = "챕터 생성", description = "챕터를 생성합니다.")
   public void createChapter(@RequestBody ChapterRequest request) {
     commandChapterService.createChapter(request.toEntity());
   }
 
   @GetMapping("{chapter-id}")
-  public ChapterResponse readOne(@PathVariable(name = "chapter-id") Long chapterId) {
+  @Operation(summary = "챕터 조회", description = "해당 챕터를 조회합니다.")
+  public ChapterResponse readOne(
+      @Parameter(description = "챕터 ID", required = true) @PathVariable(name = "chapter-id") Long chapterId) {
     return ChapterResponse.from(queryChapterService.readOne(chapterId));
   }
 
   @GetMapping
+  @Operation(summary = "모든 챕터 조회", description = "모든 챕터를 조회합니다.")
   public List<ChapterResponse> readAll() {
     return queryChapterService.readAll().stream()
         .map(ChapterResponse::from)
@@ -35,15 +42,16 @@ public class ChapterController {
   }
 
   @PutMapping("/{chapter-id}")
+  @Operation(summary = "챕터 업데이트", description = "해당 챕터를 업데이트합니다.")
   public void updateChapter(
-      @PathVariable(name = "chapter-id") Long chapterId,
-      @RequestBody ChapterRequest request
-  ) {
+      @Parameter(description = "챕터 ID", required = true) @PathVariable(name = "chapter-id") Long chapterId,
+      @RequestBody ChapterRequest request) {
     commandChapterService.updateChapter(chapterId, request.toEntity());
   }
 
   @DeleteMapping("/{chapter-id}")
-  public void deleteChapter(@PathVariable(name = "chapter-id") Long chapterId) {
+  @Operation(summary = "챕터 삭제", description = "해당 챕터를 삭제합니다.")
+  public void deleteChapter(@Parameter(description = "챕터 ID", required = true) @PathVariable(name = "chapter-id") Long chapterId) {
     commandChapterService.deleteChapter(chapterId);
   }
 }

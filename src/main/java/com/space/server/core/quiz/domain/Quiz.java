@@ -4,6 +4,7 @@ import com.space.server.core.chapter.domain.Chapter;
 import com.space.server.core.quiz.domain.value.CharacterDirection;
 import io.hypersistence.utils.hibernate.type.array.IntArrayType;
 import io.hypersistence.utils.hibernate.type.basic.PostgreSQLHStoreType;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -17,47 +18,57 @@ import java.util.Map;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@Schema(description = "퀴즈 Entity")
 public class Quiz {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Schema(description = "퀴즈 ID")
   private Long id;
 
   @ManyToOne
   @NotNull
+  @Schema(description = "챕터 정보")
   private Chapter chapter;
 
   @NotNull
+  @Schema(description = "스텝 ID")
   private Long stepId;
 
   @NotNull
+  @Schema(description = "NPC ID")
   private Long npcId;
 
   @NotNull
+  @Schema(description = "퀴즈 제목")
   private String title;
 
   @NotNull
+  @Schema(description = "퀴즈 내용")
   private String content;
 
   @Type(IntArrayType.class)
   @Column(columnDefinition = "int[][]")
   @NotNull
+  @Schema(description = "퀴즈 맵 (7x7)")
   private Integer[][] map;
 
   @Enumerated(EnumType.STRING)
   @NotNull
+  @Schema(description = "캐릭터 방향")
   private CharacterDirection characterDirection;
 
   @Type(PostgreSQLHStoreType.class)
   @Column(columnDefinition = "hstore")
   @NotNull
+  @Schema(description = "맵 오브젝트 정보")
   private Map<String, String> mapObject;
 
   @Type(PostgreSQLHStoreType.class)
   @Column(columnDefinition = "hstore")
   @NotNull
+  @Schema(description = "맵 오브젝트 이미지 정보")
   private Map<String, String> mapObjectImage;
-
 
   @Builder
   public Quiz(Chapter chapter, Long stepId, Long npcId, String title, String content, Integer[][] map, CharacterDirection characterDirection, Map<String, String> mapObject, Map<String, String> mapObjectImage) {
