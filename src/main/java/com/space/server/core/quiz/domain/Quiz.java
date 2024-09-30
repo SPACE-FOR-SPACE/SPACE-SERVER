@@ -3,6 +3,7 @@ package com.space.server.core.quiz.domain;
 import com.space.server.core.chapter.domain.Chapter;
 import com.space.server.core.quiz.domain.value.CharacterDirection;
 import io.hypersistence.utils.hibernate.type.array.IntArrayType;
+import io.hypersistence.utils.hibernate.type.basic.PostgreSQLHStoreType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -10,6 +11,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
+
+import java.util.Map;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -45,8 +48,19 @@ public class Quiz {
   @NotNull
   private CharacterDirection characterDirection;
 
+  @Type(PostgreSQLHStoreType.class)
+  @Column(columnDefinition = "hstore")
+  @NotNull
+  private Map<String, String> mapObject;
+
+  @Type(PostgreSQLHStoreType.class)
+  @Column(columnDefinition = "hstore")
+  @NotNull
+  private Map<String, String> mapObjectImage;
+
+
   @Builder
-  public Quiz(Chapter chapter, Long stepId, Long npcId, String title, String content, Integer[][] map, CharacterDirection characterDirection) {
+  public Quiz(Chapter chapter, Long stepId, Long npcId, String title, String content, Integer[][] map, CharacterDirection characterDirection, Map<String, String> mapObject, Map<String, String> mapObjectImage) {
     this.chapter = chapter;
     this.stepId = stepId;
     this.npcId = npcId;
@@ -54,6 +68,8 @@ public class Quiz {
     this.content = content;
     this.map = map;
     this.characterDirection = characterDirection;
+    this.mapObject = mapObject;
+    this.mapObjectImage = mapObjectImage;
   }
 
   @Builder
