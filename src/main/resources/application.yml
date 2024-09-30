@@ -80,3 +80,7 @@ server:
 logging:
   level:
     org.springframework.security: DEBUG
+
+groq:
+  api:
+    key: {GROQ_API_KEY}
