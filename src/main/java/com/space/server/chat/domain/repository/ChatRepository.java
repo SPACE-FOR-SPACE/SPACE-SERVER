@@ -7,8 +7,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ChatRepository extends JpaRepository<Chat, Long> {
     @Query("SELECT COALESCE(MAX(c.order), 0) FROM Chat c WHERE c.state = :state")
     Integer findMaxOrderByState(@Param("state") State state);
+
+    List<Chat> findAllChatByStateId(@Param("stateId") State state);
 }
