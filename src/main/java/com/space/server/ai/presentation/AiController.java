@@ -44,6 +44,7 @@ public class AiController {
                 "캐릭터 방향은 '"+ quiz.getCharacterDirection() +"', " +
                 "입력은 '" + aiCodeRequest.code() + "'" +
                 "일 때 정답인지 아닌지와 문제 조건들의 맞는 퍼센트를 백분율로 나타내고, 피드백과 움직임을 나타낸 맵을 JSON 형태로 만들어줘";
+        ChatCompleter chatCompleter = new ChatCompleter();
 
         // AI 연결 코드
         ArrayList<AiChat> aiChats = new ArrayList<>();
