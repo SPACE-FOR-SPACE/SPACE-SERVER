@@ -1,9 +1,12 @@
 package com.space.server.chat.service.implementation;
 
+import com.space.server.chat.domain.Chat;
 import com.space.server.chat.domain.repository.ChatRepository;
 import com.space.server.state.domain.State;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -14,4 +17,6 @@ public class ChatReader {
     public Integer findMaxOrderByState(State state) {
         return chatRepository.findMaxOrderByState(state);
     }
+
+    public List<Chat> findAllChatByStateId(State state) { return chatRepository.findAllChatByStateId(state); }
 }
