@@ -3,6 +3,7 @@ package com.space.server.ai.service.implementation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.space.server.ai.service.dto.request.AiRequest;
 import com.space.server.ai.service.dto.response.AiResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -26,7 +27,7 @@ public class ChatCompleter {
         this.apiKey = apiKey;
     }
 
-    public void completerChat(AiRequest request) {
+    public AiResponse completerChat(AiRequest request) {
         String url = "https://api.groq.com/openai/v1/chat/completions";
 
         // 헤더 설정
@@ -35,7 +36,7 @@ public class ChatCompleter {
         headers.set("Authorization", "Bearer " + apiKey);
 
         // 요청 엔티티 생성
-        HttpEntity<AiRequest> httpEntity = new HttpEntity<AiRequest>(request, headers);
+        HttpEntity<AiRequest> httpEntity = new HttpEntity<>(request, headers);
 
         try {
             // API 호출
@@ -55,9 +56,10 @@ public class ChatCompleter {
 
             // 응답 처리
             log.info("Response: " + responseMap);
+            return responseMap;
         } catch (Exception e) {
             log.error("Error: " + e.getMessage());
+            return null;
         }
     }
-
 }
