@@ -7,7 +7,7 @@ import java.util.Map;
 
 public record AiChoices(
     Integer index,
-    List<AiChat> message,
+    List<ResponseAiChat> message,
     String logprobs,
     String finish_reason
 ) {
