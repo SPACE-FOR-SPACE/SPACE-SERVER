@@ -1,6 +1,7 @@
 package com.space.server.ai.service.implementation;
 
 import com.space.server.chat.domain.Chat;
+import com.space.server.chat.domain.value.Type;
 import com.space.server.core.chapter.domain.Chapter;
 import com.space.server.core.checklist.domain.Checklist;
 import com.space.server.core.quiz.domain.Quiz;
@@ -14,8 +15,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PromptCreator {
 
-    public String create(String state, Quiz quiz, List<Checklist> checklists, Chapter chapter, String chat) {
-        return "상태는 '"+ state +"', " +
+    public String create(Type type, Quiz quiz, List<Checklist> checklists, Chapter chapter, String chat) {
+        return "상태는 '"+ type +"', " +
             "문제 난이도는 '0', " +
             "문제 내용은 '"+ quiz.getContent() +"', " +
             "문제 조건들은 '"+ checklists +"', " +
