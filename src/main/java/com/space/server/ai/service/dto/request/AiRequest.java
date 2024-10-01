@@ -1,10 +1,10 @@
 package com.space.server.ai.service.dto.request;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public record AiRequest (
         String model,
-        ArrayList<AiChat> messages,
+        List<AiChat> messages,
         Float temperature,
         Long max_tokens,
         Long top_p,
