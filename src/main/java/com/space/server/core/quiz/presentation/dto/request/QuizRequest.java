@@ -15,9 +15,6 @@ public record QuizRequest(
     @Schema(description = "스텝 ID", example = "1", required = true)
     Long stepId,
 
-    @Schema(description = "NPC ID", example = "1", required = true)
-    Long npcId,
-
     @Schema(description = "퀴즈 제목", example = "바다거북이가 위험해", required = true)
     String title,
 
@@ -41,7 +38,6 @@ public record QuizRequest(
     return Quiz.builder()
         .chapter(chapter)
         .stepId(stepId)
-        .npcId(npcId)
         .title(title)
         .content(content)
         .map(map)
