@@ -2,10 +2,7 @@ package com.space.server.core.item.presentation;
 
 import com.space.server.core.inventory.service.CommandInventoryService;
 import com.space.server.core.item.presentation.converter.CategoryConverter;
-import com.space.server.core.item.presentation.dto.request.CreateItemRequest;
-import com.space.server.core.item.presentation.dto.request.UpdateItemRequest;
 import com.space.server.core.item.presentation.dto.response.ItemResponse;
-import com.space.server.core.item.service.CommandItemService;
 import com.space.server.core.item.service.QueryItemService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -21,16 +18,9 @@ import static com.space.server.common.jwt.util.AuthenticationUtil.getMemberId;
 @RequestMapping("/stores/items")
 public class ItemController {
 
-  private final CommandItemService commandItemService;
   private final QueryItemService queryItemService;
   private final CommandInventoryService commandInventoryService;
   private final CategoryConverter categoryConverter;
-
-  @PostMapping("/item")
-  @Operation(summary = "아이템 생성", description = "아이템을 생성합니다.")
-  public void createItem(@RequestBody CreateItemRequest request) {
-    commandItemService.createItem(request.toEntity());
-  }
 
   @PostMapping("/{item-id}")
   @Operation(summary = "아이템 구매", description = "해당 아이템을 구매합니다.")
@@ -58,20 +48,5 @@ public class ItemController {
     return queryItemService.findAllByCategory(categoryConverter.convert(category)).stream()
         .map(ItemResponse::from)
         .toList();
-  }
-
-  @PutMapping("/{item-id}")
-  @Operation(summary = "아이템 업데이트", description = "해당 아이템을 업데이트합니다.")
-  public void updateItem(
-      @PathVariable("item-id") @Parameter(description = "업데이트할 아이템 ID") Long itemId,
-      @RequestBody UpdateItemRequest request
-  ) {
-    commandItemService.updateItem(itemId, request.toEntity());
-  }
-
-  @DeleteMapping("/{item-id}")
-  @Operation(summary = "아이템 삭제", description = "해당 아이템을 삭제합니다.")
-  public void deleteItem(@PathVariable("item-id") @Parameter(description = "삭제할 아이템 ID") Long itemId) {
-    commandItemService.deleteItem(itemId);
   }
 }
