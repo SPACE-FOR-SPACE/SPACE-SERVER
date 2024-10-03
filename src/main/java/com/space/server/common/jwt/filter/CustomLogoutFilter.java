@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.filter.GenericFilterBean;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 @RequiredArgsConstructor
 public class CustomLogoutFilter extends GenericFilterBean {
