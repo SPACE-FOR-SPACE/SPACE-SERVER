@@ -72,7 +72,6 @@ public class AiController {
         // AI 반환 코드
     }
 
-
     public void createChatCompletion(AiRequest request) {
         String url = "https://api.groq.com/openai/v1/chat/completions";
 
