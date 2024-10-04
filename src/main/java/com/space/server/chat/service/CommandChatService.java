@@ -1,9 +1,11 @@
 package com.space.server.chat.service;
 
-import com.space.server.ai.service.dto.request.AiChat;
-import com.space.server.ai.service.dto.request.AiRequest;
+import com.space.server.ai.service.dto.request.gpt.AiChat;
+import com.space.server.ai.service.dto.request.gpt.AiAssistantsRequest;
 import com.space.server.ai.service.dto.request.ResponseFormat;
-import com.space.server.ai.service.dto.response.AiResponse;
+import com.space.server.ai.service.dto.request.gpt.AiThreadRequest;
+import com.space.server.ai.service.dto.request.gpt.Tools;
+import com.space.server.ai.service.dto.response.gpt.AiAssistantsResponse;
 import com.space.server.ai.service.implementation.ChatCompleter;
 import com.space.server.ai.service.implementation.PromptCreator;
 import com.space.server.chat.domain.Chat;
@@ -62,19 +64,12 @@ public class CommandChatService {
 
             promptCreator.create(type, quiz, checklists, chapter, request.userChat());
 
-            List<AiChat> aiChats = List.of();
-            aiChats.add(new AiChat("system", "The response format is JSON."));
-            for (Chat chat : chats) {
-                aiChats.add(new AiChat("user", chat.getUserChat()));
-                aiChats.add(new AiChat("assistant", chat.getBotChat()));
-            }
-            AiRequest aiRequest = new AiRequest("llama-3.1-8b-instant", aiChats, 1F, 2048L, 1L, false, new ResponseFormat("json_object"), null);
-            AiResponse aiResponse = chatCompleter.completerChat(aiRequest);
+
 
             chatCreator.create(Chat.builder()
                     .state(stateReader.findByQuizIdAndUserId(quiz, user).get())
                     .userChat(request.userChat())
-                    .botChat(aiResponse.choices().message().toString())
+                    .botChat()
                     .type(Type.CODE)
                     .order(1)
                     .build());
@@ -91,6 +86,29 @@ public class CommandChatService {
         }
         // 없다면 처음 만드는 로직
         else {
+            String instruction = "The return type is JSON. " +
+                    "Now for the return related settings. " +
+                    "The map is an array of 7*7 format. " +
+                    "isSuccess is the correct answer if any of the problem conditions are true. " +
+                    "Accuracy is the percentage of correct answers among the problem conditions.";
+
+            List<Tools> tools = List.of();
+            tools.add(new Tools("code_interpreter"));
+
+            AiAssistantsRequest assistantsRequest = new AiAssistantsRequest(
+                    instruction,
+                    "user-123",
+                    tools,
+                    "gpt-4o mini"
+            );
+            chatCompleter.assistantsCreate(assistantsRequest);
+
+            List<AiChat> aiChats = List.of();
+            aiChats.add(new AiChat("user", request.userChat()));
+            chatCompleter.threadCreate(new AiThreadRequest(aiChats));
+
+
+
             stateCreator.create(State.createBuilder()
                     .user(user)
                     .quiz(quiz)

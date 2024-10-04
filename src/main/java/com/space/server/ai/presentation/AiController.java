@@ -1,8 +1,8 @@
 package com.space.server.ai.presentation;
 
-import com.space.server.ai.service.dto.request.AiChat;
+import com.space.server.ai.service.dto.request.gpt.AiChat;
 import com.space.server.ai.service.dto.request.AiCodeRequest;
-import com.space.server.ai.service.dto.request.AiRequest;
+import com.space.server.ai.service.dto.request.gpt.AiAssistantsRequest;
 import com.space.server.ai.service.dto.request.ResponseFormat;
 import com.space.server.ai.service.implementation.ChatCompleter;
 import com.space.server.core.chapter.domain.Chapter;
@@ -51,7 +51,7 @@ public class AiController {
         aiChats.add(new AiChat("system", "The response format is JSON."));
         aiChats.add(new AiChat("system", prompt));
         log.warn("AI Result aiChats :" + aiChats);
-        AiRequest aiRequest = new AiRequest("llama-3.1-8b-instant", aiChats, 1F, 2048L, 1L, false, new ResponseFormat("json_object"), null);
+        AiAssistantsRequest aiRequest = new AiAssistantsRequest("llama-3.1-8b-instant", aiChats, 1F, 2048L, 1L, false, new ResponseFormat("json_object"), null);
         log.warn("AI Result aiRequest :" + aiRequest);
 
         // AI 요청 비동기 처리
