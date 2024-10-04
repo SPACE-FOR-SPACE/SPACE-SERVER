@@ -4,6 +4,7 @@ import com.space.server.core.quiz.presentation.dto.response.QuizResponse;
 import com.space.server.core.quiz.service.QueryQuizService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +13,8 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/chapters")
-
+@Tag(name = "Quiz", description = "퀴즈 API")
 public class QuizController {
-
   private final QueryQuizService queryQuizService;
 
   @GetMapping("/{chapter-id}/steps")

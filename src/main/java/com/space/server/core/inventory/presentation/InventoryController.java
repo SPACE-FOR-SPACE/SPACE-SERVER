@@ -5,6 +5,7 @@ import com.space.server.core.inventory.service.CommandInventoryService;
 import com.space.server.core.inventory.service.QueryInventoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,7 @@ import static com.space.server.common.jwt.util.AuthenticationUtil.getMemberId;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/inventories")
+@Tag(name = "Inventory", description = "인벤토리 API")
 public class InventoryController {
 
   private final CommandInventoryService commandInventoryService;

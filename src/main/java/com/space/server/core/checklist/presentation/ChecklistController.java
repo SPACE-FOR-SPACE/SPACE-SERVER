@@ -4,6 +4,7 @@ import com.space.server.core.checklist.presentation.dto.response.ChecklistRespon
 import com.space.server.core.checklist.service.QueryChecklistService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/checklists")
+@Tag(name = "Checklist", description = "체크리스트 API")
 public class ChecklistController {
 
   private final QueryChecklistService queryChecklistService;

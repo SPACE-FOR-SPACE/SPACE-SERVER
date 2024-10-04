@@ -6,6 +6,7 @@ import com.space.server.core.item.presentation.dto.response.ItemResponse;
 import com.space.server.core.item.service.QueryItemService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,7 @@ import static com.space.server.common.jwt.util.AuthenticationUtil.getMemberId;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/stores/items")
+@Tag(name = "Item", description = "아이템 API")
 public class ItemController {
 
   private final QueryItemService queryItemService;
