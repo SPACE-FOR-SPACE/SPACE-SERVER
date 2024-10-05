@@ -67,7 +67,7 @@ public class ChatCompleter {
         }
     }
 
-    public AiThreadResponse threadCreate(AiThreadRequest request) {
+    public AiThreadResponse threadCreate() {
         String url = "https://api.openai.com/v1/threads";
 
         // 헤더 설정
@@ -77,7 +77,7 @@ public class ChatCompleter {
         headers.set("OpenAI-Beta", "assistants=v2");
 
         // 요청 엔티티 생성
-        HttpEntity<AiThreadRequest> httpEntity = new HttpEntity<>(request, headers);
+        HttpEntity<AiThreadRequest> httpEntity = new HttpEntity<>(headers);
 
         try {
             // API 호출
@@ -194,7 +194,7 @@ public class ChatCompleter {
             // API 호출
             ResponseEntity<String> responseEntity = restTemplate.exchange(
                     url,
-                    HttpMethod.POST,
+                    HttpMethod.GET,
                     httpEntity,
                     String.class
             );
@@ -215,7 +215,7 @@ public class ChatCompleter {
         }
     }
 
-    public AiRunsResponse messageCreate(String id, AiRunsRequest request) {
+    public AiRunsResponse runsCreate(String id, AiRunsRequest request) {
         String url = "https://api.openai.com/v1/threads/" + id + "/runs";
 
         // 헤더 설정

@@ -1,11 +1,12 @@
 package com.space.server.chat.service;
 
-import com.space.server.ai.service.dto.request.gpt.AiChat;
-import com.space.server.ai.service.dto.request.gpt.AiAssistantsRequest;
+import com.space.server.ai.service.dto.request.gpt.*;
 import com.space.server.ai.service.dto.request.ResponseFormat;
-import com.space.server.ai.service.dto.request.gpt.AiThreadRequest;
-import com.space.server.ai.service.dto.request.gpt.Tools;
+import com.space.server.ai.service.dto.response.AiResponse;
 import com.space.server.ai.service.dto.response.gpt.AiAssistantsResponse;
+import com.space.server.ai.service.dto.response.gpt.AiMessagesResponse;
+import com.space.server.ai.service.dto.response.gpt.AiRunsResponse;
+import com.space.server.ai.service.dto.response.gpt.AiThreadResponse;
 import com.space.server.ai.service.implementation.ChatCompleter;
 import com.space.server.ai.service.implementation.PromptCreator;
 import com.space.server.chat.domain.Chat;
@@ -48,81 +49,89 @@ public class CommandChatService {
     private final ChapterReader chapterReader;
     private final ChatCompleter chatCompleter;
     private final StateUpdater stateUpdater;
+    private String assistantsId;
 
-    public void create(Long quizId, CreateChatRequest request, Long userId, Type type) {
+    public void initGpt(){
+        String instruction = "The return type is JSON. " +
+                "Now for the return related settings. " +
+                "The map is an array of 7*7 format. " +
+                "isSuccess is the correct answer if any of the problem conditions are true. " +
+                "Accuracy is the percentage of correct answers among the problem conditions.";
+
+        List<Tools> tools = List.of();
+        tools.add(new Tools("code_interpreter"));
+
+        AiAssistantsRequest assistantsRequest = new AiAssistantsRequest(
+                instruction,
+                "SPACE-FOR-AI",
+                tools,
+                "gpt-4o mini"
+        );
+        AiAssistantsResponse aiAssistantsResponse = chatCompleter.assistantsCreate(assistantsRequest);
+        assistantsId = aiAssistantsResponse.id();
+    }
+
+    public void create(Long quizId, CreateChatRequest request, Long userId) {
         Quiz quiz = quizReader.findById(quizId);
         Users user = userReader.findById(userId);
         List<Checklist> checklists = checklistReader.findByQuiz(quiz);
         Chapter chapter = chapterReader.findById(quiz.getChapter().getId());
 
         Optional<State> state = stateReader.findByQuizIdAndUserId(quiz, user);
+        PromptCreator promptCreator = new PromptCreator();
+        AiChat aiChat = new AiChat("user", promptCreator.create(request.type(), quiz, checklists, chapter, request.userChat()));
 
         // state 있다면 대화 로직
         if (state.isPresent()) {
-            List<Chat> chats = chatReader.findAllChatByStateId(state.get());
-            PromptCreator promptCreator = new PromptCreator();
+            AiMessagesResponse aiMessagesResponseCreate = chatCompleter.messageCreate(user.getThreadId(), aiChat);
+            chatCompleter.runsCreate(user.getThreadId(), new AiRunsRequest(assistantsId));
+            AiMessagesResponse aiMessagesResponseSelect = chatCompleter.messageSelect(user.getThreadId(), aiMessagesResponseCreate.id());
 
-            promptCreator.create(type, quiz, checklists, chapter, request.userChat());
-
-
+            AiResponse botChat = aiMessagesResponseSelect.content().get(1).text().value();
 
             chatCreator.create(Chat.builder()
                     .state(stateReader.findByQuizIdAndUserId(quiz, user).get())
                     .userChat(request.userChat())
-                    .botChat()
+                    .botChat(botChat.toString())
                     .type(Type.CODE)
-                    .order(1)
+                    .order(chatReader.findMaxOrderByState(state.get()) + 1)
                     .build());
 
             stateUpdater.update(State.createBuilder()
                     .user(user)
                     .quiz(quiz)
-                    .status()
-                    .map()
-                    .score()
+                    .status(botChat.isSuccess() == true ? Status.SUCCESS : Status.FAIL)
+                    .map(botChat.map())
+                    .score(botChat.consistency())
+                    .move(botChat.move())
                     .build(), state.get());
 
             chatReader.findAllChatByStateId(state.get());
         }
         // 없다면 처음 만드는 로직
         else {
-            String instruction = "The return type is JSON. " +
-                    "Now for the return related settings. " +
-                    "The map is an array of 7*7 format. " +
-                    "isSuccess is the correct answer if any of the problem conditions are true. " +
-                    "Accuracy is the percentage of correct answers among the problem conditions.";
+            AiThreadResponse aiThreadResponse = chatCompleter.threadCreate();
+            AiMessagesResponse aiMessagesResponseCreate = chatCompleter.messageCreate(aiThreadResponse.id(), aiChat);
+            chatCompleter.runsCreate(aiThreadResponse.id(), new AiRunsRequest(assistantsId));
+            AiMessagesResponse aiMessagesResponseSelect = chatCompleter.messageSelect(aiThreadResponse.id(), aiMessagesResponseCreate.id());
 
-            List<Tools> tools = List.of();
-            tools.add(new Tools("code_interpreter"));
-
-            AiAssistantsRequest assistantsRequest = new AiAssistantsRequest(
-                    instruction,
-                    "user-123",
-                    tools,
-                    "gpt-4o mini"
-            );
-            chatCompleter.assistantsCreate(assistantsRequest);
-
-            List<AiChat> aiChats = List.of();
-            aiChats.add(new AiChat("user", request.userChat()));
-            chatCompleter.threadCreate(new AiThreadRequest(aiChats));
-
-
+            AiResponse botChat = aiMessagesResponseSelect.content().get(1).text().value();
 
             stateCreator.create(State.createBuilder()
                     .user(user)
                     .quiz(quiz)
-                    .status(Status.FAIL)
-                    .map(new Integer[7][7])
-                    .score(0.0)
+                    .status(botChat.isSuccess() == true ? Status.SUCCESS : Status.FAIL)
+                    .map(botChat.map())
+                    .move(botChat.move())
+                    .score(botChat.consistency())
                     .build());
             chatCreator.create(Chat.builder()
-                            .state(stateReader.findByQuizIdAndUserId(quiz, user).get())
-                            .userChat(request.userChat())
-                            .botChat("")
-                            .type(Type.CODE)
-                            .order(1)
-                            .build());
+                    .state(stateReader.findByQuizIdAndUserId(quiz, user).get())
+                    .userChat(request.userChat())
+                    .botChat(botChat.toString())
+                    .type(Type.CODE)
+                    .order(chatReader.findMaxOrderByState(state.get()) + 1)
+                    .build());
         }
     }
 }

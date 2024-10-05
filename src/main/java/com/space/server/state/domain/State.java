@@ -35,10 +35,14 @@ public class State {
     @Column(columnDefinition = "int[][]")
     private Integer[][] map;
 
+    @Type(IntArrayType.class)
+    @Column(columnDefinition = "int[]")
+    private String[] move;
+
     private Double score;
 
     @Builder(builderMethodName = "createBuilder")
-    public State(Users user, Quiz quiz, Status status, Integer[][] map, Double score) {
+    public State(Users user, Quiz quiz, Status status, Integer[][] map,  String[] move, Double score) {
         this.user = user;
         this.quiz = quiz;
         this.status = status;
@@ -47,7 +51,7 @@ public class State {
     }
 
     @Builder(builderMethodName = "updateBuilder")
-    public State(Status status, Integer[][] map, Double score) {
+    public State(Status status, Integer[][] map, String move, Double score) {
         this.status = status;
         this.map = map;
         this.score = score;
@@ -59,6 +63,7 @@ public class State {
         for (int i = 0; i < 7; i++) {
             System.arraycopy(state.getMap()[i], 0, this.map[i], 0, 7);
         }
+        this.move = state.getMove();
         this.score = state.getScore();
     }
 

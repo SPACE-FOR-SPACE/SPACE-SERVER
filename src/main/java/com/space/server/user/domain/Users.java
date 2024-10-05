@@ -35,6 +35,8 @@ public class Users {
 
     private Integer point;
 
+    private String threadId;
+
     @CreatedDate
     private LocalDateTime createdAt;
 
