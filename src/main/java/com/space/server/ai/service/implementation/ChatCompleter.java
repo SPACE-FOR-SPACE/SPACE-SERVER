@@ -10,6 +10,7 @@ import com.space.server.ai.service.dto.response.gpt.AiMessagesResponse;
 import com.space.server.ai.service.dto.response.gpt.AiRunsResponse;
 import com.space.server.ai.service.dto.response.gpt.AiThreadResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -25,6 +26,7 @@ public class ChatCompleter {
     private final String apiKey;
     private final RestTemplate restTemplate;
 
+    @Autowired
     public ChatCompleter(RestTemplate restTemplate, @Value("${gpt.api.key}") String apiKey) {
         this.restTemplate = restTemplate;
         this.apiKey = apiKey;
