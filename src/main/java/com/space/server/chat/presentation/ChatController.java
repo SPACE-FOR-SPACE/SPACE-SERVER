@@ -18,11 +18,6 @@ public class ChatController {
     private final CommandChatService commandChatService;
 //    private final QueryChatService queryChatService;
 
-    @PostMapping("/gpt-api/init")
-    public void initGPT(){
-        commandChatService.initGpt();
-    }
-
     @PostMapping("/chats/{quiz-id}")
     public void createChat(
             @PathVariable("quiz-id") Long quizId,

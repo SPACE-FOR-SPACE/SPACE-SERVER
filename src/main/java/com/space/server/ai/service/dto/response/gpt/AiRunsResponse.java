@@ -1,6 +1,7 @@
 package com.space.server.ai.service.dto.response.gpt;
 
-import com.space.server.ai.service.dto.request.gpt.Tools;
+import java.util.List;
+import java.util.Map;
 
 public record AiRunsResponse(
     String id,
@@ -18,7 +19,7 @@ public record AiRunsResponse(
     String model,
     String instructions,
     String incomplete_details,
-    Tools tools,
+    List<Map<String, String>> tools,
     String metadata,
     String usage,
     Double temperature,

@@ -1,11 +1,8 @@
 package com.space.server.chat.service;
 
 import com.space.server.ai.service.dto.request.gpt.*;
-import com.space.server.ai.service.dto.request.ResponseFormat;
 import com.space.server.ai.service.dto.response.AiResponse;
-import com.space.server.ai.service.dto.response.gpt.AiAssistantsResponse;
 import com.space.server.ai.service.dto.response.gpt.AiMessagesResponse;
-import com.space.server.ai.service.dto.response.gpt.AiRunsResponse;
 import com.space.server.ai.service.dto.response.gpt.AiThreadResponse;
 import com.space.server.ai.service.implementation.ChatCompleter;
 import com.space.server.ai.service.implementation.PromptCreator;
@@ -28,12 +25,15 @@ import com.space.server.state.service.implementation.StateUpdater;
 import com.space.server.user.domain.Users;
 import com.space.server.user.service.implementation.UserReader;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -49,27 +49,6 @@ public class CommandChatService {
     private final ChapterReader chapterReader;
     private final ChatCompleter chatCompleter;
     private final StateUpdater stateUpdater;
-    private String assistantsId;
-
-    public void initGpt(){
-        String instruction = "The return type is JSON. " +
-                "Now for the return related settings. " +
-                "The map is an array of 7*7 format. " +
-                "isSuccess is the correct answer if any of the problem conditions are true. " +
-                "Accuracy is the percentage of correct answers among the problem conditions.";
-
-        List<Tools> tools = List.of();
-        tools.add(new Tools("code_interpreter"));
-
-        AiAssistantsRequest assistantsRequest = new AiAssistantsRequest(
-                instruction,
-                "SPACE-FOR-AI",
-                tools,
-                "gpt-4o mini"
-        );
-        AiAssistantsResponse aiAssistantsResponse = chatCompleter.assistantsCreate(assistantsRequest);
-        assistantsId = aiAssistantsResponse.id();
-    }
 
     public void create(Long quizId, CreateChatRequest request, Long userId) {
         Quiz quiz = quizReader.findById(quizId);
@@ -84,7 +63,7 @@ public class CommandChatService {
         // state 있다면 대화 로직
         if (state.isPresent()) {
             AiMessagesResponse aiMessagesResponseCreate = chatCompleter.messageCreate(user.getThreadId(), aiChat);
-            chatCompleter.runsCreate(user.getThreadId(), new AiRunsRequest(assistantsId));
+            chatCompleter.runsCreate(user.getThreadId());
             AiMessagesResponse aiMessagesResponseSelect = chatCompleter.messageSelect(user.getThreadId(), aiMessagesResponseCreate.id());
 
             AiResponse botChat = aiMessagesResponseSelect.content().get(1).text().value();
@@ -112,7 +91,7 @@ public class CommandChatService {
         else {
             AiThreadResponse aiThreadResponse = chatCompleter.threadCreate();
             AiMessagesResponse aiMessagesResponseCreate = chatCompleter.messageCreate(aiThreadResponse.id(), aiChat);
-            chatCompleter.runsCreate(aiThreadResponse.id(), new AiRunsRequest(assistantsId));
+            chatCompleter.runsCreate(aiThreadResponse.id());
             AiMessagesResponse aiMessagesResponseSelect = chatCompleter.messageSelect(aiThreadResponse.id(), aiMessagesResponseCreate.id());
 
             AiResponse botChat = aiMessagesResponseSelect.content().get(1).text().value();

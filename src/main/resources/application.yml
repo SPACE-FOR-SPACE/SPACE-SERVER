@@ -88,3 +88,5 @@ logging:
 gpt:
   api:
     key: {GPT_API_KEY}
+  assistants:
+    key: {GPT_ASSISTANTS_KEY}

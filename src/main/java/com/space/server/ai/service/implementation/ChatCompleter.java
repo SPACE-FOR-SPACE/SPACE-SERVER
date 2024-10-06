@@ -24,12 +24,14 @@ import org.springframework.web.client.RestTemplate;
 public class ChatCompleter {
 
     private final String apiKey;
+    private final String assistantsKey;
     private final RestTemplate restTemplate;
 
     @Autowired
-    public ChatCompleter(RestTemplate restTemplate, @Value("${gpt.api.key}") String apiKey) {
+    public ChatCompleter(RestTemplate restTemplate, @Value("${gpt.api.key}") String apiKey, @Value("${gpt.assistants.key}") String assistantsKey) {
         this.restTemplate = restTemplate;
         this.apiKey = apiKey;
+        this.assistantsKey = assistantsKey;
     }
 
     public AiAssistantsResponse assistantsCreate(AiAssistantsRequest request) {
@@ -217,7 +219,7 @@ public class ChatCompleter {
         }
     }
 
-    public AiRunsResponse runsCreate(String id, AiRunsRequest request) {
+    public AiRunsResponse runsCreate(String id) {
         String url = "https://api.openai.com/v1/threads/" + id + "/runs";
 
         // 헤더 설정
@@ -225,6 +227,8 @@ public class ChatCompleter {
         headers.set("Content-Type", "application/json");
         headers.set("Authorization", "Bearer " + apiKey);
         headers.set("OpenAI-Beta", "assistants=v2");
+
+        AiRunsRequest request = new AiRunsRequest(assistantsKey);
 
         // 요청 엔티티 생성
         HttpEntity<AiRunsRequest> httpEntity = new HttpEntity<>(request, headers);

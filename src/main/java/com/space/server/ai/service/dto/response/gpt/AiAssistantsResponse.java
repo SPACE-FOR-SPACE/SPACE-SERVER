@@ -1,17 +1,19 @@
 package com.space.server.ai.service.dto.response.gpt;
 
-import com.space.server.ai.service.dto.request.gpt.Tools;
+import java.util.List;
+import java.util.Map;
 
 public record AiAssistantsResponse(
     String id,
     String object,
     Long created_at,
     String name,
-    String dscription,
+    String description,
     String model,
     String instructions,
-    Tools tools,
-    String metadata,
+    List<Map<String, String>> tools,
+    ToolResources tool_resources,
+    Map<String, String> metadata,
     Double top_p,
     Double temperature,
     String response_format
