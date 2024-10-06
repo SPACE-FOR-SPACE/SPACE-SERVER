@@ -2,6 +2,7 @@ package com.space.server.chat.service;
 
 import com.space.server.ai.service.dto.request.gpt.*;
 import com.space.server.ai.service.dto.response.AiResponse;
+import com.space.server.ai.service.dto.response.gpt.AiAssistantsResponse;
 import com.space.server.ai.service.dto.response.gpt.AiMessagesResponse;
 import com.space.server.ai.service.dto.response.gpt.AiThreadResponse;
 import com.space.server.ai.service.implementation.ChatCompleter;
@@ -60,6 +61,8 @@ public class CommandChatService {
         PromptCreator promptCreator = new PromptCreator();
         AiChat aiChat = new AiChat("user", promptCreator.create(request.type(), quiz, checklists, chapter, request.userChat()));
 
+
+
         // state 있다면 대화 로직
         if (state.isPresent()) {
             AiMessagesResponse aiMessagesResponseCreate = chatCompleter.messageCreate(user.getThreadId(), aiChat);
@@ -69,7 +72,7 @@ public class CommandChatService {
             AiResponse botChat = aiMessagesResponseSelect.content().get(1).text().value();
 
             chatCreator.create(Chat.builder()
-                    .state(stateReader.findByQuizIdAndUserId(quiz, user).get())
+                    .state(state.get())
                     .userChat(request.userChat())
                     .botChat(botChat.toString())
                     .type(Type.CODE)

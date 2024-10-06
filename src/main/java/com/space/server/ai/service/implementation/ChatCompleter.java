@@ -27,48 +27,10 @@ public class ChatCompleter {
     private final String assistantsKey;
     private final RestTemplate restTemplate;
 
-    @Autowired
     public ChatCompleter(RestTemplate restTemplate, @Value("${gpt.api.key}") String apiKey, @Value("${gpt.assistants.key}") String assistantsKey) {
         this.restTemplate = restTemplate;
         this.apiKey = apiKey;
         this.assistantsKey = assistantsKey;
-    }
-
-    public AiAssistantsResponse assistantsCreate(AiAssistantsRequest request) {
-        String url = "https://api.openai.com/v1/assistants";
-
-        // 헤더 설정
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Content-Type", "application/json");
-        headers.set("Authorization", "Bearer " + apiKey);
-        headers.set("OpenAI-Beta", "assistants=v2");
-
-        // 요청 엔티티 생성
-        HttpEntity<AiAssistantsRequest> httpEntity = new HttpEntity<>(request, headers);
-
-        try {
-            // API 호출
-            ResponseEntity<String> responseEntity = restTemplate.exchange(
-                    url,
-                    HttpMethod.POST,
-                    httpEntity,
-                    String.class
-            );
-
-            // 응답 바디 가져오기
-            String responseBody = responseEntity.getBody();
-
-            // JSON을 Map으로 변환
-            ObjectMapper objectMapper = new ObjectMapper();
-            AiAssistantsResponse responseMap = objectMapper.readValue(responseBody, AiAssistantsResponse.class);
-
-            // 응답 처리
-            log.info("Response: " + responseMap);
-            return responseMap;
-        } catch (Exception e) {
-            log.error("Error: " + e.getMessage());
-            return null;
-        }
     }
 
     public AiThreadResponse threadCreate() {
@@ -88,43 +50,6 @@ public class ChatCompleter {
             ResponseEntity<String> responseEntity = restTemplate.exchange(
                     url,
                     HttpMethod.POST,
-                    httpEntity,
-                    String.class
-            );
-
-            // 응답 바디 가져오기
-            String responseBody = responseEntity.getBody();
-
-            // JSON을 Map으로 변환
-            ObjectMapper objectMapper = new ObjectMapper();
-            AiThreadResponse responseMap = objectMapper.readValue(responseBody, AiThreadResponse.class);
-
-            // 응답 처리
-            log.info("Response: " + responseMap);
-            return responseMap;
-        } catch (Exception e) {
-            log.error("Error: " + e.getMessage());
-            return null;
-        }
-    }
-
-    public AiThreadResponse threadSelect(String id) {
-        String url = "https://api.openai.com/v1/threads/" + id;
-
-        // 헤더 설정
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Content-Type", "application/json");
-        headers.set("Authorization", "Bearer " + apiKey);
-        headers.set("OpenAI-Beta", "assistants=v2");
-
-        // 요청 엔티티 생성
-        HttpEntity<String> httpEntity = new HttpEntity<>(headers);
-
-        try {
-            // API 호출
-            ResponseEntity<String> responseEntity = restTemplate.exchange(
-                    url,
-                    HttpMethod.GET,
                     httpEntity,
                     String.class
             );
