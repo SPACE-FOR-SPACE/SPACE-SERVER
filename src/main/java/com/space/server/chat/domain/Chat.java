@@ -28,17 +28,14 @@ public class Chat {
     @Enumerated(EnumType.STRING)
     private Type type;
 
-    private Integer order;
+    private Integer request_order;
 
     @Builder
-    public Chat(State state, String botChat, String userChat, Type type, Integer order) {
+    public Chat(State state, String botChat, String userChat, Type type, Integer request_order) {
         this.state = state;
         this.botChat = botChat;
         this.userChat = userChat;
         this.type = type;
-        this.order = order;
+        this.request_order = request_order;
     }
-
-
-
 }

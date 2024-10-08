@@ -41,13 +41,16 @@ public class State {
 
     private Double score;
 
+    private String threadId;
+
     @Builder(builderMethodName = "createBuilder")
-    public State(Users user, Quiz quiz, Status status, Integer[][] map,  String[] move, Double score) {
+    public State(Users user, Quiz quiz, Status status, Integer[][] map,  String[] move, Double score, String threadId) {
         this.user = user;
         this.quiz = quiz;
         this.status = status;
         this.map = map;
         this.score = score;
+        this.threadId = threadId;
     }
 
     @Builder(builderMethodName = "updateBuilder")

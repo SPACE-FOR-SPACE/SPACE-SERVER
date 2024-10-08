@@ -1,10 +1,12 @@
 package com.space.server.ai.service.dto.response.gpt;
 
+import java.util.Map;
+
 public record AiThreadResponse(
     String id,
     String object,
     Long created_at,
-    String metadata,
+    Map<String, String> metadata,
     ToolResources tool_resources
 ) {
 }

@@ -1,6 +1,7 @@
 package com.space.server.ai.service.dto.response.gpt;
 
 import java.util.List;
+import java.util.Map;
 
 public record AiMessagesResponse(
     String id,
@@ -12,6 +13,6 @@ public record AiMessagesResponse(
     String role,
     List<MessagesContent> content,
     List<String> attachments,
-    String metadata
+    Map<String, String> metadata
 ) {
 }
