@@ -4,6 +4,7 @@ import com.space.server.core.quiz.domain.Quiz;
 import com.space.server.state.domain.value.Status;
 import com.space.server.user.domain.Users;
 import io.hypersistence.utils.hibernate.type.array.IntArrayType;
+import io.hypersistence.utils.hibernate.type.array.StringArrayType;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -35,29 +36,31 @@ public class State {
     @Column(columnDefinition = "int[][]")
     private Integer[][] map;
 
-    @Type(IntArrayType.class)
-    @Column(columnDefinition = "int[]")
+    @Type(StringArrayType.class)
+    @Column(columnDefinition = "varchar[]")
     private String[] move;
 
-    private Double score;
+    private Long score;
 
     private String threadId;
 
     @Builder(builderMethodName = "createBuilder")
-    public State(Users user, Quiz quiz, Status status, Integer[][] map,  String[] move, Double score, String threadId) {
+    public State(Users user, Quiz quiz, Status status, Integer[][] map,  String[] move, Long score, String threadId) {
         this.user = user;
         this.quiz = quiz;
         this.status = status;
         this.map = map;
         this.score = score;
         this.threadId = threadId;
+        this.move = move;
     }
 
     @Builder(builderMethodName = "updateBuilder")
-    public State(Status status, Integer[][] map, String move, Double score) {
+    public State(Status status, Integer[][] map, String[] move, Long score) {
         this.status = status;
         this.map = map;
         this.score = score;
+        this.move = move;
     }
 
     public void update(State state) {
@@ -69,7 +72,4 @@ public class State {
         this.move = state.getMove();
         this.score = state.getScore();
     }
-
-
-
 }

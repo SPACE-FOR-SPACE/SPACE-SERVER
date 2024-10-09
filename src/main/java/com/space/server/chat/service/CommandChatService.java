@@ -93,17 +93,15 @@ public class CommandChatService {
             chatCreator.create(Chat.builder()
                     .state(state.get())
                     .userChat(request.userChat())
-                    .botChat(botChat.toString())
+                    .botChat(botChat.feedback())
                     .type(Type.CODE)
                     .request_order(chatReader.findMaxOrderByState(state.get()) + 1)
                     .build());
 
-            stateUpdater.update(State.createBuilder()
-                    .user(user)
-                    .quiz(quiz)
+            stateUpdater.update(State.updateBuilder()
                     .status(botChat.isSuccess() == true ? Status.SUCCESS : Status.FAIL)
                     .map(botChat.map())
-                    .score(botChat.consistency())
+                    .score(botChat.accuracy())
                     .move(botChat.move())
                     .build(), state.get());
         }
@@ -140,7 +138,7 @@ public class CommandChatService {
                     .status(botChat.isSuccess() == true ? Status.SUCCESS : Status.FAIL)
                     .map(botChat.map())
                     .move(botChat.move())
-                    .score(botChat.consistency())
+                    .score(botChat.accuracy())
                     .threadId(aiThreadResponse.id())
                     .build());
             chatCreator.create(Chat.builder()
