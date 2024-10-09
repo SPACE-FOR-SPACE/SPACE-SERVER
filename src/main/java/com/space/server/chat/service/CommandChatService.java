@@ -144,7 +144,7 @@ public class CommandChatService {
             chatCreator.create(Chat.builder()
                     .state(stateReader.findByQuizIdAndUserId(quiz, user).get())
                     .userChat(request.userChat())
-                    .botChat(botChat.toString())
+                    .botChat(botChat.feedback())
                     .type(Type.CODE)
                     .request_order(chatReader.findMaxOrderByState(stateReader.findByQuizIdAndUserId(quiz, user).get()) + 1)
                     .build());
