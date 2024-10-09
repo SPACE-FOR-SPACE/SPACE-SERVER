@@ -1,7 +1,6 @@
 package com.space.server.chat.presentation;
 
 import com.space.server.ai.service.dto.response.AiResponse;
-import com.space.server.chat.domain.Chat;
 import com.space.server.chat.presentation.dto.request.CreateChatRequest;
 import com.space.server.chat.presentation.dto.response.ChatResponse;
 import com.space.server.chat.service.CommandChatService;
@@ -33,13 +32,9 @@ public class ChatController {
 
     // 봇 챗, 유저 챗, 요청 순서만 보냄
     @GetMapping("/chats/{quiz-id}")
-    public List<ChatResponse> createChat(
+    public List<ChatResponse> readChats(
             @PathVariable("quiz-id") Long quizId
     ) {
         return queryChatService.readChats(quizId, getMemberId());
     }
-
-    // 상태, 점수만 보냄
-    @GetMapping("/chats/{quiz-id}/result")
-    public
 }
