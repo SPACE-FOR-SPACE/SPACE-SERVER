@@ -85,6 +85,8 @@ logging:
   level:
     org.springframework.security: DEBUG
 
-groq:
+gpt:
   api:
-    key: {GROQ_API_KEY}
+    key: {GPT_API_KEY}
+  assistants:
+    key: {GPT_ASSISTANTS_KEY}

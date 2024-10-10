@@ -18,5 +18,5 @@ public class ChatReader {
         return chatRepository.findMaxOrderByState(state);
     }
 
-    public List<Chat> findAllChatByStateId(State state) { return chatRepository.findAllChatByStateId(state); }
+    public List<Chat> findAllChatByState(State state) { return chatRepository.findAllChatByState(state); }
 }
