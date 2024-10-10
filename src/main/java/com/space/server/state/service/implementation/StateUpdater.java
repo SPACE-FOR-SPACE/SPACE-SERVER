@@ -1,7 +1,6 @@
 package com.space.server.state.service.implementation;
 
 import com.space.server.state.domain.State;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service

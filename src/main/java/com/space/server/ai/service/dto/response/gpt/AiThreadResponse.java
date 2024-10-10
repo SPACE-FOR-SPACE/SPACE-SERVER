@@ -8,5 +8,4 @@ public record AiThreadResponse(
     Long created_at,
     Map<String, String> metadata,
     ToolResources tool_resources
-) {
-}
+) {}

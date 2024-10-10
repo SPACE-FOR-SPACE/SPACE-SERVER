@@ -1,8 +1,6 @@
 package com.space.server.core.checklist.presentation.dto.response;
 
-import com.space.server.core.chapter.domain.Chapter;
 import com.space.server.core.checklist.domain.Checklist;
-import com.space.server.core.quiz.domain.Quiz;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 public record ChecklistResponse(
@@ -11,10 +9,10 @@ public record ChecklistResponse(
     Long checklistId,
 
     @Schema(description = "퀴즈 정보", required = true)
-    Quiz quiz,
+    Long quizId,
 
     @Schema(description = "챕터 정보", required = true)
-    Chapter chapter,
+    Long chapterId,
 
     @Schema(description = "체크리스트 내용", example = "바다거북이 구하기")
     String content
@@ -22,8 +20,8 @@ public record ChecklistResponse(
   public static ChecklistResponse from(Checklist checklist) {
     return new ChecklistResponse(
         checklist.getId(),
-        checklist.getQuiz(),
-        checklist.getChapter(),
+        checklist.getQuiz().getId(),
+        checklist.getChapter().getId(),
         checklist.getContent()
     );
   }

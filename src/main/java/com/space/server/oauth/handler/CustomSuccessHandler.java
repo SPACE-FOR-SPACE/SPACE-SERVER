@@ -1,7 +1,5 @@
 package com.space.server.oauth.handler;
 
-import com.space.server.auth.domain.Refresh;
-import com.space.server.auth.domain.repository.RefreshRepository;
 import com.space.server.common.jwt.util.JwtUtil;
 import com.space.server.oauth.service.dto.CustomOAuth2User;
 import com.space.server.user.domain.Users;

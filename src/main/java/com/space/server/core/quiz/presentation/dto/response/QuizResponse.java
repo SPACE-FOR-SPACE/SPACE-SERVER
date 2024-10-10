@@ -13,10 +13,6 @@ public record QuizResponse(
     @Schema(description = "스텝 ID", example = "!", required = true)
     Long stepId,
 
-    @Schema(description = "NPC ID", example = "1", required = true)
-    Long npcId,
-
-
     @Schema(description = "퀴즈 제목", example = "바다거북이가 위험해", required = true)
     String title,
 
@@ -33,7 +29,6 @@ public record QuizResponse(
     return new QuizResponse(
         quiz.getChapter(),
         quiz.getStepId(),
-        quiz.getNpcId(),
         quiz.getTitle(),
         quiz.getContent(),
         quiz.getMap(),

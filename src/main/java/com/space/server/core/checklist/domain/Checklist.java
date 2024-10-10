@@ -21,12 +21,12 @@ public class Checklist {
   @Schema(description = "체크리스트 ID")
   private Long id;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @NotNull
   @Schema(description = "퀴즈", required = true)
   private Quiz quiz;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @NotNull
   @Schema(description = "챕터", required = true)
   private Chapter chapter;

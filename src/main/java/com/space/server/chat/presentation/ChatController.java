@@ -14,7 +14,6 @@ import static com.space.server.common.jwt.util.AuthenticationUtil.getMemberId;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
 public class ChatController {
 
     private final CommandChatService commandChatService;

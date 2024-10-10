@@ -1,6 +1,5 @@
 package com.space.server.auth.domain;
 
-import com.space.server.user.domain.Users;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

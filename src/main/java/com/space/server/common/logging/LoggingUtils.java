@@ -2,7 +2,6 @@ package com.space.server.common.logging;
 
 import com.space.server.common.exception.SpaceException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @Slf4j

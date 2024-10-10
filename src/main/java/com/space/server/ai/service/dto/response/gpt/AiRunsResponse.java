@@ -34,5 +34,4 @@ public record AiRunsResponse(
     Map<String, String> response_format,
     String tool_choice,
     Boolean parallel_tool_calls
-) {
-}
+) {}

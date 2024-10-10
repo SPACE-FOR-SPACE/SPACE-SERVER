@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface ChecklistRepository extends JpaRepository<Checklist, Long> {
-  public List<Checklist> findByQuiz(Quiz quiz);
+  List<Checklist> findByQuiz(Quiz quiz);
 }

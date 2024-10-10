@@ -1,10 +1,7 @@
 package com.space.server.common.jwt.filter;
 
 import com.space.server.common.jwt.util.JwtUtil;
-import com.space.server.oauth.service.dto.CustomOAuth2User;
-import com.space.server.oauth.service.dto.UserDto;
 import com.space.server.user.domain.value.Role;
-import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

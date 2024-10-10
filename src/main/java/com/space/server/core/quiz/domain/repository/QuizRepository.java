@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface QuizRepository extends JpaRepository<Quiz, Long> {
-  public Quiz findByChapterAndStepId(Chapter chapter, Long stepId);
-  public List<Quiz> findByChapter(Chapter chapter);
+  Quiz findByChapterAndStepId(Chapter chapter, Long stepId);
+  List<Quiz> findByChapter(Chapter chapter);
 }
