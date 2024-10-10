@@ -4,5 +4,4 @@ import java.util.List;
 
 public record AiThreadRequest(
     List<AiChat> messages
-) {
-}
+) {}

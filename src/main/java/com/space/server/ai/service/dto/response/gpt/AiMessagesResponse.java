@@ -14,5 +14,4 @@ public record AiMessagesResponse(
     List<MessagesContent> content,
     List<String> attachments,
     Map<String, String> metadata
-) {
-}
+) {}
