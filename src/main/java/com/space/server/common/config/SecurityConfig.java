@@ -25,6 +25,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.cors.CorsConfiguration;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 @Configuration
@@ -59,15 +60,14 @@ public class SecurityConfig {
                         .configurationSource(request -> {
 
                             CorsConfiguration configuration = new CorsConfiguration();
-
-                            configuration.setAllowedOriginPatterns(Collections.singletonList("*"));
+                            configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "https://c435-211-182-230-53.ngrok-free.app"));
+//                            configuration.setAllowedOriginPatterns(Collections.singletonList("*"));
                             configuration.setAllowedMethods(Collections.singletonList("*"));
                             configuration.setAllowCredentials(true);
                             configuration.setAllowedHeaders(Collections.singletonList("*"));
                             configuration.setMaxAge(3600L);
+                            configuration.setExposedHeaders(Arrays.asList("Set-Cookie", "Authorization"));
 
-                            configuration.setExposedHeaders(Collections.singletonList("Set-Cookie"));
-                            configuration.setExposedHeaders(Collections.singletonList("Authorization"));
 
                             return configuration;
 

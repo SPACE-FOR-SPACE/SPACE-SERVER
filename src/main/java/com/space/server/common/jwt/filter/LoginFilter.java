@@ -8,6 +8,8 @@ import com.space.server.user.domain.value.Role;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import java.io.IOException;
 
+@Slf4j
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
@@ -59,9 +62,9 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
 
         jwtUtil.addRefreshToken(id, refreshToken);
-
-        response.addCookie(jwtUtil.createAccessCookie("access_normal", accessToken));
-        response.addCookie(jwtUtil.createRefreshCookie("refresh_normal", refreshToken));
+        log.warn("자체 로그인 필터 동작");
+        response.addHeader(HttpHeaders.SET_COOKIE, jwtUtil.createAccessCookie("access_normal", accessToken).toString());
+        response.addHeader(HttpHeaders.SET_COOKIE, jwtUtil.createRefreshCookie("refresh_normal", refreshToken).toString());
         response.setStatus(HttpStatus.OK.value());
     }
 

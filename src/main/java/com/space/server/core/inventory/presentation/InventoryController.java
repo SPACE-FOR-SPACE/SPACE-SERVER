@@ -5,14 +5,17 @@ import com.space.server.core.inventory.service.CommandInventoryService;
 import com.space.server.core.inventory.service.QueryInventoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import jakarta.servlet.http.HttpServletRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 import static com.space.server.common.jwt.util.AuthenticationUtil.getMemberId;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/inventories")
@@ -24,7 +27,13 @@ public class InventoryController {
 
   @GetMapping
   @Operation(summary = "전체 인벤토리 조회", description = "전체 구매한 아이템을 조회합니다.")
-  public List<InventoryResponse> readAll() {
+  public List<InventoryResponse> readAll(HttpServletRequest request) {
+    log.warn("인벤토리 조회 로그(MemberId) : " + getMemberId());
+    log.warn("인벤토리 조회 로그(HttpServletRequest,cookie) : " + request.getCookies());
+    log.warn("인벤토리 조회 로그(HttpServletRequest,cookie) : " + request.getRequestURI());
+    log.warn("인벤토리 조회 로그(HttpServletRequest,cookie) : " + request.getUserPrincipal());
+    log.warn("인벤토리 조회 로그(HttpServletRequest,cookie) : " + request.getMethod());
+    log.warn("인벤토리 조회 로그(HttpServletRequest,cookie) : " + request.getServletPath());
     return queryInventoryService.readMine(getMemberId()).stream()
         .map(InventoryResponse::from)
         .toList();
