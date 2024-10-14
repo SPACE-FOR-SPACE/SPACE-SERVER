@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -58,8 +59,10 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         jwtUtil.addRefreshToken(id, refreshToken);
 
-        response.addCookie(jwtUtil.createAccessCookie("access_social", accessToken));
-        response.addCookie(jwtUtil.createRefreshCookie("refresh_social", refreshToken));
+        log.warn("소셜 로그인 필터 동작");
+
+        response.addHeader(HttpHeaders.SET_COOKIE, jwtUtil.createAccessCookie("access_social", accessToken).toString());
+        response.addHeader(HttpHeaders.SET_COOKIE, jwtUtil.createRefreshCookie("refresh_social", refreshToken).toString());
 
         if (isNewUser) {
             log.warn("오어스 성공 핸들러 새로운 유저");
