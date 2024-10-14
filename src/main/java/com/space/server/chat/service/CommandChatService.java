@@ -81,7 +81,7 @@ public class CommandChatService {
             }
 
             AiAllMessagesResponse aiAllMessagesResponse = chatCompleter.messageAllSelect(state.get().getThreadId());
-            AiMessagesResponse aiMessagesResponseSelect = chatCompleter.messageOneSelect(state.get().getThreadId(), aiAllMessagesResponse.first_id());
+            AiMessagesResponse aiMessagesResponseSelect = chatCompleter.messageOneSelect(state.get().getThreadId(), aiAllMessagesResponse.last_id());
 
             Map<String, String> totalMapObject = new HashMap<>();
             totalMapObject.putAll(quiz.getMapObject());
@@ -123,7 +123,7 @@ public class CommandChatService {
             }
 
             AiAllMessagesResponse aiAllMessagesResponse = chatCompleter.messageAllSelect(aiThreadResponse.id());
-            AiMessagesResponse aiMessagesResponseSelect = chatCompleter.messageOneSelect(aiThreadResponse.id(), aiAllMessagesResponse.first_id());
+            AiMessagesResponse aiMessagesResponseSelect = chatCompleter.messageOneSelect(aiThreadResponse.id(), aiAllMessagesResponse.last_id());
 
             Map<String, String> totalMapObject = new HashMap<>();
             totalMapObject.putAll(quiz.getMapObject());
