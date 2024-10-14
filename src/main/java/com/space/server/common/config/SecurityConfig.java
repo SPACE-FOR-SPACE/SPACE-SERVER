@@ -20,13 +20,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.cors.CorsConfiguration;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 
@@ -62,15 +62,14 @@ public class SecurityConfig {
                         .configurationSource(request -> {
 
                             CorsConfiguration configuration = new CorsConfiguration();
-
-                            configuration.setAllowedOriginPatterns(Collections.singletonList("*"));
+                            configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "https://c435-211-182-230-53.ngrok-free.app"));
+//                            configuration.setAllowedOriginPatterns(Collections.singletonList("*"));
                             configuration.setAllowedMethods(Collections.singletonList("*"));
                             configuration.setAllowCredentials(true);
                             configuration.setAllowedHeaders(Collections.singletonList("*"));
                             configuration.setMaxAge(3600L);
+                            configuration.setExposedHeaders(Arrays.asList("Set-Cookie", "Authorization"));
 
-                            configuration.setExposedHeaders(Collections.singletonList("Set-Cookie"));
-                            configuration.setExposedHeaders(Collections.singletonList("Authorization"));
 
                             return configuration;
 
