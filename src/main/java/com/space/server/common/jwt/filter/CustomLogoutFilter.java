@@ -17,7 +17,6 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.web.filter.GenericFilterBean;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 @Slf4j
 @RequiredArgsConstructor

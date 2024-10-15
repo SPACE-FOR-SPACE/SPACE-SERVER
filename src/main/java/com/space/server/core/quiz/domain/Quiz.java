@@ -26,7 +26,7 @@ public class Quiz {
   @Schema(description = "퀴즈 ID")
   private Long id;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @NotNull
   @Schema(description = "챕터 정보")
   private Chapter chapter;
@@ -34,10 +34,6 @@ public class Quiz {
   @NotNull
   @Schema(description = "스텝 ID")
   private Long stepId;
-
-  @NotNull
-  @Schema(description = "NPC ID")
-  private Long npcId;
 
   @NotNull
   @Schema(description = "퀴즈 제목")
@@ -71,10 +67,9 @@ public class Quiz {
   private Map<String, String> mapObjectImage;
 
   @Builder
-  public Quiz(Chapter chapter, Long stepId, Long npcId, String title, String content, Integer[][] map, CharacterDirection characterDirection, Map<String, String> mapObject, Map<String, String> mapObjectImage) {
+  public Quiz(Chapter chapter, Long stepId, String title, String content, Integer[][] map, CharacterDirection characterDirection, Map<String, String> mapObject, Map<String, String> mapObjectImage) {
     this.chapter = chapter;
     this.stepId = stepId;
-    this.npcId = npcId;
     this.title = title;
     this.content = content;
     this.map = map;

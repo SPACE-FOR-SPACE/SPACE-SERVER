@@ -1,13 +1,11 @@
 package com.space.server.ai.service.implementation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.space.server.ai.service.dto.request.gpt.AiAssistantsRequest;
 import com.space.server.ai.service.dto.request.gpt.AiChat;
 import com.space.server.ai.service.dto.request.gpt.AiRunsRequest;
 import com.space.server.ai.service.dto.request.gpt.AiThreadRequest;
 import com.space.server.ai.service.dto.response.gpt.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;

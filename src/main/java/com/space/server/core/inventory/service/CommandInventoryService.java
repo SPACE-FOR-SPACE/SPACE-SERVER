@@ -1,6 +1,5 @@
 package com.space.server.core.inventory.service;
 
-import com.space.server.auth.service.dto.CustomUserDetails;
 import com.space.server.core.inventory.domain.Inventory;
 import com.space.server.core.inventory.service.implementation.*;
 import com.space.server.core.item.domain.Item;
