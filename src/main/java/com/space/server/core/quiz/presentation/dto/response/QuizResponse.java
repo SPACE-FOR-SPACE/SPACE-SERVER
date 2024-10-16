@@ -5,6 +5,8 @@ import com.space.server.core.quiz.domain.Quiz;
 import com.space.server.core.quiz.domain.value.CharacterDirection;
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.util.Map;
+
 public record QuizResponse(
 
     @Schema(description = "챕터 정보", example = "1", required = true)
@@ -23,7 +25,13 @@ public record QuizResponse(
     Integer[][] map,
 
     @Schema(description = "캐릭터 방향", example = "RIGHT", required = true)
-    CharacterDirection characterDirection
+    CharacterDirection characterDirection,
+
+    @Schema(description = "맵오브젝트", example = "{\"1\": \"chapter\", \"2\": \"target\"}")
+    Map<String, String> mapObject,
+
+    @Schema(description = "맵오브젝트이미지", example = "{\"1\": \"character_URL\", \"2\": \"target_URL\"}")
+    Map<String, String> mapObjectImage
 ) {
   public static QuizResponse from(Quiz quiz) {
     return new QuizResponse(
@@ -32,7 +40,9 @@ public record QuizResponse(
         quiz.getTitle(),
         quiz.getContent(),
         quiz.getMap(),
-        quiz.getCharacterDirection()
+        quiz.getCharacterDirection(),
+        quiz.getMapObject(),
+        quiz.getMapObjectImage()
     );
   }
 }
