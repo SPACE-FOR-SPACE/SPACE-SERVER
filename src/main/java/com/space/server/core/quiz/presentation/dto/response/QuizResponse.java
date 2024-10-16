@@ -12,8 +12,8 @@ public record QuizResponse(
     @Schema(description = "챕터 정보", example = "1", required = true)
     Chapter chapter,
 
-    @Schema(description = "스텝 ID", example = "!", required = true)
-    Long stepId,
+    @Schema(description = "ID", example = "1", required = true)
+    Long id,
 
     @Schema(description = "퀴즈 제목", example = "바다거북이가 위험해", required = true)
     String title,

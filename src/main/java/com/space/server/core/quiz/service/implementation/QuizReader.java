@@ -25,11 +25,11 @@ public class QuizReader {
     return quizRepository.findAll();
   }
 
-  public Quiz findByChapterAndStepId(Chapter chapter, Long stepId) {
-    return quizRepository.findByChapterAndStepId(chapter, stepId);
+  public List<Quiz> findAll(Chapter chapter) {
+    return quizRepository.findAllByOrderById(chapter);
   }
 
-  public List<Quiz> findByChapter(Chapter chapter) {
-    return quizRepository.findByChapter(chapter);
+  public Quiz findByChapterAndStepId(Chapter chapter, Long stepId) {
+    return quizRepository.findByChapterAndStepId(chapter, stepId);
   }
 }
