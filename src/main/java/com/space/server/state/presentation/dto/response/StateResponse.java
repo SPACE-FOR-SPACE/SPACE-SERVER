@@ -11,7 +11,7 @@ public record StateResponse(
         Quiz quizId,
         Status status,
         Integer[][] map,
-        Long score
+        Integer[] score
 ) {
     public static StateResponse from(State state) {
         return new StateResponse(
