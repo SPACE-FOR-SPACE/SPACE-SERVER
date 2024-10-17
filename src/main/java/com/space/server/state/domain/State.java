@@ -40,6 +40,8 @@ public class State {
     @Column(columnDefinition = "varchar[]")
     private String[] move;
 
+    @Type(IntArrayType.class)
+    @Column(columnDefinition = "int[]")
     private Integer[] score;
 
     private String threadId;
