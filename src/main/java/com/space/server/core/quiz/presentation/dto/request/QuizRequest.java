@@ -41,7 +41,6 @@ public record QuizRequest(
     return Quiz.builder()
         .chapter(chapter)
         .stepId(stepId)
-        .npcId(npcId)
         .title(title)
         .content(content)
         .map(map)
