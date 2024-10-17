@@ -41,7 +41,7 @@ public class State {
     private String[] move;
 
     @Type(IntArrayType.class)
-    @Column(columnDefinition = "int[]")
+    @Column(columnDefinition = "bigint[]")
     private Long[] score;
 
     private String threadId;
