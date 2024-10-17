@@ -101,7 +101,7 @@ public class CommandChatService {
             stateUpdater.update(State.updateBuilder()
                     .status(botChat.isSuccess() == true ? Status.SUCCESS : Status.FAIL)
                     .map(botChat.map())
-                    .score(botChat.accuracy())
+                    .score(botChat.score())
                     .move(botChat.move())
                     .build(), state.get());
         }
@@ -138,7 +138,7 @@ public class CommandChatService {
                     .status(botChat.isSuccess() == true ? Status.SUCCESS : Status.FAIL)
                     .map(botChat.map())
                     .move(botChat.move())
-                    .score(botChat.accuracy())
+                    .score(botChat.score())
                     .threadId(aiThreadResponse.id())
                     .build());
             chatCreator.create(Chat.builder()
