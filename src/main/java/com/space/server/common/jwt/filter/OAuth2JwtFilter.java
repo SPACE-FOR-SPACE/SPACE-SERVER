@@ -44,20 +44,20 @@ public class OAuth2JwtFilter extends OncePerRequestFilter {
         String accessToken = jwtUtil.getTokenFromCookies(request, "access_social");
 
         if (accessToken == null) {
-            log.info("Access token not found in cookies.");
+            log.warn("Social Access token not found in cookies.");
             filterChain.doFilter(request, response);
             return;
         }
 
         if (jwtUtil.isExpired(accessToken)) {
-            log.warn("Access token expired");
+            log.warn("Social Access token expired");
             respondWithUnauthorized(response, "Access token expired");
             return;
         }
 
         String category = jwtUtil.getCategory(accessToken);
         if (!category.equals("access")) {
-            log.warn("Invalid token category: {}", category);
+            log.warn("Invalid Social token category: {}", category);
             respondWithUnauthorized(response, "Invalid access token");
             return;
         }
