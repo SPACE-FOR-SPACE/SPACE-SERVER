@@ -19,7 +19,7 @@ public class AiResponseJsonParsing {
         JSONParser parser = new JSONParser();
         JSONObject jsonObject = null;
         Integer[][] map = null;
-        Integer[] score = null;
+        Long[] score = null;
         String[] move = null;
 
         try {
@@ -74,16 +74,16 @@ public class AiResponseJsonParsing {
         return stringArray;
     }
 
-    public Integer[] successCheckListIntegerCreator(String score) throws ParseException {
+    public Long[] successCheckListIntegerCreator(String score) throws ParseException {
         JSONParser parser = new JSONParser();
         JSONArray jsonArray = (JSONArray) parser.parse(score);
-        Integer[] integerArray = new Integer[jsonArray.size()];
+        Long[] longArray = new Long[jsonArray.size()];
 
         for (int i = 0; i < jsonArray.size(); i++) {
-            integerArray[i] = ((Integer) jsonArray.get(i));
+            longArray[i] = ((Long) jsonArray.get(i));
         }
 
-        return integerArray;
+        return longArray;
     }
 
 }

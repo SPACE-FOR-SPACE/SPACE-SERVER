@@ -42,12 +42,12 @@ public class State {
 
     @Type(IntArrayType.class)
     @Column(columnDefinition = "int[]")
-    private Integer[] score;
+    private Long[] score;
 
     private String threadId;
 
     @Builder(builderMethodName = "createBuilder")
-    public State(Users user, Quiz quiz, Status status, Integer[][] map,  String[] move, Integer[] score, String threadId) {
+    public State(Users user, Quiz quiz, Status status, Integer[][] map,  String[] move, Long[] score, String threadId) {
         this.user = user;
         this.quiz = quiz;
         this.status = status;
@@ -58,7 +58,7 @@ public class State {
     }
 
     @Builder(builderMethodName = "updateBuilder")
-    public State(Status status, Integer[][] map, String[] move, Integer[] score) {
+    public State(Status status, Integer[][] map, String[] move, Long[] score) {
         this.status = status;
         this.map = map;
         this.score = score;
