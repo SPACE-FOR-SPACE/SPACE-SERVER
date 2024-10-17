@@ -11,11 +11,14 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.web.filter.GenericFilterBean;
 
 import java.io.IOException;
-import java.util.Arrays;
 
+@Slf4j
 @RequiredArgsConstructor
 public class CustomLogoutFilter extends GenericFilterBean {
 
@@ -68,12 +71,13 @@ public class CustomLogoutFilter extends GenericFilterBean {
 
         refreshRepository.deleteByRefreshToken(refreshToken);
 
-        Cookie refreshCookie = jwtUtil.invalidCookie(cookieName);
-        response.addCookie(refreshCookie);
+        log.warn("로그아웃 필터 동작");
+        ResponseCookie invalidRefreshCookie = jwtUtil.invalidCookie(cookieName);
+        response.addHeader(HttpHeaders.SET_COOKIE, invalidRefreshCookie.toString());
 
         String accessCookieName = cookieName.replace("refresh", "access");
-        Cookie accessCookie = jwtUtil.invalidCookie(accessCookieName);
-        response.addCookie(accessCookie);
+        ResponseCookie invalidAccessCookie = jwtUtil.invalidCookie(accessCookieName);
+        response.addHeader(HttpHeaders.SET_COOKIE, invalidAccessCookie.toString());
 
         response.setStatus(HttpServletResponse.SC_OK);
     }

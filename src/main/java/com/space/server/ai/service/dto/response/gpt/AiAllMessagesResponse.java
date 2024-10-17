@@ -8,5 +8,4 @@ public record AiAllMessagesResponse(
     String first_id,
     String last_id,
     Boolean has_more
-) {
-}
+) {}

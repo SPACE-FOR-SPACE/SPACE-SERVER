@@ -26,7 +26,7 @@ public class Quiz {
   @Schema(description = "퀴즈 ID")
   private Long id;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @NotNull
   @Schema(description = "챕터 정보")
   private Chapter chapter;

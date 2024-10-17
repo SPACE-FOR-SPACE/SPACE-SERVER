@@ -7,6 +7,7 @@ import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -55,15 +56,15 @@ public class JwtUtil {
         return createJwt("refresh", id, role, refreshTokenExpiration);
     }
 
-    public Cookie createAccessCookie(String key, String value){
+    public ResponseCookie createAccessCookie(String key, String value){
         return createCookie(key, value, (int) accessTokenExpiration);
     }
 
-    public Cookie createRefreshCookie(String key, String value){
+    public ResponseCookie createRefreshCookie(String key, String value){
         return createCookie(key, value, (int) refreshTokenExpiration);
     }
 
-    public Cookie invalidCookie(String key){
+    public ResponseCookie invalidCookie(String key){
         return createCookie(key, null, 0);
     }
 
@@ -102,13 +103,15 @@ public class JwtUtil {
                 .compact();
     }
 
-    private Cookie createCookie(String key, String value, int maxAge) {
+    private ResponseCookie createCookie(String key, String value, int maxAge) {
 
-        Cookie cookie = new Cookie(key, value);
-        cookie.setMaxAge(maxAge);
-        cookie.setPath("/");
-        cookie.setHttpOnly(true);
-        //cookie.setSecure(true);
+        ResponseCookie cookie = ResponseCookie.from(key, value)
+                .maxAge(maxAge)
+                .path("/")
+                .httpOnly(true)
+                .secure(true)
+                .sameSite("None")
+                .build();
         return cookie;
 
     }

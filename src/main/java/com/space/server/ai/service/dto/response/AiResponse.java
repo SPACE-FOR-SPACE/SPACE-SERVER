@@ -9,5 +9,4 @@ public record AiResponse (
     Integer[][] map,
     String[] move,
     Map<String, String> mapObject
-){
-}
+) {}

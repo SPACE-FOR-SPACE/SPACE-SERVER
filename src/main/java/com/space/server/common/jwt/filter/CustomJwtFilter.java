@@ -1,12 +1,7 @@
 package com.space.server.common.jwt.filter;
 
-import com.space.server.auth.service.dto.CustomUserDetails;
 import com.space.server.common.jwt.util.JwtUtil;
-import com.space.server.user.domain.Users;
-import com.space.server.user.domain.repository.UserRepository;
 import com.space.server.user.domain.value.Role;
-import io.jsonwebtoken.ExpiredJwtException;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
