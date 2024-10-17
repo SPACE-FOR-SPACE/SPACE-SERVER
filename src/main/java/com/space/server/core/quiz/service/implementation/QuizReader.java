@@ -26,7 +26,7 @@ public class QuizReader {
   }
 
   public List<Quiz> findAll(Chapter chapter) {
-    return quizRepository.findAllByOrderById(chapter);
+    return quizRepository.findAllByChapterOrderByStepId(chapter);
   }
 
   public Quiz findByChapterAndStepId(Chapter chapter, Long stepId) {

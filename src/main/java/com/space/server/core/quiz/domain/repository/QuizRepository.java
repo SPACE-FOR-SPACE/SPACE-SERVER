@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface QuizRepository extends JpaRepository<Quiz, Long> {
   Quiz findByChapterAndStepId(Chapter chapter, Long stepId);
-  List<Quiz> findAllByOrderById(Chapter chapter);
+  List<Quiz> findAllByChapterOrderByStepId(Chapter chapter);
 }
