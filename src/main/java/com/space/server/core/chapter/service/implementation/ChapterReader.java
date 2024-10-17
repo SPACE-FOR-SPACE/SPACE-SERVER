@@ -21,6 +21,6 @@ public class ChapterReader {
   }
 
   public List<Chapter> findAll() {
-    return chapterRepository.findAll();
+    return chapterRepository.findAllByOrderById();
   }
 }
