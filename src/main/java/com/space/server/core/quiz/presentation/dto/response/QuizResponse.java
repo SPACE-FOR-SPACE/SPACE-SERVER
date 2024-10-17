@@ -1,6 +1,6 @@
 package com.space.server.core.quiz.presentation.dto.response;
 
-import com.space.server.core.chapter.domain.Chapter;
+import com.space.server.core.chapter.presentation.dto.response.ChapterResponse;
 import com.space.server.core.quiz.domain.Quiz;
 import com.space.server.core.quiz.domain.value.CharacterDirection;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -9,11 +9,12 @@ import java.util.Map;
 
 public record QuizResponse(
 
-    @Schema(description = "챕터 정보", example = "1", required = true)
-    Chapter chapter,
-
     @Schema(description = "ID", example = "1", required = true)
     Long id,
+
+    @Schema(description = "챕터 정보", example = "1", required = true)
+    ChapterResponse chapter,
+
 
     @Schema(description = "퀴즈 제목", example = "바다거북이가 위험해", required = true)
     String title,
@@ -35,8 +36,8 @@ public record QuizResponse(
 ) {
   public static QuizResponse from(Quiz quiz) {
     return new QuizResponse(
-        quiz.getChapter(),
-        quiz.getStepId(),
+        quiz.getId(),
+        ChapterResponse.from(quiz.getChapter()),
         quiz.getTitle(),
         quiz.getContent(),
         quiz.getMap(),
