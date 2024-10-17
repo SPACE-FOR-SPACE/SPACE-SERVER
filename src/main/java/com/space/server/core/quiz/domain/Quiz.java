@@ -36,10 +36,6 @@ public class Quiz {
   private Long stepId;
 
   @NotNull
-  @Schema(description = "NPC ID")
-  private Long npcId;
-
-  @NotNull
   @Schema(description = "퀴즈 제목")
   private String title;
 
