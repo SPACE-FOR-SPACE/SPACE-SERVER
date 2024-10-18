@@ -32,10 +32,6 @@ public class State {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @Type(IntArrayType.class)
-    @Column(columnDefinition = "int[][]")
-    private Integer[][] map;
-
     @Type(StringArrayType.class)
     @Column(columnDefinition = "varchar[]")
     private String[] move;
@@ -47,30 +43,24 @@ public class State {
     private String threadId;
 
     @Builder(builderMethodName = "createBuilder")
-    public State(Users user, Quiz quiz, Status status, Integer[][] map,  String[] move, Long[] score, String threadId) {
+    public State(Users user, Quiz quiz, Status status, String[] move, Long[] score, String threadId) {
         this.user = user;
         this.quiz = quiz;
         this.status = status;
-        this.map = map;
         this.score = score;
         this.threadId = threadId;
         this.move = move;
     }
 
     @Builder(builderMethodName = "updateBuilder")
-    public State(Status status, Integer[][] map, String[] move, Long[] score) {
+    public State(Status status, String[] move, Long[] score) {
         this.status = status;
-        this.map = map;
         this.score = score;
         this.move = move;
     }
 
     public void update(State state) {
         this.status = state.getStatus();
-        this.map = new Integer[7][7];
-        for (int i = 0; i < 7; i++) {
-            System.arraycopy(state.getMap()[i], 0, this.map[i], 0, 7);
-        }
         this.move = state.getMove();
         this.score = state.getScore();
     }

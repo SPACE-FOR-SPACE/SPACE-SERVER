@@ -6,7 +6,5 @@ public record AiResponse (
     Boolean isSuccess,
     Long[] score,
     String feedback,
-    Integer[][] map,
-    String[] move,
-    Map<String, String> mapObject
+    String[] move
 ) {}
