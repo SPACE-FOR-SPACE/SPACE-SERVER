@@ -9,13 +9,20 @@ import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Slf4j
 @Service
 public class AiResponseJsonParsing {
 
     public AiResponse jsonCreator(String contents, Map<String, String> mapObject) {
-        String result = contents.substring(7, contents.length() - 3);
+        Pattern pattern = Pattern.compile("```json\\s*([\\s\\S]*?)\\s*```", Pattern.DOTALL);
+        Matcher matcher = pattern.matcher(contents);
+        String result = null;
+        while (matcher.find()) {
+            result = matcher.group(1);
+        }
         JSONParser parser = new JSONParser();
         JSONObject jsonObject = null;
         Long[] score = null;
