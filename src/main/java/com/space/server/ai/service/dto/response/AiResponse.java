@@ -4,9 +4,7 @@ import java.util.Map;
 
 public record AiResponse (
     Boolean isSuccess,
-    Long accuracy,
+    Long[] score,
     String feedback,
-    Integer[][] map,
-    String[] move,
-    Map<String, String> mapObject
+    String[] move
 ) {}

@@ -33,6 +33,6 @@ public class QueryQuizService {
 
   public List<Quiz> findAll(Long chapterId) {
     Chapter chapter = chapterReader.findById(chapterId);
-    return quizReader.findByChapter(chapter);
+    return quizReader.findAll(chapter);
   }
 }

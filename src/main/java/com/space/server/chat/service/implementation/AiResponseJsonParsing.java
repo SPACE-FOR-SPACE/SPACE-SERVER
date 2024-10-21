@@ -18,12 +18,12 @@ public class AiResponseJsonParsing {
         String result = contents.substring(7, contents.length() - 3);
         JSONParser parser = new JSONParser();
         JSONObject jsonObject = null;
-        Integer[][] map = null;
+        Long[] score = null;
         String[] move = null;
 
         try {
             jsonObject = (JSONObject) parser.parse(result);
-            map = mapIntegerCreator(jsonObject.get("map").toString());
+            score = successCheckListIntegerCreator(jsonObject.get("score").toString());
             move = moveStringCreator(jsonObject.get("move").toString());
         } catch (ParseException e) {
             throw new RuntimeException(e);
@@ -32,28 +32,10 @@ public class AiResponseJsonParsing {
         log.info("json : " + jsonObject.toJSONString());
         return new AiResponse(
                 (Boolean) jsonObject.get("isSuccess"),
-                (Long) jsonObject.get("accuracy"),
+                score,
                 (String) jsonObject.get("feedback"),
-                map,
-                move,
-                mapObject
+                move
         );
-    }
-
-    public Integer[][] mapIntegerCreator(String map) throws ParseException {
-        JSONParser parser = new JSONParser();
-        JSONArray jsonArray = (JSONArray) parser.parse(map);
-        Integer[][] integerArray = new Integer[jsonArray.size()][];
-
-        for (int i = 0; i < jsonArray.size(); i++) {
-            JSONArray innerArray = (JSONArray) jsonArray.get(i);
-            integerArray[i] = new Integer[innerArray.size()];
-            for (int j = 0; j < innerArray.size(); j++) {
-                integerArray[i][j] = ((Long) innerArray.get(j)).intValue();
-            }
-        }
-
-        return integerArray;
     }
 
     public String[] moveStringCreator(String move) throws ParseException {
@@ -71,4 +53,17 @@ public class AiResponseJsonParsing {
 
         return stringArray;
     }
+
+    public Long[] successCheckListIntegerCreator(String score) throws ParseException {
+        JSONParser parser = new JSONParser();
+        JSONArray jsonArray = (JSONArray) parser.parse(score);
+        Long[] longArray = new Long[jsonArray.size()];
+
+        for (int i = 0; i < jsonArray.size(); i++) {
+            longArray[i] = ((Long) jsonArray.get(i));
+        }
+
+        return longArray;
+    }
+
 }

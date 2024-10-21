@@ -10,8 +10,7 @@ public record StateResponse(
         Users userId,
         Quiz quizId,
         Status status,
-        Integer[][] map,
-        Long score
+        Long[] score
 ) {
     public static StateResponse from(State state) {
         return new StateResponse(
@@ -19,7 +18,6 @@ public record StateResponse(
                 state.getUser(),
                 state.getQuiz(),
                 state.getStatus(),
-                state.getMap(),
                 state.getScore()
         );
     }
