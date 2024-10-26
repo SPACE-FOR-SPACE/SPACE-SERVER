@@ -27,6 +27,7 @@ import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity(debug = true)
@@ -39,6 +40,8 @@ public class SecurityConfig {
     private final ObjectMapper objectMapper;
     private final CustomOAuth2UserService customOAuth2UserService;
     private final CustomSuccessHandler customSuccessHandler;
+
+    private final List<String> excludedPaths = Arrays.asList("/swagger-ui/**", "/v3/api-docs/**");
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
@@ -94,8 +97,8 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/login","/","/join","/reissue", "/swagger-ui/**", "/v3/api-docs/**", "/api/ai/result" ,"*").permitAll()
-                        .requestMatchers("/user","/my").hasRole("GUEST")
+                        .requestMatchers("/login","/join", "/swagger-ui/**", "/v3/api-docs/**", "/api/ai/result").permitAll()
+                        .requestMatchers("/user","/my", "/reissue").hasRole("GUEST")
                         .anyRequest().hasRole("USER"));
 
         http
@@ -104,10 +107,10 @@ public class SecurityConfig {
                 );
 
         http
-                .addFilterAfter(new CustomJwtFilter(jwtUtil), LoginFilter.class);
+                .addFilterAfter(new CustomJwtFilter(jwtUtil, excludedPaths), LoginFilter.class);
 
         http
-                .addFilterAfter(new OAuth2JwtFilter(jwtUtil), LoginFilter.class);
+                .addFilterAfter(new OAuth2JwtFilter(jwtUtil, excludedPaths), LoginFilter.class);
 
         http
                 .addFilterBefore(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil, objectMapper), UsernamePasswordAuthenticationFilter.class);
@@ -123,4 +126,5 @@ public class SecurityConfig {
 
         return http.build();
     }
+
 }
