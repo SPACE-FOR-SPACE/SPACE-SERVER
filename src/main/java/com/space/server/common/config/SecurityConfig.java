@@ -27,6 +27,7 @@ import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity(debug = true)
@@ -39,6 +40,8 @@ public class SecurityConfig {
     private final ObjectMapper objectMapper;
     private final CustomOAuth2UserService customOAuth2UserService;
     private final CustomSuccessHandler customSuccessHandler;
+
+    private final List<String> excludedPaths = Arrays.asList("/swagger-ui", "/v3/api-docs");
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
@@ -53,7 +56,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
 
         http
                 .cors((cors) -> cors
@@ -120,6 +123,25 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
 
+
+        return http.build();
+    }
+
+    @Bean
+    public SecurityFilterChain swaggerFilterChain(HttpSecurity http) throws Exception {
+
+        http
+                .csrf((auth) -> auth.disable());
+
+        http
+                .cors((auth) -> auth.disable());
+
+        http
+                .securityMatcher("/swagger-ui/**");
+
+        http
+                .authorizeHttpRequests((auth) -> auth
+                        .anyRequest().permitAll());
 
         return http.build();
     }
