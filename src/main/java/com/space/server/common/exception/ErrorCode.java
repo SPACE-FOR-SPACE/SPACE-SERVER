@@ -46,6 +46,9 @@ public enum ErrorCode {
 
     //state
     STATE_NOT_FOUND(HttpStatus.NOT_FOUND, "상태를 찾을 수 없습니다."),
+
+    //ai
+    MOVE_NOT_FIT(HttpStatus.BAD_REQUEST, "move가 올바르지 않습니다."),
     ;
 
     private final HttpStatus status;
