@@ -63,7 +63,7 @@ public class CommandChatService {
         Optional<State> state = stateReader.findByQuizIdAndUserId(quiz, user);
 
         String userChat = request.userChat();
-        chatValidator.checkEnglish(userChat);
+        chatValidator.validateEnglish(userChat);
 
         PromptCreator promptCreator = new PromptCreator();
         AiChat aiChat = new AiChat("user", promptCreator.create(request.type(), quiz, checklists, chapter, request.userChat()));

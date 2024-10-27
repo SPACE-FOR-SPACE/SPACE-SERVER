@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 @Service
 public class ChatValidator {
 
-  public void checkEnglish(String chat) {
+  public void validateEnglish(String chat) {
     Pattern pattern = Pattern.compile("[a-zA-Z]");
     Matcher matcher = pattern.matcher(chat);
     if (matcher.find()) {
