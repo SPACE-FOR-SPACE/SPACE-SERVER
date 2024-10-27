@@ -13,16 +13,24 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collections;
+import java.util.List;
 
 @Slf4j
-@RequiredArgsConstructor
 public class OAuth2JwtFilter extends OncePerRequestFilter {
+
     private final JwtUtil jwtUtil;
+    private final List<String> excludedPaths;
+
+    public OAuth2JwtFilter(JwtUtil jwtUtil, List<String> excludedPaths) {
+        this.jwtUtil = jwtUtil;
+        this.excludedPaths = excludedPaths;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -76,6 +84,13 @@ public class OAuth2JwtFilter extends OncePerRequestFilter {
         SecurityContextHolder.getContext().setAuthentication(authToken);
 
         filterChain.doFilter(request, response);
+    }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        return excludedPaths.stream()
+                .anyMatch(pattern ->
+                        new AntPathMatcher().match(pattern, request.getServletPath()));
     }
 
     private void respondWithUnauthorized(HttpServletResponse response, String message) throws IOException {
