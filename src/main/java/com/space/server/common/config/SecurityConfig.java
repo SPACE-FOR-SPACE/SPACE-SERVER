@@ -24,6 +24,7 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.filter.CorsFilter;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -107,10 +108,10 @@ public class SecurityConfig {
                 );
 
         http
-                .addFilterAfter(new CustomJwtFilter(jwtUtil, excludedPaths), LoginFilter.class);
+                .addFilterAfter(new CustomJwtFilter(jwtUtil, excludedPaths), CorsFilter.class);
 
         http
-                .addFilterAfter(new OAuth2JwtFilter(jwtUtil, excludedPaths), LoginFilter.class);
+                .addFilterAfter(new OAuth2JwtFilter(jwtUtil, excludedPaths), CorsFilter.class);
 
         http
                 .addFilterBefore(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil, objectMapper), UsernamePasswordAuthenticationFilter.class);
