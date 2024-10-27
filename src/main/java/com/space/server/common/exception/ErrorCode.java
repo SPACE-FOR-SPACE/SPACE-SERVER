@@ -21,6 +21,7 @@ public enum ErrorCode {
 
     // chat
     CHAT_NOT_ENGLISH(HttpStatus.BAD_REQUEST, "영어는 입력할 수 없습니다."),
+    CHAT_NOT_BAD_WORD(HttpStatus.BAD_REQUEST, "부적절한 단어는 입력할 수 없습니다."),
 
     // item
     ITEM_NOT_FOUND(HttpStatus.NOT_FOUND, "아이템을 찾을 수 없습니다."),

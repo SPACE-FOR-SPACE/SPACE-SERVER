@@ -63,6 +63,7 @@ public class CommandChatService {
         Optional<State> state = stateReader.findByQuizIdAndUserId(quiz, user);
 
         String userChat = request.userChat();
+        chatValidator.validateBadWords(userChat);
         chatValidator.validateEnglish(userChat);
 
         PromptCreator promptCreator = new PromptCreator();

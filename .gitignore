@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# Ignore BadWords.java
+/src/main/java/com/space/server/chat/service/badWord/BadWords.java
