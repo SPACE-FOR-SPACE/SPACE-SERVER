@@ -1,6 +1,8 @@
 package com.space.server.auth.service.implementation;
 
 import com.space.server.auth.domain.repository.RefreshRepository;
+import com.space.server.common.jwt.exception.InvalidTokenException;
+import com.space.server.common.jwt.exception.RefreshTokenNotFoundException;
 import com.space.server.common.jwt.util.JwtUtil;
 import com.space.server.user.domain.value.Role;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -28,29 +30,23 @@ public class ReIssuer {
 
         if (refresh == null) {
             log.warn("Refresh token not found in cookies");
-            return new ResponseEntity<>("refresh token null", HttpStatus.BAD_REQUEST);
+            throw new RefreshTokenNotFoundException();
         }
 
-        try {
-            jwtUtil.isExpired(refresh);
-        } catch (ExpiredJwtException e) {
-            log.warn("Refresh token expired: {}", e.getMessage());
-            return new ResponseEntity<>("refresh token expired", HttpStatus.BAD_REQUEST);
-        }
-
+        jwtUtil.isExpired(refresh);
 
         String category = jwtUtil.getCategory(refresh);
 
         if (!category.equals("refresh")) {
-            log.warn("Invlid token category: {}", category);
-            return new ResponseEntity<>("invalid refresh token", HttpStatus.BAD_REQUEST);
+            log.warn("Invalid token category: {}", category);
+            throw new InvalidTokenException();
         }
 
         Boolean isExist = refreshRepository.existsByRefreshToken(refresh);
 
         if (!isExist) {
             log.warn("Refresh token not found in database: {}", refresh);
-            return new ResponseEntity<>("refresh token not found", HttpStatus.BAD_REQUEST);
+            throw new RefreshTokenNotFoundException();
         }
 
         Long id = jwtUtil.getId(refresh);
