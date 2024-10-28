@@ -1,4 +1,7 @@
 spring:
+  config:
+    import:
+      - optional:file:env/spring.env[.properties]
   datasource:
     driver-class-name: org.postgresql.Driver
     url : ${DB_URL}
@@ -87,6 +90,6 @@ logging:
 
 gpt:
   api:
-    key: {GPT_API_KEY}
+    key: ${GPT_API_KEY}
   assistants:
-    key: {GPT_ASSISTANTS_KEY}
+    key: ${GPT_ASSISTANTS_KEY}

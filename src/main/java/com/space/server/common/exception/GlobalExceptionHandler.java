@@ -1,6 +1,8 @@
 package com.space.server.common.exception;
 
+import com.space.server.common.exception.security.SpaceSecurityException;
 import com.space.server.common.logging.LoggingUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -18,6 +20,20 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity
                 .status(errorCode.getStatus())
+                .body(response);
+    }
+
+    @ExceptionHandler(SpaceSecurityException.class)
+    public ResponseEntity<ErrorResponse> handleApplicationException(SpaceSecurityException exception) {
+        LoggingUtils.warn(exception);
+
+        int httpStatus = exception.getStatus().value();
+        String errorCode = exception.getErrorCode();
+        String message = exception.getMessage();
+        ErrorResponse response = ErrorResponse.from(httpStatus, errorCode, message);;
+
+        return ResponseEntity
+                .status(httpStatus)
                 .body(response);
     }
 
