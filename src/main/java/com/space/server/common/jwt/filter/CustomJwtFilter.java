@@ -1,7 +1,10 @@
 package com.space.server.common.jwt.filter;
 
+import com.space.server.common.jwt.exception.ExpiredTokenException;
+import com.space.server.common.jwt.exception.InvalidTokenException;
 import com.space.server.common.jwt.util.JwtUtil;
 import com.space.server.user.domain.value.Role;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,17 +16,24 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collections;
+import java.util.List;
 
 @Slf4j
-@RequiredArgsConstructor
 public class CustomJwtFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
+    private final List<String> excludedPaths;
+
+    public CustomJwtFilter(JwtUtil jwtUtil, List<String> excludedPaths) {
+        this.jwtUtil = jwtUtil;
+        this.excludedPaths = excludedPaths;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -49,17 +59,13 @@ public class CustomJwtFilter extends OncePerRequestFilter {
             return;
         }
 
-        if (jwtUtil.isExpired(accessToken)) {
-            log.warn("Custom Access token expired");
-            respondWithUnauthorized(response, "Access token expired");
-            return;
-        }
+        jwtUtil.isExpired(accessToken);
 
         String category = jwtUtil.getCategory(accessToken);
+
         if (!category.equals("access")) {
-            log.warn("Invalid Custom token category: {}", category);
-            respondWithUnauthorized(response, "Invalid access token");
-            return;
+            log.warn("Invalid  token category: {}", category);
+            throw new InvalidTokenException();
         }
 
         Long id = jwtUtil.getId(accessToken);
@@ -74,12 +80,10 @@ public class CustomJwtFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-
-    private void respondWithUnauthorized(HttpServletResponse response, String message) throws IOException {
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        response.setContentType("application/json");
-        PrintWriter writer = response.getWriter();
-        writer.print("{\"error\": \"" + message + "\"}");
-        writer.flush();
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        return excludedPaths.stream()
+                .anyMatch(pattern ->
+                        new AntPathMatcher().match(pattern, request.getServletPath()));
     }
 }
