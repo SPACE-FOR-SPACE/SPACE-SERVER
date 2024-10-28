@@ -54,7 +54,7 @@ public class CustomJwtFilter extends OncePerRequestFilter {
         String accessToken = jwtUtil.getTokenFromCookies(request, "access_normal");
 
         if (accessToken == null) {
-            log.info("Access token not found in cookies.");
+            log.warn("Custom Access token not found in cookies.");
             filterChain.doFilter(request, response);
             return;
         }
@@ -64,7 +64,7 @@ public class CustomJwtFilter extends OncePerRequestFilter {
         String category = jwtUtil.getCategory(accessToken);
 
         if (!category.equals("access")) {
-            log.warn("Invalid token category: {}", category);
+            log.warn("Invalid  token category: {}", category);
             throw new InvalidTokenException();
         }
 
