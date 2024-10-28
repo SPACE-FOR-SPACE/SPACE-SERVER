@@ -37,3 +37,6 @@ out/
 .vscode/
 
 env
+
+### Bad Word ###
+/src/main/java/com/space/server/chat/service/badWord/badWords.txt
