@@ -2,10 +2,13 @@ package com.space.server.common.jwt.util;
 
 import com.space.server.auth.domain.Refresh;
 import com.space.server.auth.domain.repository.RefreshRepository;
+import com.space.server.common.jwt.exception.ExpiredTokenException;
 import com.space.server.user.domain.value.Role;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
@@ -16,6 +19,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Date;
 
+@Slf4j
 @Component
 public class JwtUtil {
 
@@ -44,8 +48,13 @@ public class JwtUtil {
         return Role.fromValue(roleValue);
     }
 
-    public Boolean isExpired(String token) {
-        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration().before(new Date());
+    public void isExpired(String token) {
+        try {
+            log.warn("JwtUtil isExpired 메서드 호출");
+            Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration().before(new Date());
+        } catch (ExpiredJwtException e) {
+            throw new ExpiredTokenException();
+        }
     }
 
     public String createAccessToken(Long id, Role role) {
