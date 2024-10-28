@@ -1,6 +1,8 @@
 package com.space.server.chat.service.implementation;
 
 import com.space.server.ai.service.dto.response.AiResponse;
+import com.space.server.common.exception.ErrorCode;
+import com.space.server.common.exception.SpaceException;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -9,13 +11,20 @@ import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Slf4j
 @Service
 public class AiResponseJsonParsing {
 
     public AiResponse jsonCreator(String contents, Map<String, String> mapObject) {
-        String result = contents.substring(7, contents.length() - 3);
+        Pattern pattern = Pattern.compile("```json\\s*([\\s\\S]*?)\\s*```", Pattern.DOTALL);
+        Matcher matcher = pattern.matcher(contents);
+        String result = null;
+        while (matcher.find()) {
+            result = matcher.group(1);
+        }
         JSONParser parser = new JSONParser();
         JSONObject jsonObject = null;
         Long[] score = null;
@@ -39,10 +48,16 @@ public class AiResponseJsonParsing {
     }
 
     public String[] moveStringCreator(String move) throws ParseException {
+        Pattern pattern = Pattern.compile("^\\[\\s*(u|d|r|l|5)(\\s*,\\s*(u|d|r|l|5))*\\s*\\]$");
+        Matcher matcher = pattern.matcher(move);
+
+        if (!matcher.matches()) {
+            throw new SpaceException(ErrorCode.MOVE_NOT_FIT);
+        }
+
         JSONParser parser = new JSONParser();
         JSONArray jsonArray = (JSONArray) parser.parse(move);
         String[] stringArray = new String[jsonArray.size()];
-
         for (int i = 0; i < jsonArray.size(); i++) {
             if (jsonArray.get(i) instanceof Long) {
                 stringArray[i] = ((Long) jsonArray.get(i)).toString();
@@ -65,5 +80,4 @@ public class AiResponseJsonParsing {
 
         return longArray;
     }
-
 }

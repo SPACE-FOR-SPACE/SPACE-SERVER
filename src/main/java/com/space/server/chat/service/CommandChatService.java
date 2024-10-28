@@ -14,6 +14,7 @@ import com.space.server.chat.presentation.dto.request.CreateChatRequest;
 import com.space.server.chat.service.implementation.ChatCreator;
 import com.space.server.chat.service.implementation.ChatReader;
 import com.space.server.chat.service.implementation.AiResponseJsonParsing;
+import com.space.server.chat.service.implementation.ChatValidator;
 import com.space.server.core.chapter.domain.Chapter;
 import com.space.server.core.chapter.service.implementation.ChapterReader;
 import com.space.server.core.checklist.domain.Checklist;
@@ -46,6 +47,7 @@ public class CommandChatService {
     private final UserReader userReader;
     private final ChatReader chatReader;
     private final ChatCreator chatCreator;
+    private final ChatValidator chatValidator;
     private final ChecklistReader checklistReader;
     private final ChapterReader chapterReader;
     private final ChatCompleter chatCompleter;
@@ -59,6 +61,10 @@ public class CommandChatService {
         Chapter chapter = chapterReader.findById(quiz.getChapter().getId());
 
         Optional<State> state = stateReader.findByQuizIdAndUserId(quiz, user);
+
+        String userChat = request.userChat();
+        chatValidator.validateBadWords(userChat);
+        chatValidator.validateEnglish(userChat);
 
         PromptCreator promptCreator = new PromptCreator();
         AiChat aiChat = new AiChat("user", promptCreator.create(request.type(), quiz, checklists, chapter, request.userChat()));
