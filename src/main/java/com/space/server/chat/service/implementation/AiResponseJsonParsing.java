@@ -80,5 +80,4 @@ public class AiResponseJsonParsing {
 
         return longArray;
     }
-
 }
