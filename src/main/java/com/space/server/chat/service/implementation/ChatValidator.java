@@ -1,6 +1,5 @@
 package com.space.server.chat.service.implementation;
 
-import com.space.server.chat.service.badWord.BadWords;
 import com.space.server.common.exception.ErrorCode;
 import com.space.server.common.exception.SpaceException;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
-public class ChatValidator implements BadWords {
+public class ChatValidator {
   private final Set<String> badWords = new HashSet<>();
 
   public ChatValidator(@Value("${BAD_WORD}") String filePath) {
