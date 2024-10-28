@@ -1,5 +1,6 @@
 package com.space.server.common.jwt.filter;
 
+import com.space.server.common.jwt.exception.InvalidTokenException;
 import com.space.server.common.jwt.util.JwtUtil;
 import com.space.server.user.domain.value.Role;
 import jakarta.servlet.FilterChain;
@@ -57,17 +58,13 @@ public class OAuth2JwtFilter extends OncePerRequestFilter {
             return;
         }
 
-        if (jwtUtil.isExpired(accessToken)) {
-            log.warn("Access token expired");
-            respondWithUnauthorized(response, "Access token expired");
-            return;
-        }
+        jwtUtil.isExpired(accessToken);
 
         String category = jwtUtil.getCategory(accessToken);
+
         if (!category.equals("access")) {
             log.warn("Invalid token category: {}", category);
-            respondWithUnauthorized(response, "Invalid access token");
-            return;
+            throw new InvalidTokenException();
         }
 
         Long id = jwtUtil.getId(accessToken);
@@ -91,13 +88,5 @@ public class OAuth2JwtFilter extends OncePerRequestFilter {
         return excludedPaths.stream()
                 .anyMatch(pattern ->
                         new AntPathMatcher().match(pattern, request.getServletPath()));
-    }
-
-    private void respondWithUnauthorized(HttpServletResponse response, String message) throws IOException {
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        response.setContentType("application/json");
-        PrintWriter writer = response.getWriter();
-        writer.print("{\"error\": \"" + message + "\"}");
-        writer.flush();
     }
 }
