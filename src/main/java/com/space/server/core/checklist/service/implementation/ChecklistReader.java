@@ -4,6 +4,7 @@ import com.space.server.common.exception.ErrorCode;
 import com.space.server.common.exception.SpaceException;
 import com.space.server.core.checklist.domain.Checklist;
 import com.space.server.core.checklist.domain.repository.ChecklistRepository;
+import com.space.server.core.checklist.exception.ChecklistNotFoundException;
 import com.space.server.core.quiz.domain.Quiz;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class ChecklistReader {
 
   public Checklist readOne(Long checklistId) {
     return repository.findById(checklistId)
-        .orElseThrow(() -> new SpaceException(ErrorCode.CHECKLIST_NOT_FOUND));
+        .orElseThrow(ChecklistNotFoundException::new);
   }
 
   public List<Checklist> readALL() {
