@@ -1,8 +1,7 @@
 package com.space.server.chat.service.implementation;
 
 import com.space.server.ai.service.dto.response.AiResponse;
-import com.space.server.common.exception.ErrorCode;
-import com.space.server.common.exception.SpaceException;
+import com.space.server.chat.exception.MoveNotFitException;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -52,7 +51,7 @@ public class AiResponseJsonParsing {
         Matcher matcher = pattern.matcher(move);
 
         if (!matcher.matches()) {
-            throw new SpaceException(ErrorCode.MOVE_NOT_FIT);
+            throw new MoveNotFitException();
         }
 
         JSONParser parser = new JSONParser();
