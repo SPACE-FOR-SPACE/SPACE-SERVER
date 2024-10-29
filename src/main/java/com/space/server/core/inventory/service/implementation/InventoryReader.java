@@ -1,9 +1,8 @@
 package com.space.server.core.inventory.service.implementation;
 
-import com.space.server.common.exception.ErrorCode;
-import com.space.server.common.exception.SpaceException;
 import com.space.server.core.inventory.domain.Inventory;
 import com.space.server.core.inventory.domain.repository.InventoryRepository;
+import com.space.server.core.inventory.exception.InventoryNotFoundException;
 import com.space.server.core.item.domain.value.Category;
 import com.space.server.user.domain.Users;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +18,7 @@ public class InventoryReader {
 
   public Inventory findById(Long inventoryId) {
     return inventoryRepository.findById(inventoryId)
-        .orElseThrow(() -> new SpaceException(ErrorCode.INVENTORY_NOT_FOUND));
+        .orElseThrow(InventoryNotFoundException::new);
   }
 
   public List<Inventory> findByUser(Users user) {
