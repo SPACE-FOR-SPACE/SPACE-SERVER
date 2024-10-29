@@ -8,10 +8,10 @@ public record ErrorResponse(
         String message,
         LocalDateTime timestamp
 ) {
-    public static ErrorResponse from(ErrorCode errorCode) {
+    public static ErrorResponse from(SpaceException errorCode) {
         return new ErrorResponse(
                 errorCode.getStatus().value(),
-                errorCode.name(),
+                errorCode.getMessage(),
                 errorCode.getMessage(),
                 LocalDateTime.now()
         );
