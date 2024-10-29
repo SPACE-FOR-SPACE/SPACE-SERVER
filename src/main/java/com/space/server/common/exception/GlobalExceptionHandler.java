@@ -15,11 +15,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleApplicationException(SpaceException exception) {
         LoggingUtils.warn(exception);
 
-        ErrorCode errorCode = exception.getErrorCode();
-        ErrorResponse response = ErrorResponse.from(errorCode);;
+        ErrorResponse response = ErrorResponse.from(exception);;
 
         return ResponseEntity
-                .status(errorCode.getStatus())
+                .status(exception.getStatus())
                 .body(response);
     }
 
