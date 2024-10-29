@@ -1,7 +1,5 @@
 package com.space.server.core.chapter.service.implementation;
 
-import com.space.server.common.exception.ErrorCode;
-import com.space.server.common.exception.SpaceException;
 import com.space.server.core.chapter.domain.Chapter;
 import com.space.server.core.chapter.domain.repository.ChapterRepository;
 import com.space.server.core.chapter.exception.ChapterNotFoundException;
