@@ -38,9 +38,6 @@ public enum ErrorCode {
     QUIZ_NOT_FOUND(HttpStatus.NOT_FOUND, "문제를 찾을 수 없습니다."),
     STEP_NOT_FOUND(HttpStatus.NOT_FOUND, "단게를 찾을 수 없습니다."),
 
-    // checklist
-    CHECKLIST_NOT_FOUND(HttpStatus.NOT_FOUND, "체크리스트를 찾을 수 없습니다."),
-
     //state
     STATE_NOT_FOUND(HttpStatus.NOT_FOUND, "상태를 찾을 수 없습니다."),
 
