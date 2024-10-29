@@ -48,7 +48,7 @@ public class AiResponseJsonParsing {
     }
 
     public String[] moveStringCreator(String move) throws ParseException {
-        Pattern pattern = Pattern.compile("^\\[\\s*(u|d|r|l|5)(\\s*,\\s*(u|d|r|l|5))*\\s*\\]$");
+        Pattern pattern = Pattern.compile("^\\[\\s*(\"([udrl])\"|5)?(\\s*,\\s*(\"([udrl])\"|5))*\\s*]$");
         Matcher matcher = pattern.matcher(move);
 
         if (!matcher.matches()) {
