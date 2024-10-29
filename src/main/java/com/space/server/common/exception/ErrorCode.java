@@ -34,9 +34,6 @@ public enum ErrorCode {
     INVENTORY_ITEM_FOUND(HttpStatus.FOUND, "아이템을 이미 가지고 있습니다."),
     ITEM_ALREADY_EQUIPPED(HttpStatus.CONFLICT, "아이템이 이미 장착되었습니다."),
 
-    // chapter
-    CHAPTER_NOT_FOUND(HttpStatus.NOT_FOUND, "챕터를 찾을 수 없습니다."),
-
     // quiz
     QUIZ_NOT_FOUND(HttpStatus.NOT_FOUND, "문제를 찾을 수 없습니다."),
     STEP_NOT_FOUND(HttpStatus.NOT_FOUND, "단게를 찾을 수 없습니다."),
