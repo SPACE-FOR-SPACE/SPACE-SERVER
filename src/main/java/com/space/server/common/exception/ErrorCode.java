@@ -29,7 +29,6 @@ public enum ErrorCode {
     CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "카테고리를 찾을 수 없습니다."),
 
     // inventory
-    INVENTORY_NOT_FOUND(HttpStatus.NOT_FOUND, "인벤토리를 찾을 수 없습니다."),
     INVENTORY_ITEM_NOT_FOUND(HttpStatus.NOT_FOUND, "아이템을 가지고 있지 않습니다."),
     INVENTORY_ITEM_FOUND(HttpStatus.FOUND, "아이템을 이미 가지고 있습니다."),
     ITEM_ALREADY_EQUIPPED(HttpStatus.CONFLICT, "아이템이 이미 장착되었습니다."),
