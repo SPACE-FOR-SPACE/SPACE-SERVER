@@ -1,9 +1,8 @@
 package com.space.server.user.service.implementation;
 
-import com.space.server.common.exception.ErrorCode;
-import com.space.server.common.exception.SpaceException;
 import com.space.server.user.domain.Users;
 import com.space.server.user.domain.repository.UserRepository;
+import com.space.server.user.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +14,6 @@ public class UserReader {
 
     public Users findById(Long userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new SpaceException(ErrorCode.USER_NOT_FOUND));
+                .orElseThrow(UserNotFoundException::new);
     }
 }
