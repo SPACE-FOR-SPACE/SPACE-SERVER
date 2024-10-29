@@ -19,9 +19,6 @@ public enum ErrorCode {
     // item
     ITEM_NOT_FOUND(HttpStatus.NOT_FOUND, "아이템을 찾을 수 없습니다."),
 
-    // inventory
-    INVENTORY_ITEM_FOUND(HttpStatus.FOUND, "아이템을 이미 가지고 있습니다."),
-
     // quiz
     QUIZ_NOT_FOUND(HttpStatus.NOT_FOUND, "문제를 찾을 수 없습니다."),
 
