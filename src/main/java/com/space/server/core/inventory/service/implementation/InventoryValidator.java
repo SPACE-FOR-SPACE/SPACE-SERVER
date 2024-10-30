@@ -1,10 +1,10 @@
 package com.space.server.core.inventory.service.implementation;
 
-import com.space.server.common.exception.ErrorCode;
-import com.space.server.common.exception.SpaceException;
 import com.space.server.core.inventory.domain.repository.InventoryRepository;
+import com.space.server.core.inventory.exception.InventoryItemFoundException;
 import com.space.server.core.item.domain.Item;
 import com.space.server.user.domain.Users;
+import com.space.server.user.exception.InsufficientPointsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +15,13 @@ public class InventoryValidator {
 
   public void hasItem(Item item, Users user) {
     if(inventoryRepository.existsByItemAndUser(item, user)) {
-      throw new SpaceException(ErrorCode.INVENTORY_ITEM_FOUND);
+      throw new InventoryItemFoundException();
     }
   }
   
   public void buyItem(Item item, Users user) {
     if(item.getPrice() > user.getPoint()) {
-      throw new SpaceException(ErrorCode.INSUFFICIENT_POINTS);
+      throw new InsufficientPointsException();
     }
     else user.payPoint(item.getPrice());
   }

@@ -8,7 +8,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 @Slf4j
 public class LoggingUtils {
     public static void warn(SpaceException exception) {
-        String message = getExceptionMessage(exception.getErrorCode().getMessage());
+        String message = getExceptionMessage(exception.getMessage());
         log.warn(message + "\n \t {}", exception);
     }
 

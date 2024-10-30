@@ -1,8 +1,6 @@
 package com.space.server.auth.service.implementation;
 
 import com.space.server.auth.presentation.dto.request.JoinUserRequest;
-import com.space.server.common.exception.ErrorCode;
-import com.space.server.common.exception.SpaceException;
 import com.space.server.core.inventory.domain.Inventory;
 import com.space.server.core.inventory.service.implementation.InventoryCreator;
 import com.space.server.core.inventory.service.implementation.InventoryUpdater;
@@ -11,6 +9,7 @@ import com.space.server.core.item.service.implementation.ItemReader;
 import com.space.server.user.domain.Users;
 import com.space.server.user.domain.repository.UserRepository;
 import com.space.server.user.domain.value.Role;
+import com.space.server.user.exception.UserExistedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -35,7 +34,7 @@ public class UserJoiner {
         Boolean isExist = userRepository.existsByEmail(email);
 
         if (isExist) {
-            throw new SpaceException(ErrorCode.USER_EXISTED);
+            throw new UserExistedException();
         }
 
         Users user = Users.normalUserBuilder()

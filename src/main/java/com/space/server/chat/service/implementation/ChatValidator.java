@@ -1,7 +1,7 @@
 package com.space.server.chat.service.implementation;
 
-import com.space.server.common.exception.ErrorCode;
-import com.space.server.common.exception.SpaceException;
+import com.space.server.chat.exception.ChatNotBadWordException;
+import com.space.server.chat.exception.ChatNotEnglishException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -36,13 +36,13 @@ public class ChatValidator {
     Pattern pattern = Pattern.compile("[a-zA-Z]");
     Matcher matcher = pattern.matcher(chat);
     if (matcher.find()) {
-      throw new SpaceException(ErrorCode.CHAT_NOT_ENGLISH);
+      throw new ChatNotEnglishException();
     }
   }
 
   public void validateBadWords(String chat) {
     if(badWords.stream().anyMatch(chat::contains)) {
-      throw new SpaceException(ErrorCode.CHAT_NOT_BAD_WORD);
+      throw new ChatNotBadWordException();
     }
   }
 }
