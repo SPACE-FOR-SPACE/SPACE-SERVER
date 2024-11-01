@@ -1,6 +1,7 @@
 package com.space.server.chat.service.implementation;
 
 import com.space.server.ai.service.dto.response.AiResponse;
+import com.space.server.chat.exception.ChatJsonParseException;
 import com.space.server.chat.exception.MoveNotFitException;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
@@ -9,6 +10,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,8 +35,8 @@ public class AiResponseJsonParsing {
             jsonObject = (JSONObject) parser.parse(result);
             score = successCheckListIntegerCreator(jsonObject.get("score").toString());
             move = moveStringCreator(jsonObject.get("move").toString());
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
+        } catch (ParseException | NullPointerException e) {
+            throw new ChatJsonParseException();
         }
 
         log.info("json : " + jsonObject.toJSONString());
