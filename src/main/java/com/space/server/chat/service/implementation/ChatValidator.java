@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 public class ChatValidator {
   private final Set<String> badWords = new HashSet<>();
 
-  public ChatValidator(@Value("${BAD_WORD}") String filePath) {
+  public ChatValidator(@Value("${block.bad-words}") String filePath) {
     loadBadWords(filePath);
   }
 
