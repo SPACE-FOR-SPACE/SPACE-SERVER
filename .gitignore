@@ -39,4 +39,4 @@ out/
 env
 
 ### Bad Word ###
-/src/main/java/com/space/server/chat/service/badWord/badWords.txt
+/src/main/resources/BadWords.txt
