@@ -93,6 +93,3 @@ gpt:
     key: ${GPT_API_KEY}
   assistants:
     key: ${GPT_ASSISTANTS_KEY}
-
-block:
-  bad-words: ${BAD_WORD}
