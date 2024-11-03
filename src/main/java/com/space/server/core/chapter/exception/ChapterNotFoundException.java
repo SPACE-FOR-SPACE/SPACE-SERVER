@@ -6,6 +6,6 @@ import org.springframework.http.HttpStatus;
 public class ChapterNotFoundException extends SpaceException {
 
   public ChapterNotFoundException() {
-    super(HttpStatus.NOT_FOUND, "챕터를 찾을 수 없습니다.");
+    super(HttpStatus.NOT_FOUND, "CHAPTER_NOT_FOUND", "챕터를 찾을 수 없습니다.");
   }
 }
