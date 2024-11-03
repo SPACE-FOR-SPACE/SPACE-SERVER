@@ -3,17 +3,17 @@ package com.space.server.common.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.space.server.auth.domain.repository.RefreshRepository;
 import com.space.server.common.exception.security.SpaceSecurityExceptionFilter;
+import com.space.server.common.jwt.exception.CustomAccessDeniedException;
+import com.space.server.common.jwt.exception.UnauthenticatedAccessException;
 import com.space.server.common.jwt.filter.CustomLogoutFilter;
 import com.space.server.common.jwt.filter.CustomJwtFilter;
 import com.space.server.common.jwt.filter.LoginFilter;
-import com.space.server.common.jwt.filter.OAuth2JwtFilter;
 import com.space.server.common.jwt.util.JwtUtil;
 import com.space.server.oauth.handler.CustomSuccessHandler;
 import com.space.server.oauth.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,12 +21,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.filter.CorsFilter;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -105,7 +103,12 @@ public class SecurityConfig {
 
         http
                 .exceptionHandling(exceptionHandling -> exceptionHandling
-                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                        .authenticationEntryPoint(((request, response, e) -> {
+                            throw new UnauthenticatedAccessException();
+                        }))
+                        .accessDeniedHandler((request, response, e) -> {
+                            throw new CustomAccessDeniedException();
+                        })
                 );
 
         http
@@ -113,9 +116,6 @@ public class SecurityConfig {
 
         http
                 .addFilterAfter(new CustomJwtFilter(jwtUtil, excludedPaths), CorsFilter.class);
-
-        http
-                .addFilterAfter(new OAuth2JwtFilter(jwtUtil, excludedPaths), CorsFilter.class);
 
         http
                 .addFilterBefore(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil, objectMapper), UsernamePasswordAuthenticationFilter.class);
