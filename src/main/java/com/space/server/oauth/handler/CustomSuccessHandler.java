@@ -52,8 +52,8 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         }
 
 
-        String accessToken = jwtUtil.createAccessToken(id, role);
-        String refreshToken = jwtUtil.createRefreshToken(id, role);
+        String accessToken = jwtUtil.createAccessToken(id, role, "social");
+        String refreshToken = jwtUtil.createRefreshToken(id, role, "social");
 
         jwtUtil.addRefreshToken(id, refreshToken);
 
