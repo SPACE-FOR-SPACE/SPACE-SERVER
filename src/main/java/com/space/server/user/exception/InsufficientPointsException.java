@@ -6,6 +6,6 @@ import org.springframework.http.HttpStatus;
 public class InsufficientPointsException extends SpaceException {
 
   public InsufficientPointsException() {
-    super(HttpStatus.FORBIDDEN, "포인트가 부족합니다.");
+    super(HttpStatus.FORBIDDEN, "INSUFFICIENT_POINTS", "포인트가 부족합니다.");
   }
 }
