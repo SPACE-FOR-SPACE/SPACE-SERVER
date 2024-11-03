@@ -6,6 +6,6 @@ import org.springframework.http.HttpStatus;
 public class ChecklistNotFoundException extends SpaceException {
 
   public ChecklistNotFoundException() {
-    super(HttpStatus.NOT_FOUND, "체크리스트를 찾을 수 없습니다.");
+    super(HttpStatus.NOT_FOUND, "CHECKLIST_NOT_FOUND", "체크리스트를 찾을 수 없습니다.");
   }
 }
