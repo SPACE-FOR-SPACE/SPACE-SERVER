@@ -5,15 +5,11 @@ import com.space.server.common.jwt.exception.InvalidTokenException;
 import com.space.server.common.jwt.exception.RefreshTokenNotFoundException;
 import com.space.server.common.jwt.util.JwtUtil;
 import com.space.server.user.domain.value.Role;
-import io.jsonwebtoken.ExpiredJwtException;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -24,7 +20,7 @@ public class ReIssuer {
     private final JwtUtil jwtUtil;
     private final RefreshRepository refreshRepository;
 
-    public ResponseEntity<?> reissue(HttpServletRequest request, HttpServletResponse response) {
+    public void reissue(HttpServletRequest request, HttpServletResponse response) {
 
         String refresh = jwtUtil.getTokenFromCookies(request, "refresh_normal", "refresh_social");
 
@@ -64,8 +60,6 @@ public class ReIssuer {
 
         response.addHeader(HttpHeaders.SET_COOKIE, jwtUtil.createAccessCookie(accessCookieName, newAccess).toString());
         response.addHeader(HttpHeaders.SET_COOKIE, jwtUtil.createRefreshCookie(refreshCookieName, newRefresh).toString());
-
-        return new ResponseEntity<>(HttpStatus.OK);
 
     }
 
