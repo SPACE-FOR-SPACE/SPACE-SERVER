@@ -63,8 +63,8 @@ public class SecurityConfig {
                         .configurationSource(request -> {
 
                             CorsConfiguration configuration = new CorsConfiguration();
-                            configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "https://c435-211-182-230-53.ngrok-free.app"));
-//                            configuration.setAllowedOriginPatterns(Collections.singletonList("*"));
+//                            configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+                            configuration.setAllowedOriginPatterns(Collections.singletonList("*"));
                             configuration.setAllowedMethods(Collections.singletonList("*"));
                             configuration.setAllowCredentials(true);
                             configuration.setAllowedHeaders(Collections.singletonList("*"));
@@ -97,8 +97,8 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/login","/join", "/reissue","/swagger-ui/**", "/v3/api-docs/**", "/api/ai/result").permitAll()
-                        .requestMatchers("/user","/my").hasRole("GUEST")
+                        .requestMatchers("/login","/join", "/reissue","/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/users").hasRole("GUEST")
                         .anyRequest().hasRole("USER"));
 
         http

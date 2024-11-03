@@ -1,28 +1,37 @@
 package com.space.server.auth.service.implementation;
 
 import com.space.server.auth.domain.repository.RefreshRepository;
+import com.space.server.auth.presentation.dto.request.AdditionalInfoRequest;
 import com.space.server.common.jwt.exception.InvalidTokenException;
 import com.space.server.common.jwt.exception.RefreshTokenNotFoundException;
 import com.space.server.common.jwt.util.JwtUtil;
+import com.space.server.user.domain.Users;
+import com.space.server.user.domain.repository.UserRepository;
 import com.space.server.user.domain.value.Role;
+import com.space.server.user.exception.UserNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class ReIssuer {
+public class AdditionalInfoUpdater {
 
+    private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
     private final RefreshRepository refreshRepository;
 
-    public void reissue(HttpServletRequest request, HttpServletResponse response) {
+    @Transactional
+    public void update(HttpServletRequest request, HttpServletResponse response, Long userId, AdditionalInfoRequest additionalInfoRequest) {
+        Users user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException());
 
-        String refresh = jwtUtil.getTokenFromCookies(request, "refresh_normal", "refresh_social");
+        String refresh = jwtUtil.getTokenFromCookies(request, "refresh_social");
 
         if (refresh == null) {
             log.warn("Refresh token not found in cookies");
@@ -45,12 +54,15 @@ public class ReIssuer {
             throw new RefreshTokenNotFoundException();
         }
 
+        user.updateAdditionalInfo(additionalInfoRequest.age(), additionalInfoRequest.username());
+        user.updateRole(Role.USER);
+
         String loginType = jwtUtil.getLoginType(refresh);
         String accessCookieName = "access_" + loginType;
         String refreshCookieName = "refresh_" + loginType;
 
         Long id = jwtUtil.getId(refresh);
-        Role role = jwtUtil.getRole(refresh);
+        Role role = Role.USER;
 
         String newAccess = jwtUtil.createAccessToken(id, role, loginType);
         String newRefresh = jwtUtil.createRefreshToken(id, role, loginType);
@@ -62,5 +74,4 @@ public class ReIssuer {
         response.addHeader(HttpHeaders.SET_COOKIE, jwtUtil.createRefreshCookie(refreshCookieName, newRefresh).toString());
 
     }
-
 }
