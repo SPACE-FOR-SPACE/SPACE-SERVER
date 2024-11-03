@@ -2,6 +2,7 @@ package com.space.server.common.jwt.util;
 
 import com.space.server.auth.domain.Refresh;
 import com.space.server.auth.domain.repository.RefreshRepository;
+import com.space.server.common.jwt.exception.ExpiredRefreshTokenException;
 import com.space.server.common.jwt.exception.ExpiredTokenException;
 import com.space.server.user.domain.value.Role;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -57,6 +58,14 @@ public class JwtUtil {
             Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration().before(new Date());
         } catch (ExpiredJwtException e) {
             throw new ExpiredTokenException();
+        }
+    }
+
+    public void isExpiredRefresh(String token) {
+        try {
+            Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration().before(new Date());
+        } catch (ExpiredJwtException e) {
+            throw new ExpiredRefreshTokenException();
         }
     }
 
