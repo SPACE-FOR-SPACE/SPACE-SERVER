@@ -1,6 +1,8 @@
 package com.space.server.auth.presentation;
 
+import com.space.server.auth.presentation.dto.request.AdditionalInfoRequest;
 import com.space.server.auth.presentation.dto.request.JoinUserRequest;
+import com.space.server.auth.service.implementation.AdditionalInfoUpdater;
 import com.space.server.auth.service.implementation.ReIssuer;
 import com.space.server.auth.service.implementation.UserJoiner;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.space.server.common.jwt.util.AuthenticationUtil.getMemberId;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -20,6 +24,7 @@ public class AuthController {
 
     private final UserJoiner userJoiner;
     private final ReIssuer reIssuer;
+    private final AdditionalInfoUpdater additionalInfoUpdater;
 
     @PostMapping("/join")
     @ResponseStatus(HttpStatus.CREATED)
@@ -28,17 +33,28 @@ public class AuthController {
         @Parameter(description = "가입할 사용자 정보", required = true)
         @RequestBody JoinUserRequest joinUserRequest
     ) {
-        System.out.println(joinUserRequest);
         userJoiner.joinProcess(joinUserRequest);
     }
 
     @PostMapping("/reissue")
+    @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "토큰 재발급", description = "JWT 토큰을 재발급합니다.")
-    public ResponseEntity<?> reissue(
+    public void reissue(
         @Parameter(description = "HTTP 요청") HttpServletRequest request,
         @Parameter(description = "HTTP 응답") HttpServletResponse response
     ) {
-        return reIssuer.reissue(request, response);
+        reIssuer.reissue(request, response);
+    }
+
+    @PostMapping("/users")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "추가 정보", description = "소셜로그인 후 추가 정보를 받아야 합니다.")
+    public void updateAdditionalInfo(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            @RequestBody AdditionalInfoRequest additionalInfoRequest
+    ) {
+        additionalInfoUpdater.update(request, response, getMemberId(), additionalInfoRequest);
     }
 
 
