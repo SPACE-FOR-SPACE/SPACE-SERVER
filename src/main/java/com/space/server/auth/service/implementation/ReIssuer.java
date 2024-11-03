@@ -33,7 +33,7 @@ public class ReIssuer {
             throw new RefreshTokenNotFoundException();
         }
 
-        jwtUtil.isExpired(refresh);
+        jwtUtil.isExpiredRefresh(refresh);
 
         String category = jwtUtil.getCategory(refresh);
 
@@ -63,7 +63,7 @@ public class ReIssuer {
         jwtUtil.addRefreshToken(id, newRefresh);
 
         response.addHeader(HttpHeaders.SET_COOKIE, jwtUtil.createAccessCookie(accessCookieName, newAccess).toString());
-        response.addHeader(HttpHeaders.SET_COOKIE, jwtUtil.createRefreshCookie(accessCookieName, newRefresh).toString());
+        response.addHeader(HttpHeaders.SET_COOKIE, jwtUtil.createRefreshCookie(refreshCookieName, newRefresh).toString());
 
         return new ResponseEntity<>(HttpStatus.OK);
 
