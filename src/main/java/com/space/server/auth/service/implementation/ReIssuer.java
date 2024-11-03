@@ -26,7 +26,7 @@ public class ReIssuer {
 
     public ResponseEntity<?> reissue(HttpServletRequest request, HttpServletResponse response) {
 
-        String refresh = jwtUtil.getTokenFromCookies(request, "refresh_normal");
+        String refresh = jwtUtil.getTokenFromCookies(request, "refresh_normal", "refresh_social");
 
         if (refresh == null) {
             log.warn("Refresh token not found in cookies");
@@ -49,18 +49,21 @@ public class ReIssuer {
             throw new RefreshTokenNotFoundException();
         }
 
+        String loginType = jwtUtil.getLoginType(refresh);
+        String accessCookieName = "access_" + loginType;
+        String refreshCookieName = "refresh_" + loginType;
+
         Long id = jwtUtil.getId(refresh);
         Role role = jwtUtil.getRole(refresh);
 
-
-        String newAccess = jwtUtil.createAccessToken(id, role);
-        String newRefresh = jwtUtil.createRefreshToken(id, role);
+        String newAccess = jwtUtil.createAccessToken(id, role, loginType);
+        String newRefresh = jwtUtil.createRefreshToken(id, role, loginType);
 
         refreshRepository.deleteByRefreshToken(refresh);
         jwtUtil.addRefreshToken(id, newRefresh);
 
-        response.addHeader(HttpHeaders.SET_COOKIE, jwtUtil.createAccessCookie("access_normal", newAccess).toString());
-        response.addHeader(HttpHeaders.SET_COOKIE, jwtUtil.createRefreshCookie("refresh_normal", newRefresh).toString());
+        response.addHeader(HttpHeaders.SET_COOKIE, jwtUtil.createAccessCookie(accessCookieName, newAccess).toString());
+        response.addHeader(HttpHeaders.SET_COOKIE, jwtUtil.createRefreshCookie(accessCookieName, newRefresh).toString());
 
         return new ResponseEntity<>(HttpStatus.OK);
 
