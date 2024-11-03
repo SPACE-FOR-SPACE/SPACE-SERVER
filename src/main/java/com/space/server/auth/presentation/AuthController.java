@@ -8,10 +8,12 @@ import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class AuthController {
@@ -37,6 +39,14 @@ public class AuthController {
         @Parameter(description = "HTTP 응답") HttpServletResponse response
     ) {
         return reIssuer.reissue(request, response);
+    }
+
+
+    @GetMapping("/check")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "인가 여부", description = "현재 유저의 인가 가능 여부를 판별합니다.")
+    public void checkAuthStatus() {
+        log.warn("AuthController : /check 성공");
     }
 
 }
