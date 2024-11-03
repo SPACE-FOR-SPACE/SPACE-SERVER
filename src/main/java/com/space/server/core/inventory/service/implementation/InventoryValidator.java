@@ -1,7 +1,7 @@
 package com.space.server.core.inventory.service.implementation;
 
 import com.space.server.core.inventory.domain.repository.InventoryRepository;
-import com.space.server.core.inventory.exception.InventoryItemFoundException;
+import com.space.server.core.inventory.exception.InventoryItemExistedException;
 import com.space.server.core.item.domain.Item;
 import com.space.server.user.domain.Users;
 import com.space.server.user.exception.InsufficientPointsException;
@@ -15,7 +15,7 @@ public class InventoryValidator {
 
   public void hasItem(Item item, Users user) {
     if(inventoryRepository.existsByItemAndUser(item, user)) {
-      throw new InventoryItemFoundException();
+      throw new InventoryItemExistedException();
     }
   }
   
