@@ -11,7 +11,7 @@ public record ErrorResponse(
     public static ErrorResponse from(SpaceException errorCode) {
         return new ErrorResponse(
                 errorCode.getStatus().value(),
-                errorCode.getMessage(),
+                errorCode.getErrorCode(),
                 errorCode.getMessage(),
                 LocalDateTime.now()
         );
