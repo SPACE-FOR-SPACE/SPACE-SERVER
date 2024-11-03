@@ -2,14 +2,13 @@ package com.space.server.chat.service.implementation;
 
 import com.space.server.chat.exception.ChatNotBadWordException;
 import com.space.server.chat.exception.ChatNotEnglishException;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.io.InputStreamReader;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,17 +16,11 @@ import java.util.regex.Pattern;
 @Service
 public class ChatValidator {
   private final Set<String> badWords = new HashSet<>();
+  ClassPathResource resource = new ClassPathResource("BadWords.txt");
 
-  public ChatValidator(@Value("${block.bad-words}") String filePath) {
-    loadBadWords(filePath);
-  }
-
-  private void loadBadWords(String filePath) {
-    try {
-      List<String> koreanBadWords = Files.readAllLines(Path.of(filePath));
-      badWords.addAll(koreanBadWords);
-    } catch (IOException e) {
-      throw new IllegalStateException("Failed to load bad words file: " + e.getMessage(), e);
+  public ChatValidator() throws IOException {
+    try (BufferedReader reader = new BufferedReader(new InputStreamReader(resource.getInputStream()))) {
+      reader.lines().map(String::trim).forEach(badWords::add);
     }
   }
 
