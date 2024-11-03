@@ -69,8 +69,9 @@ public class Users {
         this.type = type;
     }
 
-    public void updateAdditionalInfo(Integer age) {
+    public void updateAdditionalInfo(Integer age, String username) {
         this.age = age;
+        this.username = username;
     }
 
     public void updateRole(Role role) {
