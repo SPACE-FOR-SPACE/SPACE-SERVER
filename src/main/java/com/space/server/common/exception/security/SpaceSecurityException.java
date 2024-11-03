@@ -11,7 +11,7 @@ public class SpaceSecurityException extends AuthenticationException {
 
     public SpaceSecurityException(HttpStatus status, String errorCode, String message) {
         super(message);
-        this.errorCode = errorCode;
         this.status = status;
+        this.errorCode = errorCode;
     }
 }
