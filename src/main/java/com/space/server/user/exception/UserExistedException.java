@@ -6,6 +6,6 @@ import org.springframework.http.HttpStatus;
 public class UserExistedException extends SpaceException {
 
   public UserExistedException() {
-    super(HttpStatus.CONFLICT, "유저가 이미 존재합니다.");
+    super(HttpStatus.CONFLICT, "USER_EXISTED", "유저가 이미 존재합니다.");
   }
 }
