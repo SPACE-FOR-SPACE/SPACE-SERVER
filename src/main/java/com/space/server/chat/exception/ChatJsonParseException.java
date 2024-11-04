@@ -5,6 +5,6 @@ import org.springframework.http.HttpStatus;
 
 public class ChatJsonParseException extends SpaceException {
   public ChatJsonParseException() {
-    super(HttpStatus.BAD_REQUEST, "INVALID_CHAT_JSON", "JSON이 올바르지 않습니다.");
+    super(HttpStatus.INTERNAL_SERVER_ERROR, "INVALID_CHAT_JSON", "JSON이 올바르지 않습니다.");
   }
 }
