@@ -6,6 +6,6 @@ import org.springframework.http.HttpStatus;
 public class MoveNotFitException extends SpaceException {
 
   public MoveNotFitException() {
-    super(HttpStatus.BAD_REQUEST, "move가 올바르지 않습니다.");
+    super(HttpStatus.INTERNAL_SERVER_ERROR, "INVALID_MOVE", "move가 올바르지 않습니다.");
   }
 }

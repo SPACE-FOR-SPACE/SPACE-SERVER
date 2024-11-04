@@ -2,7 +2,6 @@ package com.space.server.common.exception;
 
 import com.space.server.common.exception.security.SpaceSecurityException;
 import com.space.server.common.logging.LoggingUtils;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -41,40 +40,23 @@ public class GlobalExceptionHandler {
         LoggingUtils.warn(exception);
 
         return ResponseEntity.status(400)
-            .body(ErrorResponse.from(400, "INVALID_INPUT" ,exception.getMessage()));
+                .body(ErrorResponse.from(400, "TYPE_MISMATCH", "파라미터 타입이 일치하지 않습니다."));
     }
-
 
     @ExceptionHandler({IllegalArgumentException.class})
     public ResponseEntity<ErrorResponse> handleDefineException(IllegalArgumentException exception) {
         LoggingUtils.warn(exception);
 
-        String message;
-
-        if (exception.getCause() == null) {
-            message = "";
-        } else {
-            message = exception.getCause().getMessage();
-        }
-
         return ResponseEntity.status(400)
-                .body(ErrorResponse.from(400, "INVALID_INPUT" ,"잘못된 값이 들어왔습니다."));
+                .body(ErrorResponse.from(400, "INVALID_ARGUMENT", "잘못된 값이 들어왔습니다."));
     }
 
     @ExceptionHandler({NullPointerException.class})
     public ResponseEntity<ErrorResponse> handleDefineException(NullPointerException exception) {
         LoggingUtils.warn(exception);
 
-        String message;
-
-        if (exception.getCause() == null) {
-            message = "";
-        } else {
-            message = exception.getCause().getMessage();
-        }
-
         return ResponseEntity.status(400)
-            .body(ErrorResponse.from(400, "INVALID_INPUT" ,message));
+                .body(ErrorResponse.from(400, "NULL_VALUE", "필수 값이 누락되었습니다."));
     }
 
     @ExceptionHandler({RuntimeException.class})

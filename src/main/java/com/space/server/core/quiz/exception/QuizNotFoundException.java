@@ -6,6 +6,6 @@ import org.springframework.http.HttpStatus;
 public class QuizNotFoundException extends SpaceException {
 
   public QuizNotFoundException() {
-    super(HttpStatus.NOT_FOUND, "문제를 찾을 수 없습니다.");
+    super(HttpStatus.NOT_FOUND, "QUIZ_NOT_FOUND", "문제를 찾을 수 없습니다.");
   }
 }

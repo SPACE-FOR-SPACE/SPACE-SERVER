@@ -8,6 +8,12 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public class SpaceException extends RuntimeException {
     private final HttpStatus status;
-    private final String message;
+    private final String errorCode;
+
+    public SpaceException(HttpStatus status, String errorCode, String message) {
+        super(message);
+        this.status = status;
+        this.errorCode = errorCode;
+    }
 }
 
