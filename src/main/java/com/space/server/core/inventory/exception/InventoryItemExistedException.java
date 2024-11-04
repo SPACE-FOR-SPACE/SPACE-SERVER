@@ -6,6 +6,6 @@ import org.springframework.http.HttpStatus;
 public class InventoryItemExistedException extends SpaceException {
 
   public InventoryItemExistedException() {
-    super(HttpStatus.FOUND, "INVENTORY_ITEM_EXISTED", "아이템을 이미 가지고 있습니다.");
+    super(HttpStatus.CONFLICT, "INVENTORY_ITEM_EXISTED", "아이템을 이미 가지고 있습니다.");
   }
 }
