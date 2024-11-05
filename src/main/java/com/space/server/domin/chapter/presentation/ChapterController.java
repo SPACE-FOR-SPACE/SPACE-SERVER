@@ -1,7 +1,7 @@
-package com.space.server.core.chapter.presentation;
+package com.space.server.domin.chapter.presentation;
 
-import com.space.server.core.chapter.presentation.dto.response.ChapterResponse;
-import com.space.server.core.chapter.service.QueryChapterService;
+import com.space.server.domin.chapter.presentation.dto.response.ChapterResponse;
+import com.space.server.domin.chapter.service.QueryChapterService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;

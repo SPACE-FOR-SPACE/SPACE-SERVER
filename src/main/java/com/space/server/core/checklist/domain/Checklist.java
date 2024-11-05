@@ -1,6 +1,6 @@
 package com.space.server.core.checklist.domain;
 
-import com.space.server.core.chapter.domain.Chapter;
+import com.space.server.domin.chapter.domain.Chapter;
 import com.space.server.core.quiz.domain.Quiz;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;

@@ -1,7 +1,7 @@
-package com.space.server.core.chapter.service;
+package com.space.server.domin.chapter.service;
 
-import com.space.server.core.chapter.domain.Chapter;
-import com.space.server.core.chapter.service.implementation.ChapterReader;
+import com.space.server.domin.chapter.domain.Chapter;
+import com.space.server.domin.chapter.service.implementation.ChapterReader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

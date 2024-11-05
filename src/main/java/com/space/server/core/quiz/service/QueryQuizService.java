@@ -1,7 +1,7 @@
 package com.space.server.core.quiz.service;
 
-import com.space.server.core.chapter.domain.Chapter;
-import com.space.server.core.chapter.service.implementation.ChapterReader;
+import com.space.server.domin.chapter.domain.Chapter;
+import com.space.server.domin.chapter.service.implementation.ChapterReader;
 import com.space.server.core.quiz.domain.Quiz;
 import com.space.server.core.quiz.service.implementation.QuizReader;
 import lombok.RequiredArgsConstructor;

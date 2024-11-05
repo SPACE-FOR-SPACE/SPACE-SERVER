@@ -1,6 +1,6 @@
 package com.space.server.core.quiz.service;
 
-import com.space.server.core.chapter.service.implementation.ChapterReader;
+import com.space.server.domin.chapter.service.implementation.ChapterReader;
 import com.space.server.core.quiz.domain.Quiz;
 import com.space.server.core.quiz.service.implementation.QuizCreator;
 import com.space.server.core.quiz.service.implementation.QuizDeleter;

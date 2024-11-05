@@ -1,4 +1,4 @@
-package com.space.server.core.chapter.exception;
+package com.space.server.domin.chapter.exception;
 
 import com.space.server.common.exception.SpaceException;
 import org.springframework.http.HttpStatus;

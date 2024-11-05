@@ -1,4 +1,4 @@
-package com.space.server.core.chapter.domain;
+package com.space.server.domin.chapter.domain;
 
 import io.hypersistence.utils.hibernate.type.basic.PostgreSQLHStoreType;
 import io.swagger.v3.oas.annotations.media.Schema;

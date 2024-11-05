@@ -1,6 +1,6 @@
-package com.space.server.core.chapter.presentation.dto.response;
+package com.space.server.domin.chapter.presentation.dto.response;
 
-import com.space.server.core.chapter.domain.Chapter;
+import com.space.server.domin.chapter.domain.Chapter;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Map;

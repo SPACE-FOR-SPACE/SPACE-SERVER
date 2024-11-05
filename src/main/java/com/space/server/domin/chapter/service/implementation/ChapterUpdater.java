@@ -1,6 +1,6 @@
-package com.space.server.core.chapter.service.implementation;
+package com.space.server.domin.chapter.service.implementation;
 
-import com.space.server.core.chapter.domain.Chapter;
+import com.space.server.domin.chapter.domain.Chapter;
 import org.springframework.stereotype.Service;
 
 @Service
