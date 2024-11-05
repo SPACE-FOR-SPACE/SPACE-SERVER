@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.space.server.domain.ai.service.dto.request.gpt.AiChat;
 import com.space.server.domain.ai.service.dto.request.gpt.AiRunsRequest;
 import com.space.server.domain.ai.service.dto.request.gpt.AiThreadRequest;
-import com.space.server.ai.service.dto.response.gpt.*;
 import com.space.server.domain.ai.service.dto.response.gpt.AiAllMessagesResponse;
 import com.space.server.domain.ai.service.dto.response.gpt.AiMessagesResponse;
 import com.space.server.domain.ai.service.dto.response.gpt.AiRunsResponse;
