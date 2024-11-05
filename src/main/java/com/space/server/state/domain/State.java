@@ -1,6 +1,6 @@
 package com.space.server.state.domain;
 
-import com.space.server.domin.quiz.domain.Quiz;
+import com.space.server.domain.quiz.domain.Quiz;
 import com.space.server.state.domain.value.Status;
 import com.space.server.user.domain.Users;
 import io.hypersistence.utils.hibernate.type.array.IntArrayType;
