@@ -1,4 +1,4 @@
-package com.space.server.oauth.service.dto;
+package com.space.server.common.oauth.service.dto;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

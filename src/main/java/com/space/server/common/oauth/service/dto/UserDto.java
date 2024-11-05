@@ -1,4 +1,4 @@
-package com.space.server.oauth.service.dto;
+package com.space.server.common.oauth.service.dto;
 
 import com.space.server.domain.user.domain.value.Role;
 import lombok.Builder;

@@ -1,7 +1,7 @@
 package com.space.server.common.jwt.util;
 
 import com.space.server.auth.service.dto.CustomUserDetails;
-import com.space.server.oauth.service.dto.CustomOAuth2User;
+import com.space.server.common.oauth.service.dto.CustomOAuth2User;
 import com.space.server.domain.user.domain.value.Role;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
