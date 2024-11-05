@@ -1,7 +1,7 @@
 package com.space.server.common.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.space.server.auth.domain.repository.RefreshRepository;
+import com.space.server.common.auth.domain.repository.RefreshRepository;
 import com.space.server.common.exception.security.SpaceSecurityExceptionFilter;
 import com.space.server.common.jwt.exception.CustomAccessDeniedException;
 import com.space.server.common.jwt.exception.UnauthenticatedAccessException;
@@ -9,8 +9,8 @@ import com.space.server.common.jwt.filter.CustomLogoutFilter;
 import com.space.server.common.jwt.filter.CustomJwtFilter;
 import com.space.server.common.jwt.filter.LoginFilter;
 import com.space.server.common.jwt.util.JwtUtil;
-import com.space.server.oauth.handler.CustomSuccessHandler;
-import com.space.server.oauth.service.CustomOAuth2UserService;
+import com.space.server.common.oauth.handler.CustomSuccessHandler;
+import com.space.server.common.oauth.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

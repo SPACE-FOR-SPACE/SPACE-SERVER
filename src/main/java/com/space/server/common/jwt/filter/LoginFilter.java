@@ -1,10 +1,10 @@
 package com.space.server.common.jwt.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.space.server.auth.service.dto.CustomUserDetails;
+import com.space.server.common.auth.service.dto.CustomUserDetails;
 import com.space.server.common.jwt.dto.LoginRequest;
 import com.space.server.common.jwt.util.JwtUtil;
-import com.space.server.user.domain.value.Role;
+import com.space.server.domain.user.domain.value.Role;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

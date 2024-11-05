@@ -1,13 +1,12 @@
 package com.space.server.common.jwt.filter;
 
-import com.space.server.auth.domain.repository.RefreshRepository;
+import com.space.server.common.auth.domain.repository.RefreshRepository;
 import com.space.server.common.jwt.util.JwtUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
