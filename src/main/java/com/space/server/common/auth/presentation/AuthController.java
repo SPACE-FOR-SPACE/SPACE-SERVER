@@ -1,10 +1,10 @@
-package com.space.server.auth.presentation;
+package com.space.server.common.auth.presentation;
 
-import com.space.server.auth.presentation.dto.request.AdditionalInfoRequest;
-import com.space.server.auth.presentation.dto.request.JoinUserRequest;
-import com.space.server.auth.service.implementation.AdditionalInfoUpdater;
-import com.space.server.auth.service.implementation.ReIssuer;
-import com.space.server.auth.service.implementation.UserJoiner;
+import com.space.server.common.auth.presentation.dto.request.AdditionalInfoRequest;
+import com.space.server.common.auth.presentation.dto.request.JoinUserRequest;
+import com.space.server.common.auth.service.implementation.AdditionalInfoUpdater;
+import com.space.server.common.auth.service.implementation.ReIssuer;
+import com.space.server.common.auth.service.implementation.UserJoiner;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,7 +12,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import static com.space.server.common.jwt.util.AuthenticationUtil.getMemberId;

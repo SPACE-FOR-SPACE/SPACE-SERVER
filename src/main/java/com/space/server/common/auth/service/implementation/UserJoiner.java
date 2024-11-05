@@ -1,6 +1,6 @@
-package com.space.server.auth.service.implementation;
+package com.space.server.common.auth.service.implementation;
 
-import com.space.server.auth.presentation.dto.request.JoinUserRequest;
+import com.space.server.common.auth.presentation.dto.request.JoinUserRequest;
 import com.space.server.domain.inventory.domain.Inventory;
 import com.space.server.domain.inventory.service.implementation.InventoryCreator;
 import com.space.server.domain.inventory.service.implementation.InventoryUpdater;
