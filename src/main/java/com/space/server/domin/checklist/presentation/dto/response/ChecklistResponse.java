@@ -1,6 +1,6 @@
-package com.space.server.core.checklist.presentation.dto.response;
+package com.space.server.domin.checklist.presentation.dto.response;
 
-import com.space.server.core.checklist.domain.Checklist;
+import com.space.server.domin.checklist.domain.Checklist;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 public record ChecklistResponse(

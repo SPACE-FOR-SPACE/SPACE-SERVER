@@ -1,4 +1,4 @@
-package com.space.server.core.checklist.exception;
+package com.space.server.domin.checklist.exception;
 
 import com.space.server.common.exception.SpaceException;
 import org.springframework.http.HttpStatus;

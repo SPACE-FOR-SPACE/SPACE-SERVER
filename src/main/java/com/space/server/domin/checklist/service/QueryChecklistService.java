@@ -1,7 +1,7 @@
-package com.space.server.core.checklist.service;
+package com.space.server.domin.checklist.service;
 
-import com.space.server.core.checklist.domain.Checklist;
-import com.space.server.core.checklist.service.implementation.ChecklistReader;
+import com.space.server.domin.checklist.domain.Checklist;
+import com.space.server.domin.checklist.service.implementation.ChecklistReader;
 import com.space.server.domin.quiz.domain.Quiz;
 import com.space.server.domin.quiz.service.implementation.QuizReader;
 import lombok.RequiredArgsConstructor;

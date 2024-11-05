@@ -1,7 +1,7 @@
-package com.space.server.core.checklist.presentation;
+package com.space.server.domin.checklist.presentation;
 
-import com.space.server.core.checklist.presentation.dto.response.ChecklistResponse;
-import com.space.server.core.checklist.service.QueryChecklistService;
+import com.space.server.domin.checklist.presentation.dto.response.ChecklistResponse;
+import com.space.server.domin.checklist.service.QueryChecklistService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;

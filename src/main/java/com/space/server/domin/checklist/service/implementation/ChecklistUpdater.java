@@ -1,6 +1,6 @@
-package com.space.server.core.checklist.service.implementation;
+package com.space.server.domin.checklist.service.implementation;
 
-import com.space.server.core.checklist.domain.Checklist;
+import com.space.server.domin.checklist.domain.Checklist;
 import org.springframework.stereotype.Service;
 
 @Service

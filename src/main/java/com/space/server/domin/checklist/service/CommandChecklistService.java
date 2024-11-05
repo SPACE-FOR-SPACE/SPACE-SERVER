@@ -1,10 +1,10 @@
-package com.space.server.core.checklist.service;
+package com.space.server.domin.checklist.service;
 
-import com.space.server.core.checklist.domain.Checklist;
-import com.space.server.core.checklist.service.implementation.ChecklistCreator;
-import com.space.server.core.checklist.service.implementation.ChecklistDeleter;
-import com.space.server.core.checklist.service.implementation.ChecklistReader;
-import com.space.server.core.checklist.service.implementation.ChecklistUpdater;
+import com.space.server.domin.checklist.domain.Checklist;
+import com.space.server.domin.checklist.service.implementation.ChecklistCreator;
+import com.space.server.domin.checklist.service.implementation.ChecklistDeleter;
+import com.space.server.domin.checklist.service.implementation.ChecklistReader;
+import com.space.server.domin.checklist.service.implementation.ChecklistUpdater;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

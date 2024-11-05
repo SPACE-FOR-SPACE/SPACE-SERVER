@@ -1,6 +1,6 @@
-package com.space.server.core.checklist.domain.repository;
+package com.space.server.domin.checklist.domain.repository;
 
-import com.space.server.core.checklist.domain.Checklist;
+import com.space.server.domin.checklist.domain.Checklist;
 import com.space.server.domin.quiz.domain.Quiz;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

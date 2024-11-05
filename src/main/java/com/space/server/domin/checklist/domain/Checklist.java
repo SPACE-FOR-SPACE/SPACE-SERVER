@@ -1,4 +1,4 @@
-package com.space.server.core.checklist.domain;
+package com.space.server.domin.checklist.domain;
 
 import com.space.server.domin.chapter.domain.Chapter;
 import com.space.server.domin.quiz.domain.Quiz;
