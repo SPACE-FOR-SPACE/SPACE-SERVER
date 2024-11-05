@@ -2,9 +2,9 @@ package com.space.server.oauth.handler;
 
 import com.space.server.common.jwt.util.JwtUtil;
 import com.space.server.oauth.service.dto.CustomOAuth2User;
-import com.space.server.user.domain.Users;
-import com.space.server.user.domain.repository.UserRepository;
-import com.space.server.user.domain.value.Role;
+import com.space.server.domain.user.domain.Users;
+import com.space.server.domain.user.domain.repository.UserRepository;
+import com.space.server.domain.user.domain.value.Role;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

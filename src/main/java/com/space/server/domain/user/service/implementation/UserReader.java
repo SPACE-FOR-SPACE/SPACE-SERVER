@@ -1,8 +1,8 @@
-package com.space.server.user.service.implementation;
+package com.space.server.domain.user.service.implementation;
 
-import com.space.server.user.domain.Users;
-import com.space.server.user.domain.repository.UserRepository;
-import com.space.server.user.exception.UserNotFoundException;
+import com.space.server.domain.user.domain.Users;
+import com.space.server.domain.user.domain.repository.UserRepository;
+import com.space.server.domain.user.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

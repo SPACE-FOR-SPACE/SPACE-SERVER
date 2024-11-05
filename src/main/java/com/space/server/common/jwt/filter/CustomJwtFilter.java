@@ -3,7 +3,7 @@ package com.space.server.common.jwt.filter;
 import com.space.server.common.jwt.exception.DuplicateLoginException;
 import com.space.server.common.jwt.exception.InvalidTokenException;
 import com.space.server.common.jwt.util.JwtUtil;
-import com.space.server.user.domain.value.Role;
+import com.space.server.domain.user.domain.value.Role;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

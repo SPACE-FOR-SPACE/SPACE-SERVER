@@ -1,6 +1,6 @@
-package com.space.server.user.domain.repository;
+package com.space.server.domain.user.domain.repository;
 
-import com.space.server.user.domain.Users;
+import com.space.server.domain.user.domain.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

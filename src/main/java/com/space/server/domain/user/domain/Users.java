@@ -1,6 +1,6 @@
-package com.space.server.user.domain;
+package com.space.server.domain.user.domain;
 
-import com.space.server.user.domain.value.Role;
+import com.space.server.domain.user.domain.value.Role;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

@@ -3,8 +3,8 @@ package com.space.server.domain.inventory.service.implementation;
 import com.space.server.domain.inventory.domain.repository.InventoryRepository;
 import com.space.server.domain.inventory.exception.InventoryItemExistedException;
 import com.space.server.domain.item.domain.Item;
-import com.space.server.user.domain.Users;
-import com.space.server.user.exception.InsufficientPointsException;
+import com.space.server.domain.user.domain.Users;
+import com.space.server.domain.user.exception.InsufficientPointsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

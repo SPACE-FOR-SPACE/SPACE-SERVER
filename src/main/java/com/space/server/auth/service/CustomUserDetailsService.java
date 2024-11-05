@@ -1,8 +1,8 @@
 package com.space.server.auth.service;
 
 import com.space.server.auth.service.dto.CustomUserDetails;
-import com.space.server.user.domain.Users;
-import com.space.server.user.domain.repository.UserRepository;
+import com.space.server.domain.user.domain.Users;
+import com.space.server.domain.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

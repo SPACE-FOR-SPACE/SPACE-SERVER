@@ -4,7 +4,7 @@ import com.space.server.auth.domain.repository.RefreshRepository;
 import com.space.server.common.jwt.exception.InvalidTokenException;
 import com.space.server.common.jwt.exception.RefreshTokenNotFoundException;
 import com.space.server.common.jwt.util.JwtUtil;
-import com.space.server.user.domain.value.Role;
+import com.space.server.domain.user.domain.value.Role;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

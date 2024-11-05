@@ -6,10 +6,10 @@ import com.space.server.domain.inventory.service.implementation.InventoryCreator
 import com.space.server.domain.inventory.service.implementation.InventoryUpdater;
 import com.space.server.domain.item.domain.Item;
 import com.space.server.domain.item.service.implementation.ItemReader;
-import com.space.server.user.domain.Users;
-import com.space.server.user.domain.repository.UserRepository;
-import com.space.server.user.domain.value.Role;
-import com.space.server.user.exception.UserExistedException;
+import com.space.server.domain.user.domain.Users;
+import com.space.server.domain.user.domain.repository.UserRepository;
+import com.space.server.domain.user.domain.value.Role;
+import com.space.server.domain.user.exception.UserExistedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

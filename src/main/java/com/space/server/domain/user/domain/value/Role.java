@@ -1,4 +1,4 @@
-package com.space.server.user.domain.value;
+package com.space.server.domain.user.domain.value;
 
 public enum Role {
     GUEST("ROLE_GUEST"),

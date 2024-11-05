@@ -1,7 +1,7 @@
 package com.space.server.auth.service.dto;
 
-import com.space.server.user.domain.Users;
-import com.space.server.user.domain.value.Role;
+import com.space.server.domain.user.domain.Users;
+import com.space.server.domain.user.domain.value.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

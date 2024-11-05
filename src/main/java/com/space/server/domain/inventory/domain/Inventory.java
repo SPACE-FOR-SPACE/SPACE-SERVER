@@ -1,7 +1,7 @@
 package com.space.server.domain.inventory.domain;
 
 import com.space.server.domain.item.domain.Item;
-import com.space.server.user.domain.Users;
+import com.space.server.domain.user.domain.Users;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

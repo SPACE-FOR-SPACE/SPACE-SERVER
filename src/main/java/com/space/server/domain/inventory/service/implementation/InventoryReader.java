@@ -4,7 +4,7 @@ import com.space.server.domain.inventory.domain.Inventory;
 import com.space.server.domain.inventory.domain.repository.InventoryRepository;
 import com.space.server.domain.inventory.exception.InventoryNotFoundException;
 import com.space.server.domain.item.domain.value.Category;
-import com.space.server.user.domain.Users;
+import com.space.server.domain.user.domain.Users;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -4,7 +4,7 @@ import com.space.server.auth.domain.Refresh;
 import com.space.server.auth.domain.repository.RefreshRepository;
 import com.space.server.common.jwt.exception.ExpiredRefreshTokenException;
 import com.space.server.common.jwt.exception.ExpiredTokenException;
-import com.space.server.user.domain.value.Role;
+import com.space.server.domain.user.domain.value.Role;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.Cookie;

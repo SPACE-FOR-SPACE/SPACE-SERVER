@@ -1,9 +1,9 @@
 package com.space.server.oauth.service;
 
 import com.space.server.oauth.service.dto.*;
-import com.space.server.user.domain.Users;
-import com.space.server.user.domain.repository.UserRepository;
-import com.space.server.user.domain.value.Role;
+import com.space.server.domain.user.domain.Users;
+import com.space.server.domain.user.domain.repository.UserRepository;
+import com.space.server.domain.user.domain.value.Role;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;

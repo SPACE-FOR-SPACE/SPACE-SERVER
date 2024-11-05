@@ -4,7 +4,7 @@ import com.space.server.domain.quiz.domain.Quiz;
 import com.space.server.domain.state.domain.repository.StateRepository;
 import com.space.server.domain.state.domain.State;
 import com.space.server.domain.state.exception.StateNotFoundException;
-import com.space.server.user.domain.Users;
+import com.space.server.domain.user.domain.Users;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

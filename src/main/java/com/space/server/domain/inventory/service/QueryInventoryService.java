@@ -2,8 +2,8 @@ package com.space.server.domain.inventory.service;
 
 import com.space.server.domain.inventory.domain.Inventory;
 import com.space.server.domain.inventory.service.implementation.InventoryReader;
-import com.space.server.user.domain.Users;
-import com.space.server.user.domain.repository.UserRepository;
+import com.space.server.domain.user.domain.Users;
+import com.space.server.domain.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,6 +1,6 @@
 package com.space.server.oauth.service.dto;
 
-import com.space.server.user.domain.value.Role;
+import com.space.server.domain.user.domain.value.Role;
 import lombok.Builder;
 
 public record UserDto(

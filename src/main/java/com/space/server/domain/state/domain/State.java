@@ -2,7 +2,7 @@ package com.space.server.domain.state.domain;
 
 import com.space.server.domain.quiz.domain.Quiz;
 import com.space.server.domain.state.domain.value.Status;
-import com.space.server.user.domain.Users;
+import com.space.server.domain.user.domain.Users;
 import io.hypersistence.utils.hibernate.type.array.IntArrayType;
 import io.hypersistence.utils.hibernate.type.array.StringArrayType;
 import jakarta.persistence.*;
