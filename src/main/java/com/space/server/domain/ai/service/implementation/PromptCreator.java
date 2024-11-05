@@ -1,4 +1,4 @@
-package com.space.server.ai.service.implementation;
+package com.space.server.domain.ai.service.implementation;
 
 import com.space.server.domain.chat.domain.value.Type;
 import com.space.server.domain.chapter.domain.Chapter;

@@ -1,10 +1,14 @@
-package com.space.server.ai.service.implementation;
+package com.space.server.domain.ai.service.implementation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.space.server.ai.service.dto.request.gpt.AiChat;
-import com.space.server.ai.service.dto.request.gpt.AiRunsRequest;
-import com.space.server.ai.service.dto.request.gpt.AiThreadRequest;
+import com.space.server.domain.ai.service.dto.request.gpt.AiChat;
+import com.space.server.domain.ai.service.dto.request.gpt.AiRunsRequest;
+import com.space.server.domain.ai.service.dto.request.gpt.AiThreadRequest;
 import com.space.server.ai.service.dto.response.gpt.*;
+import com.space.server.domain.ai.service.dto.response.gpt.AiAllMessagesResponse;
+import com.space.server.domain.ai.service.dto.response.gpt.AiMessagesResponse;
+import com.space.server.domain.ai.service.dto.response.gpt.AiRunsResponse;
+import com.space.server.domain.ai.service.dto.response.gpt.AiThreadResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;

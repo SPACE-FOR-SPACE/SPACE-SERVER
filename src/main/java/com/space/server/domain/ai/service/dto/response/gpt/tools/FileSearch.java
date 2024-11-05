@@ -1,4 +1,4 @@
-package com.space.server.ai.service.dto.response.gpt.tools;
+package com.space.server.domain.ai.service.dto.response.gpt.tools;
 
 import java.util.Map;
 

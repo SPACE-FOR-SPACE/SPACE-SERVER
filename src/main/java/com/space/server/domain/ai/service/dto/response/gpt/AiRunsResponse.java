@@ -1,6 +1,6 @@
-package com.space.server.ai.service.dto.response.gpt;
+package com.space.server.domain.ai.service.dto.response.gpt;
 
-import com.space.server.ai.service.dto.response.gpt.tools.FileSearchTool;
+import com.space.server.domain.ai.service.dto.response.gpt.tools.FileSearchTool;
 
 import java.util.List;
 import java.util.Map;

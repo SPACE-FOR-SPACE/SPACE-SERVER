@@ -1,6 +1,6 @@
 package com.space.server.domain.chat.presentation;
 
-import com.space.server.ai.service.dto.response.AiResponse;
+import com.space.server.domain.ai.service.dto.response.AiResponse;
 import com.space.server.domain.chat.presentation.dto.request.CreateChatRequest;
 import com.space.server.domain.chat.presentation.dto.response.ChatResponse;
 import com.space.server.domain.chat.service.CommandChatService;

@@ -1,6 +1,6 @@
 package com.space.server.domain.chat.service.implementation;
 
-import com.space.server.ai.service.dto.response.AiResponse;
+import com.space.server.domain.ai.service.dto.response.AiResponse;
 import com.space.server.domain.chat.exception.ChatJsonParseException;
 import com.space.server.domain.chat.exception.MoveNotFitException;
 import lombok.extern.slf4j.Slf4j;

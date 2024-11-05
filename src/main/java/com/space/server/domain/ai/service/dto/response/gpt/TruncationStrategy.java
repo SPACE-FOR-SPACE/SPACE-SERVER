@@ -1,4 +1,4 @@
-package com.space.server.ai.service.dto.response.gpt;
+package com.space.server.domain.ai.service.dto.response.gpt;
 
 public record TruncationStrategy(
     String type,
