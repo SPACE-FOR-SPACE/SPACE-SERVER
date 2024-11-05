@@ -4,7 +4,7 @@ import com.space.server.domain.chat.domain.Chat;
 import com.space.server.domain.chat.presentation.dto.response.ChatResponse;
 import com.space.server.domain.chat.service.implementation.ChatReader;
 import com.space.server.domain.quiz.service.implementation.QuizReader;
-import com.space.server.state.service.implementation.StateReader;
+import com.space.server.domain.state.service.implementation.StateReader;
 import com.space.server.user.service.implementation.UserReader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

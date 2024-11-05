@@ -1,7 +1,7 @@
 package com.space.server.domain.chat.domain;
 
 import com.space.server.domain.chat.domain.value.Type;
-import com.space.server.state.domain.State;
+import com.space.server.domain.state.domain.State;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

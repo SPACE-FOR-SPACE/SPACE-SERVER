@@ -1,8 +1,8 @@
-package com.space.server.state.presentation.dto.response;
+package com.space.server.domain.state.presentation.dto.response;
 
 import com.space.server.domain.quiz.domain.Quiz;
-import com.space.server.state.domain.State;
-import com.space.server.state.domain.value.Status;
+import com.space.server.domain.state.domain.value.Status;
+import com.space.server.domain.state.domain.State;
 import com.space.server.user.domain.Users;
 
 public record StateResponse(

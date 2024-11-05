@@ -1,8 +1,8 @@
-package com.space.server.state.presentation;
+package com.space.server.domain.state.presentation;
 
-import com.space.server.state.presentation.dto.response.StateResponse;
-import com.space.server.state.service.CommandStateService;
-import com.space.server.state.service.QueryStateService;
+import com.space.server.domain.state.presentation.dto.response.StateResponse;
+import com.space.server.domain.state.service.CommandStateService;
+import com.space.server.domain.state.service.QueryStateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

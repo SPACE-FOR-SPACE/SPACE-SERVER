@@ -1,7 +1,7 @@
-package com.space.server.state.service;
+package com.space.server.domain.state.service;
 
-import com.space.server.state.domain.State;
-import com.space.server.state.service.implementation.StateReader;
+import com.space.server.domain.state.domain.State;
+import com.space.server.domain.state.service.implementation.StateReader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
