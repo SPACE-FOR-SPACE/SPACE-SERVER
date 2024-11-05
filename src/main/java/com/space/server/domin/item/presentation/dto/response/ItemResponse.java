@@ -1,7 +1,7 @@
-package com.space.server.core.item.presentation.dto.response;
+package com.space.server.domin.item.presentation.dto.response;
 
-import com.space.server.core.item.domain.Item;
-import com.space.server.core.item.domain.value.Category;
+import com.space.server.domin.item.domain.Item;
+import com.space.server.domin.item.domain.value.Category;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 

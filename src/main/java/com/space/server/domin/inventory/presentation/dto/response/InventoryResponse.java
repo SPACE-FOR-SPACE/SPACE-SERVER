@@ -1,7 +1,7 @@
 package com.space.server.domin.inventory.presentation.dto.response;
 
 import com.space.server.domin.inventory.domain.Inventory;
-import com.space.server.core.item.domain.value.Category;
+import com.space.server.domin.item.domain.value.Category;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 

@@ -1,6 +1,6 @@
-package com.space.server.core.item.domain;
+package com.space.server.domin.item.domain;
 
-import com.space.server.core.item.domain.value.Category;
+import com.space.server.domin.item.domain.value.Category;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

@@ -1,6 +1,6 @@
 package com.space.server.domin.inventory.domain;
 
-import com.space.server.core.item.domain.Item;
+import com.space.server.domin.item.domain.Item;
 import com.space.server.user.domain.Users;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;

@@ -1,9 +1,9 @@
-package com.space.server.core.item.presentation;
+package com.space.server.domin.item.presentation;
 
 import com.space.server.domin.inventory.service.CommandInventoryService;
-import com.space.server.core.item.presentation.converter.CategoryConverter;
-import com.space.server.core.item.presentation.dto.response.ItemResponse;
-import com.space.server.core.item.service.QueryItemService;
+import com.space.server.domin.item.presentation.converter.CategoryConverter;
+import com.space.server.domin.item.presentation.dto.response.ItemResponse;
+import com.space.server.domin.item.service.QueryItemService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;

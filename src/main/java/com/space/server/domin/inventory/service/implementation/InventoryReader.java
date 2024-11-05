@@ -3,7 +3,7 @@ package com.space.server.domin.inventory.service.implementation;
 import com.space.server.domin.inventory.domain.Inventory;
 import com.space.server.domin.inventory.domain.repository.InventoryRepository;
 import com.space.server.domin.inventory.exception.InventoryNotFoundException;
-import com.space.server.core.item.domain.value.Category;
+import com.space.server.domin.item.domain.value.Category;
 import com.space.server.user.domain.Users;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

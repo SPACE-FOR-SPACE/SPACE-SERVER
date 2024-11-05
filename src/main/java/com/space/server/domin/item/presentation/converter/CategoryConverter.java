@@ -1,6 +1,6 @@
-package com.space.server.core.item.presentation.converter;
+package com.space.server.domin.item.presentation.converter;
 
-import com.space.server.core.item.domain.value.Category;
+import com.space.server.domin.item.domain.value.Category;
 import org.springframework.stereotype.Component;
 
 @Component

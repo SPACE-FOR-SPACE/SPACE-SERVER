@@ -1,7 +1,7 @@
-package com.space.server.core.item.service.implementation;
+package com.space.server.domin.item.service.implementation;
 
-import com.space.server.core.item.domain.Item;
-import com.space.server.core.item.domain.repository.ItemRepository;
+import com.space.server.domin.item.domain.Item;
+import com.space.server.domin.item.domain.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

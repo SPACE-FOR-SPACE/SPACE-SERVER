@@ -1,7 +1,7 @@
-package com.space.server.core.item.domain.repository;
+package com.space.server.domin.item.domain.repository;
 
-import com.space.server.core.item.domain.Item;
-import com.space.server.core.item.domain.value.Category;
+import com.space.server.domin.item.domain.Item;
+import com.space.server.domin.item.domain.value.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
