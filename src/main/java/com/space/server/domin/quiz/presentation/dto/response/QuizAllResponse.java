@@ -1,6 +1,6 @@
-package com.space.server.core.quiz.presentation.dto.response;
+package com.space.server.domin.quiz.presentation.dto.response;
 
-import com.space.server.core.quiz.domain.Quiz;
+import com.space.server.domin.quiz.domain.Quiz;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 public record QuizAllResponse(

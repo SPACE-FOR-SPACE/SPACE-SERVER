@@ -1,6 +1,6 @@
 package com.space.server.state.service.implementation;
 
-import com.space.server.core.quiz.domain.Quiz;
+import com.space.server.domin.quiz.domain.Quiz;
 import com.space.server.state.domain.State;
 import com.space.server.state.domain.repository.StateRepository;
 import com.space.server.state.exception.StateNotFoundException;

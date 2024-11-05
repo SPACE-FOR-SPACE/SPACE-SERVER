@@ -3,7 +3,7 @@ package com.space.server.chat.service;
 import com.space.server.chat.domain.Chat;
 import com.space.server.chat.presentation.dto.response.ChatResponse;
 import com.space.server.chat.service.implementation.ChatReader;
-import com.space.server.core.quiz.service.implementation.QuizReader;
+import com.space.server.domin.quiz.service.implementation.QuizReader;
 import com.space.server.state.service.implementation.StateReader;
 import com.space.server.user.service.implementation.UserReader;
 import lombok.RequiredArgsConstructor;

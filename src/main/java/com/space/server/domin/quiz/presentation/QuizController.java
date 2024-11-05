@@ -1,8 +1,8 @@
-package com.space.server.core.quiz.presentation;
+package com.space.server.domin.quiz.presentation;
 
-import com.space.server.core.quiz.presentation.dto.response.QuizAllResponse;
-import com.space.server.core.quiz.presentation.dto.response.QuizResponse;
-import com.space.server.core.quiz.service.QueryQuizService;
+import com.space.server.domin.quiz.presentation.dto.response.QuizAllResponse;
+import com.space.server.domin.quiz.presentation.dto.response.QuizResponse;
+import com.space.server.domin.quiz.service.QueryQuizService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;

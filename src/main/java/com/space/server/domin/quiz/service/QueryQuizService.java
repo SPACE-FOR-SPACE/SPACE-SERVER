@@ -1,9 +1,9 @@
-package com.space.server.core.quiz.service;
+package com.space.server.domin.quiz.service;
 
 import com.space.server.domin.chapter.domain.Chapter;
 import com.space.server.domin.chapter.service.implementation.ChapterReader;
-import com.space.server.core.quiz.domain.Quiz;
-import com.space.server.core.quiz.service.implementation.QuizReader;
+import com.space.server.domin.quiz.domain.Quiz;
+import com.space.server.domin.quiz.service.implementation.QuizReader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

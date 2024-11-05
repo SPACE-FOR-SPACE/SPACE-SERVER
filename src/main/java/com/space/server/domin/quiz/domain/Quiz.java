@@ -1,7 +1,7 @@
-package com.space.server.core.quiz.domain;
+package com.space.server.domin.quiz.domain;
 
 import com.space.server.domin.chapter.domain.Chapter;
-import com.space.server.core.quiz.domain.value.CharacterDirection;
+import com.space.server.domin.quiz.domain.value.CharacterDirection;
 import io.hypersistence.utils.hibernate.type.array.IntArrayType;
 import io.hypersistence.utils.hibernate.type.basic.PostgreSQLHStoreType;
 import io.swagger.v3.oas.annotations.media.Schema;

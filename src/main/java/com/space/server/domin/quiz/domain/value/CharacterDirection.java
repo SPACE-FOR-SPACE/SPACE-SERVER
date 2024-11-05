@@ -1,4 +1,4 @@
-package com.space.server.core.quiz.domain.value;
+package com.space.server.domin.quiz.domain.value;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

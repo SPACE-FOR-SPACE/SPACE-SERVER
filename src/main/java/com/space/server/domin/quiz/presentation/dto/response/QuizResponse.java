@@ -1,8 +1,8 @@
-package com.space.server.core.quiz.presentation.dto.response;
+package com.space.server.domin.quiz.presentation.dto.response;
 
 import com.space.server.domin.chapter.presentation.dto.response.ChapterResponse;
-import com.space.server.core.quiz.domain.Quiz;
-import com.space.server.core.quiz.domain.value.CharacterDirection;
+import com.space.server.domin.quiz.domain.Quiz;
+import com.space.server.domin.quiz.domain.value.CharacterDirection;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Map;

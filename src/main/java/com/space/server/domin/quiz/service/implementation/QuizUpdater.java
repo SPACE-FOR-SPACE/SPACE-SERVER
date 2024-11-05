@@ -1,6 +1,6 @@
-package com.space.server.core.quiz.service.implementation;
+package com.space.server.domin.quiz.service.implementation;
 
-import com.space.server.core.quiz.domain.Quiz;
+import com.space.server.domin.quiz.domain.Quiz;
 import org.springframework.stereotype.Service;
 
 @Service
