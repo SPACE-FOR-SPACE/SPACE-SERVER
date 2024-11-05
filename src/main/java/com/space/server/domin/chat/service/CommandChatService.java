@@ -1,4 +1,4 @@
-package com.space.server.chat.service;
+package com.space.server.domin.chat.service;
 
 import com.space.server.ai.service.dto.request.gpt.*;
 import com.space.server.ai.service.dto.response.AiResponse;
@@ -8,13 +8,13 @@ import com.space.server.ai.service.dto.response.gpt.AiRunsResponse;
 import com.space.server.ai.service.dto.response.gpt.AiThreadResponse;
 import com.space.server.ai.service.implementation.ChatCompleter;
 import com.space.server.ai.service.implementation.PromptCreator;
-import com.space.server.chat.domain.Chat;
-import com.space.server.chat.domain.value.Type;
-import com.space.server.chat.presentation.dto.request.CreateChatRequest;
-import com.space.server.chat.service.implementation.ChatCreator;
-import com.space.server.chat.service.implementation.ChatReader;
-import com.space.server.chat.service.implementation.AiResponseJsonParsing;
-import com.space.server.chat.service.implementation.ChatValidator;
+import com.space.server.domin.chat.domain.Chat;
+import com.space.server.domin.chat.domain.value.Type;
+import com.space.server.domin.chat.presentation.dto.request.CreateChatRequest;
+import com.space.server.domin.chat.service.implementation.ChatCreator;
+import com.space.server.domin.chat.service.implementation.ChatReader;
+import com.space.server.domin.chat.service.implementation.AiResponseJsonParsing;
+import com.space.server.domin.chat.service.implementation.ChatValidator;
 import com.space.server.domin.chapter.domain.Chapter;
 import com.space.server.domin.chapter.service.implementation.ChapterReader;
 import com.space.server.domin.checklist.domain.Checklist;

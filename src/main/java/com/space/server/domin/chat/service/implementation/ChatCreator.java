@@ -1,7 +1,7 @@
-package com.space.server.chat.service.implementation;
+package com.space.server.domin.chat.service.implementation;
 
-import com.space.server.chat.domain.Chat;
-import com.space.server.chat.domain.repository.ChatRepository;
+import com.space.server.domin.chat.domain.Chat;
+import com.space.server.domin.chat.domain.repository.ChatRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

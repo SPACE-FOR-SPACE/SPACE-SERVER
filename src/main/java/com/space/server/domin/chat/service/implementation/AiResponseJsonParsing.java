@@ -1,8 +1,8 @@
-package com.space.server.chat.service.implementation;
+package com.space.server.domin.chat.service.implementation;
 
 import com.space.server.ai.service.dto.response.AiResponse;
-import com.space.server.chat.exception.ChatJsonParseException;
-import com.space.server.chat.exception.MoveNotFitException;
+import com.space.server.domin.chat.exception.ChatJsonParseException;
+import com.space.server.domin.chat.exception.MoveNotFitException;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -10,7 +10,6 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

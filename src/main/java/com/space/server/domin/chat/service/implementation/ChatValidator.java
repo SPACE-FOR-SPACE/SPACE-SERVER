@@ -1,7 +1,7 @@
-package com.space.server.chat.service.implementation;
+package com.space.server.domin.chat.service.implementation;
 
-import com.space.server.chat.exception.ChatNotBadWordException;
-import com.space.server.chat.exception.ChatNotEnglishException;
+import com.space.server.domin.chat.exception.ChatNotBadWordException;
+import com.space.server.domin.chat.exception.ChatNotEnglishException;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 

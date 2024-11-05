@@ -1,6 +1,6 @@
-package com.space.server.chat.domain;
+package com.space.server.domin.chat.domain;
 
-import com.space.server.chat.domain.value.Type;
+import com.space.server.domin.chat.domain.value.Type;
 import com.space.server.state.domain.State;
 import jakarta.persistence.*;
 import lombok.AccessLevel;

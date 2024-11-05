@@ -1,10 +1,10 @@
-package com.space.server.chat.presentation;
+package com.space.server.domin.chat.presentation;
 
 import com.space.server.ai.service.dto.response.AiResponse;
-import com.space.server.chat.presentation.dto.request.CreateChatRequest;
-import com.space.server.chat.presentation.dto.response.ChatResponse;
-import com.space.server.chat.service.CommandChatService;
-import com.space.server.chat.service.QueryChatService;
+import com.space.server.domin.chat.presentation.dto.request.CreateChatRequest;
+import com.space.server.domin.chat.presentation.dto.response.ChatResponse;
+import com.space.server.domin.chat.service.CommandChatService;
+import com.space.server.domin.chat.service.QueryChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

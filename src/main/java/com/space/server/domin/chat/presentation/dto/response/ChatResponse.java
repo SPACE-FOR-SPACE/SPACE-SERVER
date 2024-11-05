@@ -1,4 +1,4 @@
-package com.space.server.chat.presentation.dto.response;
+package com.space.server.domin.chat.presentation.dto.response;
 
 public record ChatResponse(
     Integer request_order,

@@ -1,6 +1,6 @@
-package com.space.server.chat.domain.repository;
+package com.space.server.domin.chat.domain.repository;
 
-import com.space.server.chat.domain.Chat;
+import com.space.server.domin.chat.domain.Chat;
 import com.space.server.state.domain.State;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

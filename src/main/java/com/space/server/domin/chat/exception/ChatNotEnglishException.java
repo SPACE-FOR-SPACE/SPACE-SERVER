@@ -1,4 +1,4 @@
-package com.space.server.chat.exception;
+package com.space.server.domin.chat.exception;
 
 import com.space.server.common.exception.SpaceException;
 import org.springframework.http.HttpStatus;
