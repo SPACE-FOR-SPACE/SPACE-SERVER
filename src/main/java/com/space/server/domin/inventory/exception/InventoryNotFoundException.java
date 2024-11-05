@@ -1,4 +1,4 @@
-package com.space.server.core.inventory.exception;
+package com.space.server.domin.inventory.exception;
 
 import com.space.server.common.exception.SpaceException;
 import org.springframework.http.HttpStatus;

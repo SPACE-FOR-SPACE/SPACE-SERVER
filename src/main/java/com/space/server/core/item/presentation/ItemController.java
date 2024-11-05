@@ -1,6 +1,6 @@
 package com.space.server.core.item.presentation;
 
-import com.space.server.core.inventory.service.CommandInventoryService;
+import com.space.server.domin.inventory.service.CommandInventoryService;
 import com.space.server.core.item.presentation.converter.CategoryConverter;
 import com.space.server.core.item.presentation.dto.response.ItemResponse;
 import com.space.server.core.item.service.QueryItemService;

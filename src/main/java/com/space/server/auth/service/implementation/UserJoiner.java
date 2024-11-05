@@ -1,9 +1,9 @@
 package com.space.server.auth.service.implementation;
 
 import com.space.server.auth.presentation.dto.request.JoinUserRequest;
-import com.space.server.core.inventory.domain.Inventory;
-import com.space.server.core.inventory.service.implementation.InventoryCreator;
-import com.space.server.core.inventory.service.implementation.InventoryUpdater;
+import com.space.server.domin.inventory.domain.Inventory;
+import com.space.server.domin.inventory.service.implementation.InventoryCreator;
+import com.space.server.domin.inventory.service.implementation.InventoryUpdater;
 import com.space.server.core.item.domain.Item;
 import com.space.server.core.item.service.implementation.ItemReader;
 import com.space.server.user.domain.Users;

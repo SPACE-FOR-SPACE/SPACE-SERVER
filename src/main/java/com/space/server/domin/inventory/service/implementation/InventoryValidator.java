@@ -1,7 +1,7 @@
-package com.space.server.core.inventory.service.implementation;
+package com.space.server.domin.inventory.service.implementation;
 
-import com.space.server.core.inventory.domain.repository.InventoryRepository;
-import com.space.server.core.inventory.exception.InventoryItemExistedException;
+import com.space.server.domin.inventory.domain.repository.InventoryRepository;
+import com.space.server.domin.inventory.exception.InventoryItemExistedException;
 import com.space.server.core.item.domain.Item;
 import com.space.server.user.domain.Users;
 import com.space.server.user.exception.InsufficientPointsException;

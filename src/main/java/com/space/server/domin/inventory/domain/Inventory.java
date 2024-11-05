@@ -1,4 +1,4 @@
-package com.space.server.core.inventory.domain;
+package com.space.server.domin.inventory.domain;
 
 import com.space.server.core.item.domain.Item;
 import com.space.server.user.domain.Users;

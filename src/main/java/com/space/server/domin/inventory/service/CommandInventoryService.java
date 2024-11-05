@@ -1,10 +1,11 @@
-package com.space.server.core.inventory.service;
+package com.space.server.domin.inventory.service;
 
-import com.space.server.core.inventory.domain.Inventory;
+import com.space.server.domin.inventory.domain.Inventory;
 import com.space.server.core.inventory.service.implementation.*;
 import com.space.server.core.item.domain.Item;
 import com.space.server.core.item.domain.value.Category;
 import com.space.server.core.item.service.implementation.ItemReader;
+import com.space.server.domin.inventory.service.implementation.*;
 import com.space.server.user.domain.Users;
 import com.space.server.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

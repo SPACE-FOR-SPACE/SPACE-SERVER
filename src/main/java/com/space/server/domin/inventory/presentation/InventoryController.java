@@ -1,8 +1,8 @@
-package com.space.server.core.inventory.presentation;
+package com.space.server.domin.inventory.presentation;
 
-import com.space.server.core.inventory.presentation.dto.response.InventoryResponse;
-import com.space.server.core.inventory.service.CommandInventoryService;
-import com.space.server.core.inventory.service.QueryInventoryService;
+import com.space.server.domin.inventory.presentation.dto.response.InventoryResponse;
+import com.space.server.domin.inventory.service.CommandInventoryService;
+import com.space.server.domin.inventory.service.QueryInventoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.servlet.http.HttpServletRequest;

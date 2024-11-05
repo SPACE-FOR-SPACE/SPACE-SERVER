@@ -1,6 +1,6 @@
-package com.space.server.core.inventory.service.implementation;
+package com.space.server.domin.inventory.service.implementation;
 
-import com.space.server.core.inventory.domain.Inventory;
+import com.space.server.domin.inventory.domain.Inventory;
 import org.springframework.stereotype.Service;
 
 @Service
