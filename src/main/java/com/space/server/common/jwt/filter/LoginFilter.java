@@ -1,13 +1,15 @@
 package com.space.server.common.jwt.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.space.server.auth.service.dto.CustomUserDetails;
+import com.space.server.common.auth.service.dto.CustomUserDetails;
 import com.space.server.common.jwt.dto.LoginRequest;
 import com.space.server.common.jwt.util.JwtUtil;
-import com.space.server.user.domain.value.Role;
+import com.space.server.domain.user.domain.value.Role;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import java.io.IOException;
 
+@Slf4j
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
@@ -54,14 +57,14 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         Long id = customUserDetails.getId();
 
-        String accessToken = jwtUtil.createAccessToken(id, Role.USER);
-        String refreshToken = jwtUtil.createRefreshToken(id, Role.USER);
+        String accessToken = jwtUtil.createAccessToken(id, Role.USER, "normal");
+        String refreshToken = jwtUtil.createRefreshToken(id, Role.USER, "normal");
 
 
         jwtUtil.addRefreshToken(id, refreshToken);
-
-        response.addCookie(jwtUtil.createAccessCookie("access_normal", accessToken));
-        response.addCookie(jwtUtil.createRefreshCookie("refresh_normal", refreshToken));
+        log.warn("자체 로그인 필터 동작");
+        response.addHeader(HttpHeaders.SET_COOKIE, jwtUtil.createAccessCookie("access_normal", accessToken).toString());
+        response.addHeader(HttpHeaders.SET_COOKIE, jwtUtil.createRefreshCookie("refresh_normal", refreshToken).toString());
         response.setStatus(HttpStatus.OK.value());
     }
 

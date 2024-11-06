@@ -35,3 +35,8 @@ out/
 
 ### VS Code ###
 .vscode/
+
+env
+
+### Bad Word ###
+/src/main/resources/BadWords.txt

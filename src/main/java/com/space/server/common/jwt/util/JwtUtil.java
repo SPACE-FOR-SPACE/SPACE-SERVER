@@ -1,12 +1,17 @@
 package com.space.server.common.jwt.util;
 
-import com.space.server.auth.domain.Refresh;
-import com.space.server.auth.domain.repository.RefreshRepository;
-import com.space.server.user.domain.value.Role;
+import com.space.server.common.auth.domain.Refresh;
+import com.space.server.common.auth.domain.repository.RefreshRepository;
+import com.space.server.common.jwt.exception.ExpiredRefreshTokenException;
+import com.space.server.common.jwt.exception.ExpiredTokenException;
+import com.space.server.domain.user.domain.value.Role;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -15,6 +20,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Date;
 
+@Slf4j
 @Component
 public class JwtUtil {
 
@@ -43,27 +49,43 @@ public class JwtUtil {
         return Role.fromValue(roleValue);
     }
 
-    public Boolean isExpired(String token) {
-        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration().before(new Date());
+    public String getLoginType(String token) {
+        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("loginType", String.class);
     }
 
-    public String createAccessToken(Long id, Role role) {
-        return createJwt("access", id, role, accessTokenExpiration);
+    public void isExpired(String token) {
+        try {
+            Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration().before(new Date());
+        } catch (ExpiredJwtException e) {
+            throw new ExpiredTokenException();
+        }
     }
 
-    public String createRefreshToken(Long id, Role role) {
-        return createJwt("refresh", id, role, refreshTokenExpiration);
+    public void isExpiredRefresh(String token) {
+        try {
+            Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration().before(new Date());
+        } catch (ExpiredJwtException e) {
+            throw new ExpiredRefreshTokenException();
+        }
     }
 
-    public Cookie createAccessCookie(String key, String value){
+    public String createAccessToken(Long id, Role role, String loginType) {
+        return createJwt("access", id, role, loginType, accessTokenExpiration);
+    }
+
+    public String createRefreshToken(Long id, Role role, String loginType) {
+        return createJwt("refresh", id, role, loginType, refreshTokenExpiration);
+    }
+
+    public ResponseCookie createAccessCookie(String key, String value){
         return createCookie(key, value, (int) accessTokenExpiration);
     }
 
-    public Cookie createRefreshCookie(String key, String value){
+    public ResponseCookie createRefreshCookie(String key, String value){
         return createCookie(key, value, (int) refreshTokenExpiration);
     }
 
-    public Cookie invalidCookie(String key){
+    public ResponseCookie invalidCookie(String key){
         return createCookie(key, null, 0);
     }
 
@@ -91,24 +113,38 @@ public class JwtUtil {
         return null;
     }
 
-    private String createJwt(String category, Long id, Role role, long expiredMs) {
+    public String getTokenFromCookies(HttpServletRequest request, String... tokenNames) {
+        if (request.getCookies() != null) {
+            return Arrays.stream(request.getCookies())
+                    .filter(cookie -> Arrays.asList(tokenNames).contains(cookie.getName()))
+                    .map(Cookie::getValue)
+                    .findFirst()
+                    .orElse(null); // 둘 다 없으면 null 반환
+        }
+        return null;
+    }
+
+    private String createJwt(String category, Long id, Role role, String loginType, long expiredMs) {
         return Jwts.builder()
                 .claim("category", category)
                 .claim("sub", String.valueOf(id))
                 .claim("role", role.getValue())
+                .claim("loginType", loginType)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + expiredMs))
                 .signWith(secretKey)
                 .compact();
     }
 
-    private Cookie createCookie(String key, String value, int maxAge) {
+    private ResponseCookie createCookie(String key, String value, int maxAge) {
 
-        Cookie cookie = new Cookie(key, value);
-        cookie.setMaxAge(maxAge);
-        cookie.setPath("/");
-        cookie.setHttpOnly(true);
-        //cookie.setSecure(true);
+        ResponseCookie cookie = ResponseCookie.from(key, value)
+                .maxAge(maxAge)
+                .path("/")
+                .httpOnly(true)
+                .secure(true)
+                .sameSite("None")
+                .build();
         return cookie;
 
     }

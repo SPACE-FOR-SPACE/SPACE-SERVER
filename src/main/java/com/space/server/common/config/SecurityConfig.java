@@ -1,34 +1,33 @@
 package com.space.server.common.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.space.server.auth.domain.repository.RefreshRepository;
+import com.space.server.common.auth.domain.repository.RefreshRepository;
+import com.space.server.common.exception.security.SpaceSecurityExceptionFilter;
+import com.space.server.common.jwt.exception.CustomAccessDeniedException;
+import com.space.server.common.jwt.exception.UnauthenticatedAccessException;
 import com.space.server.common.jwt.filter.CustomLogoutFilter;
 import com.space.server.common.jwt.filter.CustomJwtFilter;
 import com.space.server.common.jwt.filter.LoginFilter;
-import com.space.server.common.jwt.filter.OAuth2JwtFilter;
 import com.space.server.common.jwt.util.JwtUtil;
-import com.space.server.oauth.handler.CustomSuccessHandler;
-import com.space.server.oauth.service.CustomOAuth2UserService;
+import com.space.server.common.oauth.handler.CustomSuccessHandler;
+import com.space.server.common.oauth.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.cors.CorsConfiguration;
-
+import org.springframework.web.filter.CorsFilter;
+import java.util.Arrays;
 import java.util.Collections;
-
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity(debug = true)
@@ -41,6 +40,8 @@ public class SecurityConfig {
     private final ObjectMapper objectMapper;
     private final CustomOAuth2UserService customOAuth2UserService;
     private final CustomSuccessHandler customSuccessHandler;
+
+    private final List<String> excludedPaths = Arrays.asList("/swagger-ui/**", "/v3/api-docs/**", "/reissue");
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
@@ -62,15 +63,14 @@ public class SecurityConfig {
                         .configurationSource(request -> {
 
                             CorsConfiguration configuration = new CorsConfiguration();
-
+//                            configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
                             configuration.setAllowedOriginPatterns(Collections.singletonList("*"));
                             configuration.setAllowedMethods(Collections.singletonList("*"));
                             configuration.setAllowCredentials(true);
                             configuration.setAllowedHeaders(Collections.singletonList("*"));
                             configuration.setMaxAge(3600L);
+                            configuration.setExposedHeaders(Arrays.asList("Set-Cookie", "Authorization"));
 
-                            configuration.setExposedHeaders(Collections.singletonList("Set-Cookie"));
-                            configuration.setExposedHeaders(Collections.singletonList("Authorization"));
 
                             return configuration;
 
@@ -97,20 +97,25 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/login","/","/join","/reissue", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                        .requestMatchers("/user","/my").hasRole("GUEST")
+                        .requestMatchers("/login","/join", "/reissue","/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/users").hasRole("GUEST")
                         .anyRequest().hasRole("USER"));
 
         http
                 .exceptionHandling(exceptionHandling -> exceptionHandling
-                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                        .authenticationEntryPoint(((request, response, e) -> {
+                            throw new UnauthenticatedAccessException();
+                        }))
+                        .accessDeniedHandler((request, response, e) -> {
+                            throw new CustomAccessDeniedException();
+                        })
                 );
 
         http
-                .addFilterAfter(new CustomJwtFilter(jwtUtil), LoginFilter.class);
+                .addFilterAfter(new SpaceSecurityExceptionFilter(objectMapper), CorsFilter.class);
 
         http
-                .addFilterAfter(new OAuth2JwtFilter(jwtUtil), LoginFilter.class);
+                .addFilterAfter(new CustomJwtFilter(jwtUtil, excludedPaths), CorsFilter.class);
 
         http
                 .addFilterBefore(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil, objectMapper), UsernamePasswordAuthenticationFilter.class);
@@ -126,4 +131,5 @@ public class SecurityConfig {
 
         return http.build();
     }
+
 }

@@ -1,6 +1,5 @@
 package com.space.server.common.exception;
 
-
 import java.time.LocalDateTime;
 
 public record ErrorResponse(
@@ -9,10 +8,10 @@ public record ErrorResponse(
         String message,
         LocalDateTime timestamp
 ) {
-    public static ErrorResponse from(ErrorCode errorCode) {
+    public static ErrorResponse from(SpaceException errorCode) {
         return new ErrorResponse(
                 errorCode.getStatus().value(),
-                errorCode.name(),
+                errorCode.getErrorCode(),
                 errorCode.getMessage(),
                 LocalDateTime.now()
         );
