@@ -14,6 +14,21 @@ spring:
         hibernate:
           SQL: debug
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${GOOGLE_MAIL_ID}
+    password: ${GOOGLE_MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+email:
+  send: ${GOOGLE_MAIL_ID}
+
   jpa:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
@@ -93,3 +108,4 @@ gpt:
     key: ${GPT_API_KEY}
   assistants:
     key: ${GPT_ASSISTANTS_KEY}
+
