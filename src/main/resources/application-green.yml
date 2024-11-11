@@ -1,0 +1,16 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          naver:
+            redirect-uri: ${NAVER_PROD_REDIRECT_URL}
+          google:
+            redirect-uri: ${GOOGLE_PROD_REDIRECT_URL}
+          kakao:
+            redirect-uri: ${KAKAO_PROD_REDIRECT_URL}
+
+server:
+  port: ${GREEN_PORT}
+  serverAddress: AWS 탄력적 IP
+  serverName: green_server
