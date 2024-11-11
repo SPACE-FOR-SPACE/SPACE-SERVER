@@ -12,5 +12,5 @@ spring:
 
 server:
   port: ${BLUE_PORT}
-  serverAddress: AWS 탄력적 IP
+  serverAddress: ${PROD_SERVER_HOST}
   serverName: blue_server
