@@ -22,6 +22,7 @@ public class AiResponseJsonParsing {
         Pattern pattern = Pattern.compile("```json\\s*([\\s\\S]*?)\\s*```", Pattern.DOTALL);
         Matcher matcher = pattern.matcher(contents);
         String result = null;
+        log.warn("실행");
         while (matcher.find()) {
             result = matcher.group(1);
         }
@@ -31,9 +32,13 @@ public class AiResponseJsonParsing {
         String[] move = null;
 
         try {
-            jsonObject = (JSONObject) parser.parse(result);
+            log.warn("result : "+result);
+            jsonObject = (JSONObject) parser.parse(result.replace("'", "\"").replace("False", "false").replace("True", "true"));
+            log.warn("jsonObject : "+jsonObject);
             score = successCheckListIntegerCreator(jsonObject.get("score").toString());
+            log.warn("score : "+score);
             move = moveStringCreator(jsonObject.get("move").toString());
+            log.warn("move : "+move);
         } catch (ParseException | NullPointerException e) {
             throw new ChatJsonParseException();
         }

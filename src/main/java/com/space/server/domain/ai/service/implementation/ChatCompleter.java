@@ -193,8 +193,10 @@ public class ChatCompleter {
                     String.class
             );
 
+            log.warn("오늘 로그 AI runsCreate getBody : "+responseEntity.getBody());
             // 응답 바디 가져오기
             String responseBody = responseEntity.getBody();
+            log.warn("오늘 로그 AI runsCreate responseBody : "+responseBody);
 
             // JSON을 Map으로 변환
             ObjectMapper objectMapper = new ObjectMapper();
