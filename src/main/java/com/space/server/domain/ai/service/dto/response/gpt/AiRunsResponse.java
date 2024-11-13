@@ -31,7 +31,7 @@ public record AiRunsResponse(
     Long max_prompt_tokens,
     Long max_completion_tokens,
     TruncationStrategy truncation_strategy,
-    Map<String, String> response_format,
+    String response_format,
     String tool_choice,
     Boolean parallel_tool_calls
 ) {}
