@@ -25,7 +25,7 @@ public record AiRunsResponse(
     List<FileSearchTool> tools,
     ToolResources tool_resources,
     Map<String, String> metadata,
-    Map<String, Long> usage,
+    Map<Object, Object> usage,
     Double temperature,
     Double top_p,
     Long max_prompt_tokens,
