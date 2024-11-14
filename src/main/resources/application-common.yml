@@ -79,6 +79,10 @@ logging:
   level:
     org.springframework.security: DEBUG
 
+  config: classpath:logback-spring.xml
+  file:
+    path: ./logs
+
 gpt:
   api:
     key: ${GPT_API_KEY}
