@@ -1,24 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <property name="LOG_PATTERN" value="[%d{yyyy-MM-dd HH:mm:ss}:%-4relative] %green([%thread]) %highlight(%-5level) %cyan(%logger{35}) - %msg%n"/>
+    <!-- 공통 appender 설정 -->
+    <property name="LOG_PATTERN" value="[%d{yyyy-MM-dd HH:mm:ss}:%-4relative] %green([%thread]) %highlight(%-5level){ERROR=red, WARN=yellow, INFO=green, DEBUG=blue, TRACE=gray} %cyan(%logger{35}) - %msg%n"/>
 
+    <!-- 콘솔 appender -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>${LOG_PATTERN}</pattern>
         </encoder>
     </appender>
 
-    <appender name="DEV_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>./logs/dev/application.log</file>
-        <encoder>
-            <pattern>${LOG_PATTERN}</pattern>
-        </encoder>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>./logs/dev/application.%d{yyyy-MM-dd}.log</fileNamePattern>
-            <maxHistory>30</maxHistory>
-        </rollingPolicy>
-    </appender>
-
+    <!-- 프로덕션 환경 파일 appender -->
     <appender name="PROD_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>./logs/prod/application.log</file>
         <encoder>
@@ -30,11 +22,12 @@
         </rollingPolicy>
     </appender>
 
+    <!-- 프로파일별 로그 설정 -->
     <springProfile name="dev">
         <root level="INFO">
             <appender-ref ref="CONSOLE"/>
-            <appender-ref ref="DEV_FILE"/>
         </root>
+        <!-- 개발 환경에서는 더 자세한 SQL 로그 -->
         <logger name="org.hibernate.SQL" level="DEBUG"/>
         <logger name="org.hibernate.type.descriptor.sql" level="TRACE"/>
     </springProfile>
@@ -43,9 +36,11 @@
         <root level="INFO">
             <appender-ref ref="PROD_FILE"/>
         </root>
+        <!-- 프로덕션 환경에서는 ERROR 이상의 로그만 콘솔에 출력 -->
         <logger name="org.springframework" level="ERROR">
             <appender-ref ref="CONSOLE"/>
         </logger>
+        <!-- SQL 로그는 INFO 레벨로 제한 -->
         <logger name="org.hibernate.SQL" level="INFO"/>
     </springProfile>
 </configuration>
