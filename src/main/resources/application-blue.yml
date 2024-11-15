@@ -1,16 +1,3 @@
-spring:
-  security:
-    oauth2:
-      client:
-        registration:
-          naver:
-            redirect-uri: ${NAVER_PROD_REDIRECT_URL}
-          google:
-            redirect-uri: ${GOOGLE_PROD_REDIRECT_URL}
-          kakao:
-            redirect-uri: ${KAKAO_PROD_REDIRECT_URL}
-
 server:
   port: ${BLUE_PORT}
-  serverAddress: ${PROD_SERVER_HOST}
   serverName: blue_server
