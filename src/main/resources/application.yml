@@ -6,7 +6,7 @@ spring:
     active: dev
     group:
       dev: dev, common
-      blue: blue, common
-      green: green, common
+      blue: blue, common, prod
+      green: green, common, prod
 server:
   env: blue

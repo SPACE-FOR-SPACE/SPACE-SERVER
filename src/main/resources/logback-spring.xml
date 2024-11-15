@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="30 seconds">
-
-    <!-- 색상 및 예외 변환 규칙 설정 -->
     <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
     <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
     <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
 
-    <!-- 공통 로그 패턴 설정 -->
     <property name="LOG_PATTERN" value="[%d{yyyy-MM-dd HH:mm:ss}:%-4relative] %clr([%thread]){green} %clr(%-5level){levelColor} %clr(%logger{35}){cyan} - %msg%n"/>
 
-    <!-- 콘솔 로그 패턴 및 인코딩 설정 -->
     <property name="CONSOLE_LOG_PATTERN" value="${CONSOLE_LOG_PATTERN:-%clr(%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}}){green} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
     <property name="CONSOLE_LOG_CHARSET" value="${CONSOLE_LOG_CHARSET:-default}"/>
 
-    <!-- 콘솔 appender 설정 -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>${CONSOLE_LOG_PATTERN}</pattern>
@@ -21,7 +16,6 @@
         </encoder>
     </appender>
 
-    <!-- 프로덕션 환경 파일 appender -->
     <appender name="PROD_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>./logs/prod/application.log</file>
         <encoder>
@@ -33,10 +27,6 @@
         </rollingPolicy>
     </appender>
 
-    <!-- 파일 appender 설정 포함 -->
-    <include resource="org/springframework/boot/logging/logback/file-appender.xml" />
-
-    <!-- 특정 패키지의 로그 레벨 설정 -->
     <logger name="org.apache.catalina.startup.DigesterFactory" level="ERROR"/>
     <logger name="org.apache.catalina.util.LifecycleBase" level="ERROR"/>
     <logger name="org.apache.coyote.http11.Http11NioProtocol" level="WARN"/>
@@ -46,30 +36,24 @@
     <logger name="org.hibernate.validator.internal.util.Version" level="WARN"/>
     <logger name="org.springframework.boot.actuate.endpoint.jmx" level="WARN"/>
 
-    <!-- 프로파일별 로그 설정 -->
     <springProfile name="dev">
+        <logger name="org.hibernate.SQL" level="DEBUG"/>
+        <logger name="org.hibernate.type.descriptor.sql" level="TRACE"/>
+        <logger name="org.springframework" level="INFO"/>
+
         <root level="INFO">
             <appender-ref ref="CONSOLE"/>
         </root>
-        <!-- 개발 환경에서는 더 자세한 SQL 로그 -->
-        <logger name="org.hibernate.SQL" level="DEBUG"/>
-        <logger name="org.hibernate.type.descriptor.sql" level="TRACE"/>
     </springProfile>
 
     <springProfile name="blue,green">
         <root level="INFO">
             <appender-ref ref="PROD_FILE"/>
         </root>
-        <!-- 프로덕션 환경에서는 ERROR 이상의 로그만 콘솔에 출력 -->
         <logger name="org.springframework" level="ERROR">
             <appender-ref ref="CONSOLE"/>
         </logger>
-        <!-- SQL 로그는 INFO 레벨로 제한 -->
         <logger name="org.hibernate.SQL" level="INFO"/>
     </springProfile>
 
-    <!-- 루트 로거 설정 -->
-    <root level="INFO">
-        <appender-ref ref="CONSOLE" />
-    </root>
 </configuration>

@@ -64,11 +64,11 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         if (isNewUser) {
             log.warn("오어스 성공 핸들러 새로운 유저");
-            response.sendRedirect("http://localhost:3000/");
+            response.sendRedirect("http://localhost:5173/additional-info");
 //            response.sendRedirect("http://localhost:3000/additional-info");
         } else {
             log.warn("오어스 성공 핸들러 원래 있던 유저");
-            response.sendRedirect("http://localhost:3000/");
+            response.sendRedirect("http://localhost:5173");
         }
     }
 
