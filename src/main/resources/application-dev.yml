@@ -24,6 +24,7 @@ server:
   port: 8081
   serverAddress: localhost
   serverName: local_server
+  url: http://localhost:8081
 
 logging:
   level:
