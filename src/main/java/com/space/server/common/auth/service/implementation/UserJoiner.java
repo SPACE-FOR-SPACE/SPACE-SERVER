@@ -6,6 +6,8 @@ import com.space.server.domain.inventory.service.implementation.InventoryCreator
 import com.space.server.domain.inventory.service.implementation.InventoryUpdater;
 import com.space.server.domain.item.domain.Item;
 import com.space.server.domain.item.service.implementation.ItemReader;
+import com.space.server.domain.mail.exception.EmailNotVerifiedException;
+import com.space.server.domain.mail.service.EmailTokenService;
 import com.space.server.domain.user.domain.Users;
 import com.space.server.domain.user.domain.repository.UserRepository;
 import com.space.server.domain.user.domain.value.Role;
@@ -24,6 +26,7 @@ public class UserJoiner {
     private final InventoryCreator inventoryCreator;
     private final InventoryUpdater inventoryUpdater;
     private final ItemReader itemReader;
+    private final EmailTokenService emailTokenService;
 
     @Transactional
     public void joinProcess(JoinUserRequest joinUserRequest) {
@@ -35,6 +38,10 @@ public class UserJoiner {
 
         if (isExist) {
             throw new UserExistedException();
+        }
+
+        if (!emailTokenService.isEmailVerified(email)) {
+            throw new EmailNotVerifiedException();
         }
 
         Users user = Users.normalUserBuilder()
