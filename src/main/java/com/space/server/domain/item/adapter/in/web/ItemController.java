@@ -45,7 +45,7 @@ public class ItemController {
 
   @GetMapping("/categories/{category}")
   public List<ItemResponse> readAllByCategory(@PathVariable("category") String category) {
-    return getItemsByCategoryQuery.retrieveItemsByCategory(converter.convert(category)).stream()
+    return getItemsByCategoryQuery.getItemsByCategory(converter.convert(category)).stream()
         .map((ItemResponse::from))
         .toList();
   }
