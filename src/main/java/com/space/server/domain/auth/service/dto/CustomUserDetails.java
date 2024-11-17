@@ -1,4 +1,4 @@
-package com.space.server.common.auth.service.dto;
+package com.space.server.domain.auth.service.dto;
 
 import com.space.server.domain.user.domain.Users;
 import com.space.server.domain.user.domain.value.Role;

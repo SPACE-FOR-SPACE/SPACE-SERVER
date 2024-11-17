@@ -1,6 +1,6 @@
-package com.space.server.common.auth.service;
+package com.space.server.domain.auth.service;
 
-import com.space.server.common.auth.service.dto.CustomUserDetails;
+import com.space.server.domain.auth.service.dto.CustomUserDetails;
 import com.space.server.domain.user.domain.Users;
 import com.space.server.domain.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

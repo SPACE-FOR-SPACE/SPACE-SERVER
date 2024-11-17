@@ -1,4 +1,4 @@
-package com.space.server.common.auth.domain;
+package com.space.server.domain.auth.domain;
 
 import jakarta.persistence.*;
 import lombok.Builder;

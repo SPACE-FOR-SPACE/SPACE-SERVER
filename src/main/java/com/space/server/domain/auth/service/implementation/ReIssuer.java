@@ -1,6 +1,6 @@
-package com.space.server.common.auth.service.implementation;
+package com.space.server.domain.auth.service.implementation;
 
-import com.space.server.common.auth.domain.repository.RefreshRepository;
+import com.space.server.domain.auth.domain.repository.RefreshRepository;
 import com.space.server.common.jwt.exception.InvalidTokenException;
 import com.space.server.common.jwt.exception.RefreshTokenNotFoundException;
 import com.space.server.common.jwt.util.JwtUtil;

@@ -1,10 +1,10 @@
-package com.space.server.common.auth.presentation;
+package com.space.server.domain.auth.presentation;
 
-import com.space.server.common.auth.presentation.dto.request.AdditionalInfoRequest;
-import com.space.server.common.auth.presentation.dto.request.JoinUserRequest;
-import com.space.server.common.auth.service.implementation.AdditionalInfoUpdater;
-import com.space.server.common.auth.service.implementation.ReIssuer;
-import com.space.server.common.auth.service.implementation.UserJoiner;
+import com.space.server.domain.auth.presentation.dto.request.AdditionalInfoRequest;
+import com.space.server.domain.auth.presentation.dto.request.JoinUserRequest;
+import com.space.server.domain.auth.service.implementation.AdditionalInfoUpdater;
+import com.space.server.domain.auth.service.implementation.ReIssuer;
+import com.space.server.domain.auth.service.implementation.UserJoiner;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.servlet.http.HttpServletRequest;
