@@ -19,7 +19,7 @@ public class EquipInventoryService implements EquipInventoryUseCase {
   public void equipInventory(Long userId, Long inventoryId) {
     Inventory inventory = loadInventoryPort.loadInventory(inventoryId);
 
-    if(inventory.getUser().getId().equals(userId)) throw new InventoryNotFoundException();
+    if(!inventory.getUser().getId().equals(userId)) throw new InventoryNotFoundException();
 
     Inventory equippedInventory = equipInventoryPort.findEquippedInventoryByCategoryAndUser(
         inventory.getItem().getCategory(),
