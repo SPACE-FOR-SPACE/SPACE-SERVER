@@ -8,6 +8,7 @@ import lombok.*;
 import java.util.Optional;
 
 @Getter
+@Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Item {
 
@@ -29,7 +30,6 @@ public class Item {
   public static Item create(ItemId id, String name, Integer price, String image, Category category) {
     return new Item(id, name, price, image, category);
   }
-
 
   public Optional<ItemId> getId(){
     return Optional.ofNullable(this.id);
