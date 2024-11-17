@@ -37,6 +37,6 @@ public class InventoryController {
 
   @PutMapping("/{inventory-id}")
   public void equipItem(@PathVariable(name = "inventory-id") Long inventoryId) {
-    equipInventoryUseCase.equipInventory(getMemberId(), inventoryId);
+    equipInventoryUseCase.equipInventory(inventoryId, getMemberId());
   }
 }
