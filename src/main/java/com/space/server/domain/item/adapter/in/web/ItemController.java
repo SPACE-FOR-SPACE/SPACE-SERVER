@@ -2,17 +2,17 @@ package com.space.server.domain.item.adapter.in.web;
 
 import com.space.server.domain.item.adapter.in.web.converter.CategoryConverter;
 import com.space.server.domain.item.adapter.in.web.dto.response.ItemResponse;
+import com.space.server.domain.item.application.port.in.BuyItemUseCase;
 import com.space.server.domain.item.application.port.in.GetItemQuery;
 import com.space.server.domain.common.WebAdapter;
 import com.space.server.domain.item.application.port.in.GetItemsByCategoryQuery;
 import com.space.server.domain.item.application.port.in.GetItemsQuery;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static com.space.server.common.jwt.util.AuthenticationUtil.getMemberId;
 
 @WebAdapter
 @RestController
@@ -23,9 +23,13 @@ public class ItemController {
   private final GetItemQuery getItemQuery;
   private final GetItemsQuery getItemsQuery;
   private final GetItemsByCategoryQuery getItemsByCategoryQuery;
+  private final BuyItemUseCase buyItemUseCase;
   private final CategoryConverter converter;
 
-  //아이템 구매
+  @PostMapping("/{item-id}")
+  public void buyItem(@PathVariable("item-id") Long itemId) {
+    buyItemUseCase.buyItem(itemId, getMemberId());
+  }
 
   @GetMapping("/{item-id}")
   public ItemResponse readOne(@PathVariable("item-id") Long itemId) {
