@@ -3,9 +3,11 @@ package com.space.server.domain.item.adapter.out.persistence;
 import com.space.server.domain.item.domain.value.Category;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Builder
 @Entity
 @Table(name = "item")
 @Getter
