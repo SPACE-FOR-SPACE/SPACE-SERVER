@@ -11,15 +11,15 @@ import java.util.List;
 @PersistenceAdapter
 @RequiredArgsConstructor
 public class ItemByCategoryGetAdapter implements LoadItemsByCategoryPort {
-  private final SpringDataItemRepository itemRepository;
-  private final ItemMapper itemMapper;
 
+  private final ItemRepository itemRepository;
+  private final ItemMapper itemMapper;
 
   @Override
   public List<Item> loadItemsByCategory(Category category) {
     return itemRepository.findByCategory(category)
         .stream()
-        .map(itemMapper::mapToDomainEntity)
+        .map(itemMapper::mapToItem)
         .toList();
   }
 }
