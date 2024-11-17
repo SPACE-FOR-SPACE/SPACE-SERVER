@@ -5,6 +5,7 @@ import com.space.server.domain.inventory.application.port.in.EquipInventoryUseCa
 import com.space.server.domain.inventory.application.port.out.EquipInventoryPort;
 import com.space.server.domain.inventory.application.port.out.LoadInventoryPort;
 import com.space.server.domain.inventory.domain.Inventory;
+import com.space.server.domain.inventory.exception.InventoryNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @UseCase
@@ -17,6 +18,8 @@ public class EquipInventoryService implements EquipInventoryUseCase {
   @Override
   public void equipInventory(Long userId, Long inventoryId) {
     Inventory inventory = loadInventoryPort.loadInventory(inventoryId);
+
+    if(inventory.getUser().getId().equals(userId)) throw new InventoryNotFoundException();
 
     Inventory equippedInventory = equipInventoryPort.findEquippedInventoryByCategoryAndUser(
         inventory.getItem().getCategory(),
