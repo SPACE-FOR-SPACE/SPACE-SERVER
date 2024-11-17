@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface GetItemsByCategoryQuery {
 
-  List<Item> retrieveItemsByCategory(Category category);
+  List<Item> getItemsByCategory(Category category);
 }
