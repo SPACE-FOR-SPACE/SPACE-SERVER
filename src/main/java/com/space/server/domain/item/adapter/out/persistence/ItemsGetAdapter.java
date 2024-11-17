@@ -11,14 +11,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ItemsGetAdapter implements LoadItemsPort {
 
-  private final SpringDataItemRepository itemRepository;
+  private final ItemRepository itemRepository;
   private final ItemMapper itemMapper;
 
   @Override
   public List<Item> loadItems() {
     return itemRepository.findAll()
         .stream()
-        .map(itemMapper::mapToDomainEntity)
+        .map(itemMapper::mapToItem)
         .toList();
   }
 }
