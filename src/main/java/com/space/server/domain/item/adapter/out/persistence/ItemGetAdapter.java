@@ -10,13 +10,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ItemGetAdapter implements LoadItemPort {
 
-  private final SpringDataItemRepository itemRepository;
+  private final ItemRepository itemRepository;
   private final ItemMapper itemMapper;
 
   @Override
   public Item loadItem(Long id) {
     return itemRepository.findById(id)
-        .map(itemMapper::mapToDomainEntity)
+        .map(itemMapper::mapToItem)
         .orElseThrow(ItemNotFoundException::new);
   }
 }
