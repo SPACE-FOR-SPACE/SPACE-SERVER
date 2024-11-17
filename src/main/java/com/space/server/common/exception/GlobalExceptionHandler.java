@@ -1,11 +1,14 @@
 package com.space.server.common.exception;
 
+import com.space.server.common.exception.mail.SpaceMailException;
 import com.space.server.common.exception.security.SpaceSecurityException;
 import com.space.server.common.logging.LoggingUtils;
+import com.space.server.domain.mail.exception.value.EmailVerificationStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.ModelAndView;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -33,6 +36,32 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(httpStatus)
                 .body(response);
+    }
+
+    @ExceptionHandler(SpaceMailException.class)
+    public ModelAndView handleSpaceEmailException(SpaceMailException exception) {
+        LoggingUtils.warn(exception);
+
+        ModelAndView modelAndView = new ModelAndView("verification-result");
+
+        String status;
+        switch (exception.getErrorCode()) {
+            case "EMAIL_TOKEN_NOT_FOUND":
+                status = EmailVerificationStatus.NOT_FOUND.name();
+                break;
+            case "EMAIL_TOKEN_EXPIRED":
+                status = EmailVerificationStatus.EXPIRED.name();
+                break;
+            case "EMAIL_TOKEN_ALREADY_VERIFIED":
+                status = EmailVerificationStatus.ALREADY_VERIFIED.name();
+                break;
+            default:
+                status = EmailVerificationStatus.ERROR.name();
+        }
+
+        modelAndView.addObject("status", status);
+
+        return modelAndView;
     }
 
     @ExceptionHandler({MethodArgumentTypeMismatchException.class})

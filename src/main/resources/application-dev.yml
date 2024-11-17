@@ -17,11 +17,14 @@ spring:
       hibernate:
         format_sql: true
         show_sql: true
+  thymeleaf:
+    cache: false
 
 server:
   port: 8081
   serverAddress: localhost
   serverName: local_server
+  url: http://localhost:8081
 
 logging:
   level:
