@@ -1,4 +1,4 @@
-package com.space.server.common.oauth.service.dto;
+package com.space.server.domain.oauth.service.dto;
 
 import lombok.RequiredArgsConstructor;
 
