@@ -1,0 +1,3 @@
+server:
+  port: ${BLUE_PORT}
+  serverName: blue_server

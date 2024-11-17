@@ -25,13 +25,13 @@ public record AiRunsResponse(
     List<FileSearchTool> tools,
     ToolResources tool_resources,
     Map<String, String> metadata,
-    Map<String, Long> usage,
+    Map<Object, Object> usage,
     Double temperature,
     Double top_p,
     Long max_prompt_tokens,
     Long max_completion_tokens,
     TruncationStrategy truncation_strategy,
-    Map<String, String> response_format,
+    String response_format,
     String tool_choice,
     Boolean parallel_tool_calls
 ) {}

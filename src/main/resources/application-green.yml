@@ -1,0 +1,3 @@
+server:
+  port: ${GREEN_PORT}
+  serverName: green_server

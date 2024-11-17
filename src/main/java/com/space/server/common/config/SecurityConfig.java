@@ -1,7 +1,7 @@
 package com.space.server.common.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.space.server.common.auth.domain.repository.RefreshRepository;
+import com.space.server.domain.auth.domain.repository.RefreshRepository;
 import com.space.server.common.exception.security.SpaceSecurityExceptionFilter;
 import com.space.server.common.jwt.exception.CustomAccessDeniedException;
 import com.space.server.common.jwt.exception.UnauthenticatedAccessException;
@@ -9,8 +9,8 @@ import com.space.server.common.jwt.filter.CustomLogoutFilter;
 import com.space.server.common.jwt.filter.CustomJwtFilter;
 import com.space.server.common.jwt.filter.LoginFilter;
 import com.space.server.common.jwt.util.JwtUtil;
-import com.space.server.common.oauth.handler.CustomSuccessHandler;
-import com.space.server.common.oauth.service.CustomOAuth2UserService;
+import com.space.server.domain.oauth.handler.CustomSuccessHandler;
+import com.space.server.domain.oauth.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,7 +41,7 @@ public class SecurityConfig {
     private final CustomOAuth2UserService customOAuth2UserService;
     private final CustomSuccessHandler customSuccessHandler;
 
-    private final List<String> excludedPaths = Arrays.asList("/swagger-ui/**", "/v3/api-docs/**", "/reissue");
+    private final List<String> excludedPaths = Arrays.asList("/swagger-ui/**", "/v3/api-docs/**", "/reissue", "/hc", "/env", "/mails", "/verify", "/favicon.ico");
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
@@ -97,7 +97,7 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/login","/join", "/reissue","/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/login","/join", "/reissue","/swagger-ui/**", "/v3/api-docs/**", "/hc", "/env", "/mails", "/verify", "/favicon.ico").permitAll()
                         .requestMatchers("/users").hasRole("GUEST")
                         .anyRequest().hasRole("USER"));
 
