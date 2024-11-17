@@ -6,9 +6,7 @@ import com.space.server.domain.inventory.domain.Inventory;
 import com.space.server.domain.item.domain.Item;
 import com.space.server.domain.user.domain.Users;
 import lombok.RequiredArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
 @PersistenceAdapter
 @RequiredArgsConstructor
 public class CreateInventoryAdapter implements CreateInventoryPort {
