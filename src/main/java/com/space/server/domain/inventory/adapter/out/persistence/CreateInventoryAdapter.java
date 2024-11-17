@@ -20,5 +20,5 @@ public class CreateInventoryAdapter implements CreateInventoryPort {
         .user(user)
         .isEquipped(false)
         .build();
-  };
+  }
 }
