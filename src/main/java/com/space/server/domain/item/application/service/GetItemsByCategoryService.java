@@ -16,7 +16,7 @@ public class GetItemsByCategoryService implements GetItemsByCategoryQuery {
   private final LoadItemsByCategoryPort loadItemsByCategoryPort;
 
   @Override
-  public List<Item> retrieveItemsByCategory(Category category) {
+  public List<Item> getItemsByCategory(Category category) {
     return loadItemsByCategoryPort.loadItemsByCategory(category);
   }
 }
