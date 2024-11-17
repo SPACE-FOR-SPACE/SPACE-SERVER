@@ -1,8 +1,8 @@
-package com.space.server.common.auth.service.implementation;
+package com.space.server.domain.auth.service.implementation;
 
-import com.space.server.common.auth.presentation.dto.request.JoinUserRequest;
 import com.space.server.domain.inventory.adapter.out.persistence.EquipInventoryAdapter;
 import com.space.server.domain.inventory.application.port.out.CreateInventoryPort;
+import com.space.server.domain.auth.presentation.dto.request.JoinUserRequest;
 import com.space.server.domain.inventory.domain.Inventory;
 import com.space.server.domain.item.application.port.in.GetItemQuery;
 import com.space.server.domain.item.domain.Item;

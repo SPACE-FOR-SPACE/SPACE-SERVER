@@ -1,7 +1,7 @@
-package com.space.server.common.oauth.handler;
+package com.space.server.domain.oauth.handler;
 
 import com.space.server.common.jwt.util.JwtUtil;
-import com.space.server.common.oauth.service.dto.CustomOAuth2User;
+import com.space.server.domain.oauth.service.dto.CustomOAuth2User;
 import com.space.server.domain.user.domain.Users;
 import com.space.server.domain.user.domain.repository.UserRepository;
 import com.space.server.domain.user.domain.value.Role;
