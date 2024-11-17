@@ -1,11 +1,11 @@
 package com.space.server.common.auth.service.implementation;
 
 import com.space.server.common.auth.presentation.dto.request.JoinUserRequest;
+import com.space.server.domain.inventory.adapter.out.persistence.EquipInventoryAdapter;
+import com.space.server.domain.inventory.application.port.out.CreateInventoryPort;
 import com.space.server.domain.inventory.domain.Inventory;
-import com.space.server.domain.inventory.service.implementation.InventoryCreator;
-import com.space.server.domain.inventory.service.implementation.InventoryUpdater;
+import com.space.server.domain.item.application.port.in.GetItemQuery;
 import com.space.server.domain.item.domain.Item;
-import com.space.server.domain.item.service.implementation.ItemReader;
 import com.space.server.domain.user.domain.Users;
 import com.space.server.domain.user.domain.repository.UserRepository;
 import com.space.server.domain.user.domain.value.Role;
@@ -21,9 +21,9 @@ public class UserJoiner {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
-    private final InventoryCreator inventoryCreator;
-    private final InventoryUpdater inventoryUpdater;
-    private final ItemReader itemReader;
+    private final CreateInventoryPort createInventoryPort;
+    private final GetItemQuery getItemQuery;
+    private final EquipInventoryAdapter equipInventoryAdapter;
 
     @Transactional
     public void joinProcess(JoinUserRequest joinUserRequest) {
@@ -48,16 +48,13 @@ public class UserJoiner {
 
         userRepository.save(user);
 
-        Item head = itemReader.findById(1L);
-        Item theme = itemReader.findById(2L);
+        Item head = getItemQuery.getItem(1L);
+        Item theme = getItemQuery.getItem(2L);
 
-        Inventory In_head = new Inventory(head, user);
-        Inventory In_theme = new Inventory(theme, user);
+        Inventory In_head = createInventoryPort.create(head, user);
+        Inventory In_theme = createInventoryPort.create(theme, user);
 
-        inventoryCreator.create(In_head);
-        inventoryCreator.create(In_theme);
-
-        inventoryUpdater.equip(In_head);
-        inventoryUpdater.equip(In_theme);
+        equipInventoryAdapter.equipInventory(In_head);
+        equipInventoryAdapter.equipInventory(In_theme);
     }
 }
