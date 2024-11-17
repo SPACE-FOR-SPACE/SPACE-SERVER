@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class ItemJpaEntity {
 
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @Column
