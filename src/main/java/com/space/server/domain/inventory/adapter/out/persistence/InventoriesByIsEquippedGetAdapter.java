@@ -16,7 +16,6 @@ public class InventoriesByIsEquippedGetAdapter implements LoadInventoriesByIsEqu
   private final InventoryMapper inventoryMapper;
   private final UserRepository userRepository;
 
-
   @Override
   public List<Inventory> loadInventoriesByIsEquippedPort(Long userId) {
     return inventoryRepository.findByIsEquippedAndUser(userRepository.findById(userId).get()).stream()
