@@ -1,6 +1,7 @@
 package com.space.server.domain.user.domain;
 
 import com.space.server.domain.user.domain.value.Role;
+import com.space.server.domain.user.domain.value.Status;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -32,6 +33,9 @@ public class Users {
     private Role role;
 
     private Integer age;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     private Integer point;
 

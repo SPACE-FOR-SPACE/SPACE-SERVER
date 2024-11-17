@@ -7,6 +7,7 @@ import com.space.server.domain.user.domain.repository.UserRepository;
 import com.space.server.domain.user.domain.value.Role;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,6 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 
         log.warn("오어스 성공 핸들러 authentication : "+authentication);
-        //OAuth2User
         CustomOAuth2User customUserDetails = (CustomOAuth2User) authentication.getPrincipal();
         log.warn("오어스 성공 핸들러" + customUserDetails.toString());
 
@@ -43,6 +43,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         Users user = userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found"));
         boolean isNewUser = user == null || user.getAge() == null;
         log.warn("오어스 성공 핸들러 중간 체크 : "+isNewUser);
+
         if (isNewUser) {
             role = Role.GUEST;
             if (user != null) {
@@ -61,6 +62,19 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         response.addHeader(HttpHeaders.SET_COOKIE, jwtUtil.createAccessCookie("access_social", accessToken).toString());
         response.addHeader(HttpHeaders.SET_COOKIE, jwtUtil.createRefreshCookie("refresh_social", refreshToken).toString());
+
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("JSESSIONID".equals(cookie.getName())) {
+                    cookie.setValue("");
+                    cookie.setPath("/");
+                    cookie.setMaxAge(0);
+                    response.addCookie(cookie);
+                    break;
+                }
+            }
+        }
 
         if (isNewUser) {
             log.warn("오어스 성공 핸들러 새로운 유저");

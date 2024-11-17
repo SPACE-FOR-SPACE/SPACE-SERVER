@@ -20,6 +20,7 @@ spring:
 
 server:
   serverAddress: ${PROD_SERVER_HOST}
+  url: ${PROD_SERVER_URL}
 
 logging:
   level:
