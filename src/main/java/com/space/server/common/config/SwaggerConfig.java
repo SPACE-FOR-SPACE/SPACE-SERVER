@@ -28,6 +28,7 @@ public class SwaggerConfig {
                     + "| --- | --- | --- |\n"
                     + "| 400 | BAD_WORD_DETECTED | 부적절한 단어는 입력할 수 없습니다. |\n"
                     + "| 400 | ENGLISH_DETECTED | 영어는 입력할 수 없습니다. |\n"
+                    + "| 400 | EMAIL_NOT_VERIFIED | 이메일 인증이 필요합니다. |\n"
                     + "| 400 | INVALID_ARGUMENT | 잘못된 값이 들어왔습니다. |\n"
                     + "| 400 | TYPE_MISMATCH | 파라미터 타입이 일치하지 않습니다. |\n"
                     + "| 400 | NULL_VALUE | 필수 값이 누락되었습니다. |\n"
