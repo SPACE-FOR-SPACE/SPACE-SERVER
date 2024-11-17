@@ -1,6 +1,5 @@
 package com.space.server.domain.oauth.service;
 
-import com.space.server.common.oauth.service.dto.*;
 import com.space.server.domain.oauth.service.dto.*;
 import com.space.server.domain.user.domain.Users;
 import com.space.server.domain.user.domain.repository.UserRepository;
