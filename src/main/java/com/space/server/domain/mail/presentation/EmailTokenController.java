@@ -1,11 +1,13 @@
 package com.space.server.domain.mail.presentation;
 
+import com.space.server.domain.mail.exception.value.EmailVerificationStatus;
 import com.space.server.domain.mail.presentation.dto.request.EmailVerificationRequest;
 import com.space.server.domain.mail.service.EmailTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,6 +24,10 @@ public class EmailTokenController {
     @GetMapping("/verify")
     public ResponseEntity<Void> verifyEmail(@RequestParam String token) {
         emailTokenService.verifyEmail(token);
+
+        ModelAndView modelAndView = new ModelAndView("verification-result");
+        modelAndView.addObject("status", EmailVerificationStatus.SUCCESS);
+
         return ResponseEntity.ok().build();
     }
 }
