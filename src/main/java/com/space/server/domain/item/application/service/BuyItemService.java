@@ -1,6 +1,8 @@
 package com.space.server.domain.item.application.service;
 
 import com.space.server.domain.common.UseCase;
+import com.space.server.domain.inventory.application.port.out.CheckHaveItemPort;
+import com.space.server.domain.inventory.exception.InventoryItemExistedException;
 import com.space.server.domain.item.application.port.in.BuyItemUseCase;
 import com.space.server.domain.item.application.port.out.BuyItemPort;
 import com.space.server.domain.item.application.port.out.LoadItemPort;
@@ -16,6 +18,7 @@ public class BuyItemService implements BuyItemUseCase {
 
   private final BuyItemPort buyItemPort;
   private final LoadItemPort loadItemPort;
+  private final CheckHaveItemPort checkHaveItemPort;
   private final UserRepository userRepository;
 
   @Override
@@ -24,7 +27,7 @@ public class BuyItemService implements BuyItemUseCase {
     Users user = userRepository.findById(userId)
         .orElseThrow(UserNotFoundException::new);
 
-    //구매 가능 여부 로직
+    if(checkHaveItemPort.checkHaveItem(item, user)) throw new InventoryItemExistedException();
 
     buyItemPort.buyItemPort(item, user);
   }
