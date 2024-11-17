@@ -6,13 +6,23 @@ import org.springframework.stereotype.Component;
 @Component
 public class ItemMapper {
 
-  Item mapToDomainEntity(ItemJpaEntity item) {
-    return Item.create(
-        new Item.ItemId(item.getId()),
-        item.getName(),
-        item.getPrice(),
-        item.getImage(),
-        item.getCategory()
-    );
+  public Item mapToItem(ItemJpaEntity item) {
+    return Item.builder()
+        .id(new Item.ItemId(item.getId()))
+        .name(item.getName())
+        .price(item.getPrice())
+        .image(item.getImage())
+        .category(item.getCategory())
+        .build();
+  }
+
+  public ItemJpaEntity mapToItemJpaEntity(Item item) {
+    return ItemJpaEntity.builder()
+        .id(item.getId().get().getValue())
+        .name(item.getName())
+        .price(item.getPrice())
+        .image(item.getImage())
+        .category(item.getCategory())
+        .build();
   }
 }
