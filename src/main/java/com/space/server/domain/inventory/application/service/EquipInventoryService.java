@@ -16,7 +16,7 @@ public class EquipInventoryService implements EquipInventoryUseCase {
   private final LoadInventoryPort loadInventoryPort;
 
   @Override
-  public void equipInventory(Long userId, Long inventoryId) {
+  public void equipInventory(Long inventoryId, Long userId) {
     Inventory inventory = loadInventoryPort.loadInventory(inventoryId);
 
     if(!inventory.getUser().getId().equals(userId)) throw new InventoryNotFoundException();
