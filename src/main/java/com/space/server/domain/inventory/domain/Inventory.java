@@ -2,43 +2,25 @@ package com.space.server.domain.inventory.domain;
 
 import com.space.server.domain.item.domain.Item;
 import com.space.server.domain.user.domain.Users;
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity
-@Schema(description = "인벤토리 Entity")
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Inventory {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Schema(description = "인벤토리 ID")
-  private Long id;
-
-  @ManyToOne
-  @JoinColumn(name = "user_id")
   @NotNull
-  @Schema(description = "사용자 정보")
-  private Users user;
+  private final InventoryId id;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "item_id")
   @NotNull
-  @Schema(description = "아이템 정보")
-  private Item item;
+  private final Users user;
 
-  @Schema(description = "아이템 장착 여부", example = "false")
+  @NotNull
+  private final Item item;
+
+  @NotNull
   private boolean isEquipped;
-
-
-  @Builder
-  public Inventory(Item item, Users user) {
-    this.item = item;
-    this.user = user;
-  }
 
   public void equip() {
     isEquipped = true;
@@ -46,5 +28,10 @@ public class Inventory {
 
   public void unEquip() {
     isEquipped = false;
+  }
+
+  @Value
+  public static class InventoryId {
+    private final Long value;
   }
 }

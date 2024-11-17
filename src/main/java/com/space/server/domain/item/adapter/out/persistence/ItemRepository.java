@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface SpringDataItemRepository extends JpaRepository<ItemJpaEntity, Long> {
+public interface ItemRepository extends JpaRepository<ItemJpaEntity, Long> {
   List<ItemJpaEntity> findByCategory(Category category);
 
 }

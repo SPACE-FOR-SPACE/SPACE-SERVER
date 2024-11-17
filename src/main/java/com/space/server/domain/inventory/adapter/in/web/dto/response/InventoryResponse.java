@@ -1,4 +1,4 @@
-package com.space.server.domain.inventory.presentation.dto.response;
+package com.space.server.domain.inventory.adapter.in.web.dto.response;
 
 import com.space.server.domain.inventory.domain.Inventory;
 import com.space.server.domain.item.domain.value.Category;
@@ -11,6 +11,8 @@ public record InventoryResponse(
     @Schema(description = "인벤토리 ID", example = "1")
     Long id,
 
+    String name,
+
     @Schema(description = "아이템 ID", example = "10")
     Long itemId,
 
@@ -22,8 +24,9 @@ public record InventoryResponse(
 ) {
   public static InventoryResponse from(Inventory inventory) {
     return InventoryResponse.builder()
-        .id(inventory.getId())
-        .itemId(inventory.getItem().getId())
+        .id(inventory.getId().getValue())
+        .name(inventory.getItem().getName())
+        .itemId(inventory.getItem().getId().get().getValue())
         .category(inventory.getItem().getCategory())
         .isEquipped(inventory.isEquipped())
         .build();
