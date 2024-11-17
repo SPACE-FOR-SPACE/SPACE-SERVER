@@ -1,6 +1,6 @@
 package com.space.server.common.jwt.filter;
 
-import com.space.server.common.auth.domain.repository.RefreshRepository;
+import com.space.server.domain.auth.domain.repository.RefreshRepository;
 import com.space.server.common.jwt.util.JwtUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;

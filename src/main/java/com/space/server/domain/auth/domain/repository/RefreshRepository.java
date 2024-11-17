@@ -1,6 +1,6 @@
-package com.space.server.common.auth.domain.repository;
+package com.space.server.domain.auth.domain.repository;
 
-import com.space.server.common.auth.domain.Refresh;
+import com.space.server.domain.auth.domain.Refresh;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

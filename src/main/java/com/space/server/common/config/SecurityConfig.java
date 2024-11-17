@@ -1,7 +1,7 @@
 package com.space.server.common.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.space.server.common.auth.domain.repository.RefreshRepository;
+import com.space.server.domain.auth.domain.repository.RefreshRepository;
 import com.space.server.common.exception.security.SpaceSecurityExceptionFilter;
 import com.space.server.common.jwt.exception.CustomAccessDeniedException;
 import com.space.server.common.jwt.exception.UnauthenticatedAccessException;

@@ -1,4 +1,4 @@
-package com.space.server.common.auth.presentation.dto.request;
+package com.space.server.domain.auth.presentation.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
