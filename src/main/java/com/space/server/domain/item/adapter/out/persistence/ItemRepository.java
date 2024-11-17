@@ -7,5 +7,4 @@ import java.util.List;
 
 public interface ItemRepository extends JpaRepository<ItemJpaEntity, Long> {
   List<ItemJpaEntity> findByCategory(Category category);
-
 }
