@@ -15,4 +15,6 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
     Integer findMaxOrderByState(@Param("state") State state);
 
     List<Chat> findAllChatByState(@Param("stateId") State state);
+
+    void deleteByState(State state);
 }
