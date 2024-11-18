@@ -19,4 +19,6 @@ public interface InventoryRepository extends JpaRepository<Inventory, Long> {
   List<Inventory> findByIsEquippedAndUser(@Param("user") Users user);
   @Query("SELECT i FROM Inventory i WHERE i.user = :user AND i.item.category = :category AND i.isEquipped = true")
   Inventory findByCategoryAndUserAndIsEquipped(@Param("category") Category category, @Param("user") Users user);
+
+  void deleteByUser(Users user);
 }
