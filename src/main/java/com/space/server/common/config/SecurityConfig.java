@@ -14,6 +14,7 @@ import com.space.server.domain.oauth.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -98,8 +99,9 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/login","/join", "/reissue","/swagger-ui/**", "/v3/api-docs/**", "/hc", "/env", "/mails", "/verify", "/favicon.ico").permitAll()
-                        .requestMatchers("/users").hasRole("GUEST")
-                        .anyRequest().hasRole("USER"));
+                        .requestMatchers(HttpMethod.POST,"/users").hasRole("GUEST")
+                        .anyRequest().hasRole("USER"))
+                ;
 
         http
                 .exceptionHandling(exceptionHandling -> exceptionHandling
