@@ -1,4 +1,4 @@
-package com.space.server.domain.common;
+package com.space.server.common.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -13,10 +13,9 @@ import org.springframework.stereotype.Component;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Component
-public @interface UseCase {
+public @interface PersistenceAdapter {
 
   @AliasFor(annotation = Component.class)
   String value() default "";
 
 }
-

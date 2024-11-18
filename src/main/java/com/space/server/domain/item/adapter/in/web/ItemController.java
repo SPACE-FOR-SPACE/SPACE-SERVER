@@ -4,7 +4,7 @@ import com.space.server.domain.item.adapter.in.web.converter.CategoryConverter;
 import com.space.server.domain.item.adapter.in.web.dto.response.ItemResponse;
 import com.space.server.domain.item.application.port.in.BuyItemUseCase;
 import com.space.server.domain.item.application.port.in.GetItemQuery;
-import com.space.server.domain.common.WebAdapter;
+import com.space.server.common.annotation.WebAdapter;
 import com.space.server.domain.item.application.port.in.GetItemsByCategoryQuery;
 import com.space.server.domain.item.application.port.in.GetItemsQuery;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 package com.space.server.domain.item.adapter.out.persistence;
 
-import com.space.server.domain.common.PersistenceAdapter;
+import com.space.server.common.annotation.PersistenceAdapter;
 import com.space.server.domain.item.application.port.out.LoadItemsPort;
 import com.space.server.domain.item.domain.Item;
 import lombok.RequiredArgsConstructor;

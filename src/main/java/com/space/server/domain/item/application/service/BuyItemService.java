@@ -1,6 +1,6 @@
 package com.space.server.domain.item.application.service;
 
-import com.space.server.domain.common.UseCase;
+import com.space.server.common.annotation.UseCase;
 import com.space.server.domain.inventory.application.port.out.CheckHaveItemPort;
 import com.space.server.domain.inventory.exception.InventoryItemExistedException;
 import com.space.server.domain.item.application.port.in.BuyItemUseCase;

@@ -1,6 +1,6 @@
 package com.space.server.domain.inventory.adapter.out.persistence;
 
-import com.space.server.domain.common.PersistenceAdapter;
+import com.space.server.common.annotation.PersistenceAdapter;
 import com.space.server.domain.inventory.application.port.out.LoadInventoryPort;
 import com.space.server.domain.inventory.domain.Inventory;
 import com.space.server.domain.inventory.exception.InventoryNotFoundException;

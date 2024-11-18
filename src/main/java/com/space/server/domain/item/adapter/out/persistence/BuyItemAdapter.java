@@ -1,6 +1,6 @@
 package com.space.server.domain.item.adapter.out.persistence;
 
-import com.space.server.domain.common.PersistenceAdapter;
+import com.space.server.common.annotation.PersistenceAdapter;
 import com.space.server.domain.inventory.adapter.out.persistence.InventoryJpaEntity;
 import com.space.server.domain.inventory.adapter.out.persistence.InventoryMapper;
 import com.space.server.domain.inventory.adapter.out.persistence.InventoryRepository;

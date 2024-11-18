@@ -1,6 +1,6 @@
 package com.space.server.domain.inventory.application.service;
 
-import com.space.server.domain.common.UseCase;
+import com.space.server.common.annotation.UseCase;
 import com.space.server.domain.inventory.application.port.in.EquipInventoryUseCase;
 import com.space.server.domain.inventory.application.port.out.EquipInventoryPort;
 import com.space.server.domain.inventory.application.port.out.LoadInventoryPort;

@@ -1,6 +1,6 @@
 package com.space.server.domain.item.application.service;
 
-import com.space.server.domain.common.UseCase;
+import com.space.server.common.annotation.UseCase;
 import com.space.server.domain.item.application.port.in.GetItemsQuery;
 import com.space.server.domain.item.application.port.out.LoadItemsPort;
 import com.space.server.domain.item.domain.Item;
