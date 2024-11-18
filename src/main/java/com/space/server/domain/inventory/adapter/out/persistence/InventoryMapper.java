@@ -11,9 +11,7 @@ public class InventoryMapper {
 
   private final ItemMapper itemMapper;
 
-  public Inventory mapToInventory(
-      InventoryJpaEntity inventory
-  ) {
+  public Inventory mapToInventory(InventoryJpaEntity inventory) {
     return Inventory.builder()
         .id(new Inventory.InventoryId(inventory.getId()))
         .user(inventory.getUser())
