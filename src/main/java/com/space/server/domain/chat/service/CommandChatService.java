@@ -17,8 +17,8 @@ import com.space.server.domain.chat.service.implementation.AiResponseJsonParsing
 import com.space.server.domain.chat.service.implementation.ChatValidator;
 import com.space.server.domain.chapter.domain.Chapter;
 import com.space.server.domain.chapter.service.implementation.ChapterReader;
+import com.space.server.domain.checklist.application.port.in.GetChecklistsByQuizQuery;
 import com.space.server.domain.checklist.domain.Checklist;
-import com.space.server.domain.checklist.service.implementation.ChecklistReader;
 import com.space.server.domain.quiz.domain.Quiz;
 import com.space.server.domain.quiz.service.implementation.QuizReader;
 import com.space.server.domain.state.domain.State;
@@ -48,7 +48,7 @@ public class CommandChatService {
     private final ChatReader chatReader;
     private final ChatCreator chatCreator;
     private final ChatValidator chatValidator;
-    private final ChecklistReader checklistReader;
+    private final GetChecklistsByQuizQuery getChecklistsByQuizQuery;
     private final ChapterReader chapterReader;
     private final ChatCompleter chatCompleter;
     private final StateUpdater stateUpdater;
@@ -57,7 +57,7 @@ public class CommandChatService {
     public AiResponse create(Long quizId, CreateChatRequest request, Long userId) {
         Quiz quiz = quizReader.findById(quizId);
         Users user = userReader.findById(userId);
-        List<Checklist> checklists = checklistReader.findByQuiz(quiz);
+        List<Checklist> checklists = getChecklistsByQuizQuery.getChecklistsByQuiz(quizId);
         Chapter chapter = chapterReader.findById(quiz.getChapter().getId());
 
         Optional<State> state = stateReader.findByQuizIdAndUserId(quiz, user);
