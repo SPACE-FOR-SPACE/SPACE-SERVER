@@ -1,8 +1,8 @@
 package com.space.server.domain.ai.service.dto.response.gpt;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public record MessagesText(
-    String value,
-    List<String> annotations
+    String value
 ) {}
