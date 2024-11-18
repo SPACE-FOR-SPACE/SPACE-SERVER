@@ -1,4 +1,4 @@
-package com.space.server.domain.checklist.presentation.dto.response;
+package com.space.server.domain.checklist.adapter.in.web.dto.response;
 
 import com.space.server.domain.checklist.domain.Checklist;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -19,7 +19,7 @@ public record ChecklistResponse(
 ) {
   public static ChecklistResponse from(Checklist checklist) {
     return new ChecklistResponse(
-        checklist.getId(),
+        checklist.getId().getValue(),
         checklist.getQuiz().getId(),
         checklist.getChapter().getId(),
         checklist.getContent()
