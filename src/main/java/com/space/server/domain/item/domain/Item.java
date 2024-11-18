@@ -26,7 +26,7 @@ public class Item {
   @Schema(description = "아이템 가격")
   private Integer price;
 
-  @Column(name = "item_image", length = 100)
+  @Column(length = 100)
   @NotNull
   @Schema(description = "아이템 이미지 URL")
   private String image;
