@@ -21,7 +21,7 @@ import static com.space.server.common.jwt.util.AuthenticationUtil.getMemberId;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/stores/items")
-@Tag(name = "item", description = "아이템 API")
+@Tag(name = "Item", description = "아이템 API")
 public class ItemController {
 
   private final GetItemQuery getItemQuery;
