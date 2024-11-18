@@ -1,7 +1,6 @@
 package com.space.server.domain.user.domain;
 
 import com.space.server.domain.user.domain.value.Role;
-import com.space.server.domain.user.domain.value.Status;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -34,9 +33,6 @@ public class Users {
 
     private Integer age;
 
-    @Enumerated(EnumType.STRING)
-    private Status status;
-
     private Integer point;
 
     @CreatedDate
@@ -66,6 +62,12 @@ public class Users {
         this.email = email;
         this.password = password;
         this.role = role;
+    }
+
+    @Builder(builderMethodName = "updateUserBuilder")
+    public Users(String username, Integer age) {
+        this.username = username;
+        this.age = age;
     }
 
     public void updateSocial(String email, String type) {
