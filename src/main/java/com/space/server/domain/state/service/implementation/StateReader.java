@@ -24,4 +24,8 @@ public class StateReader {
     public Optional<State> findByQuizIdAndUserId(Quiz quiz, Users user) {
         return stateRepository.findByQuizAndUser(quiz, user);
     }
+
+    public State findByUser(Users user) {
+        return stateRepository.findByUser(user);
+    }
 }
