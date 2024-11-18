@@ -1,11 +1,8 @@
 package com.space.server.domain.ai.service.dto.response.gpt;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public record AiAllMessagesResponse(
-    String object,
-    List<AiMessagesResponse> data,
-    String first_id,
-    String last_id,
-    Boolean has_more
+    String first_id
 ) {}
