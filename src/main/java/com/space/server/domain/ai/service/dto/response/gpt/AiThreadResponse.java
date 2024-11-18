@@ -1,11 +1,8 @@
 package com.space.server.domain.ai.service.dto.response.gpt;
 
-import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public record AiThreadResponse(
-    String id,
-    String object,
-    Long created_at,
-    Map<String, String> metadata,
-    ToolResources tool_resources
+    String id
 ) {}
