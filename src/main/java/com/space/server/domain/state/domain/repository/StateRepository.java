@@ -11,4 +11,6 @@ import java.util.Optional;
 @Repository
 public interface StateRepository extends JpaRepository<State, Long> {
     Optional<State> findByQuizAndUser(Quiz quiz, Users user);
+
+    void deleteByUser(Users user);
 }
