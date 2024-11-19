@@ -21,7 +21,7 @@ public record ChecklistResponse(
     return new ChecklistResponse(
         checklist.getId().getValue(),
         checklist.getQuiz().getId(),
-        checklist.getChapter().getId(),
+        checklist.getChapter().getId().getValue(),
         checklist.getContent()
     );
   }
