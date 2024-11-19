@@ -20,8 +20,7 @@ public class ChapterController {
 
   @GetMapping("{chapter-id}")
   @Operation(summary = "챕터 조회", description = "해당 챕터를 조회합니다.")
-  public ChapterResponse readOne(
-      @Parameter(description = "챕터 ID", required = true) @PathVariable(name = "chapter-id") Long chapterId) {
+  public ChapterResponse readOne(@Parameter(description = "챕터 ID", required = true) @PathVariable(name = "chapter-id") Long chapterId) {
     return ChapterResponse.from(getChapterQuery.getChapter(chapterId));
   }
 
