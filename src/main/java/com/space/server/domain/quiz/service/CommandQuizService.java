@@ -18,7 +18,6 @@ public class CommandQuizService {
   private final QuizReader quizReader;
   private final QuizUpdater quizUpdater;
   private final QuizDeleter quizDeleter;
-  private final ChapterReader chapterReader;
 
   public void create(Quiz quiz) {
     quizCreator.create(quiz);
