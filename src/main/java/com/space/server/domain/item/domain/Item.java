@@ -31,10 +31,6 @@ public class Item {
     return new Item(id, name, price, image, category);
   }
 
-  public Optional<ItemId> getId(){
-    return Optional.ofNullable(this.id);
-  }
-
   @Value
   public static class ItemId {
     private final Long value;
