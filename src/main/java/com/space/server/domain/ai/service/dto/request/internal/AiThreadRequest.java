@@ -1,4 +1,4 @@
-package com.space.server.domain.ai.service.dto.request.gpt;
+package com.space.server.domain.ai.service.dto.request.internal;
 
 import java.util.List;
 

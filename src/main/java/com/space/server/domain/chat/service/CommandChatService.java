@@ -1,6 +1,6 @@
 package com.space.server.domain.chat.service;
 
-import com.space.server.domain.ai.service.dto.request.gpt.AiChat;
+import com.space.server.domain.ai.service.dto.request.internal.AiChat;
 import com.space.server.domain.ai.service.dto.response.AiResponse;
 import com.space.server.domain.ai.service.dto.response.internal.AiAllMessagesResponse;
 import com.space.server.domain.ai.service.dto.response.internal.AiMessagesResponse;

@@ -1,9 +1,9 @@
 package com.space.server.domain.ai.service.implementation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.space.server.domain.ai.service.dto.request.gpt.AiChat;
-import com.space.server.domain.ai.service.dto.request.gpt.AiRunsRequest;
-import com.space.server.domain.ai.service.dto.request.gpt.AiThreadRequest;
+import com.space.server.domain.ai.service.dto.request.internal.AiChat;
+import com.space.server.domain.ai.service.dto.request.internal.AiRunsRequest;
+import com.space.server.domain.ai.service.dto.request.internal.AiThreadRequest;
 import com.space.server.domain.ai.service.dto.response.internal.AiAllMessagesResponse;
 import com.space.server.domain.ai.service.dto.response.internal.AiMessagesResponse;
 import com.space.server.domain.ai.service.dto.response.internal.AiRunsResponse;

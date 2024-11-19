@@ -1,4 +1,4 @@
-package com.space.server.domain.ai.service.dto.request.gpt;
+package com.space.server.domain.ai.service.dto.request.internal;
 
 public record AiChat (
     String role,
