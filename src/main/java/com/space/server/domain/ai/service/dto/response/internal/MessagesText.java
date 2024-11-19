@@ -1,8 +1,8 @@
-package com.space.server.domain.ai.service.dto.response.gpt;
+package com.space.server.domain.ai.service.dto.response.internal;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record AiThreadResponse(
-    String id
+public record MessagesText(
+    String value
 ) {}

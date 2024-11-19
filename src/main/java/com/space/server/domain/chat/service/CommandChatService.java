@@ -2,10 +2,10 @@ package com.space.server.domain.chat.service;
 
 import com.space.server.domain.ai.service.dto.request.gpt.AiChat;
 import com.space.server.domain.ai.service.dto.response.AiResponse;
-import com.space.server.domain.ai.service.dto.response.gpt.AiAllMessagesResponse;
-import com.space.server.domain.ai.service.dto.response.gpt.AiMessagesResponse;
-import com.space.server.domain.ai.service.dto.response.gpt.AiRunsResponse;
-import com.space.server.domain.ai.service.dto.response.gpt.AiThreadResponse;
+import com.space.server.domain.ai.service.dto.response.internal.AiAllMessagesResponse;
+import com.space.server.domain.ai.service.dto.response.internal.AiMessagesResponse;
+import com.space.server.domain.ai.service.dto.response.internal.AiRunsResponse;
+import com.space.server.domain.ai.service.dto.response.internal.AiThreadResponse;
 import com.space.server.domain.ai.service.implementation.ChatCompleter;
 import com.space.server.domain.ai.service.implementation.PromptCreator;
 import com.space.server.domain.chat.domain.Chat;
