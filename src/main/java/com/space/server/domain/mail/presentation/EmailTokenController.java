@@ -26,12 +26,12 @@ public class EmailTokenController {
     }
 
     @GetMapping("/verify")
-    public ResponseEntity<Void> verifyEmail(@RequestParam String token) {
+    public ModelAndView verifyEmail(@RequestParam String token) {
         emailTokenService.verifyEmail(token);
 
         ModelAndView modelAndView = new ModelAndView("verification-result");
-        modelAndView.addObject("status", EmailVerificationStatus.SUCCESS);
+        modelAndView.addObject("status", EmailVerificationStatus.SUCCESS.name());
 
-        return ResponseEntity.ok().build();
+        return modelAndView;
     }
 }
