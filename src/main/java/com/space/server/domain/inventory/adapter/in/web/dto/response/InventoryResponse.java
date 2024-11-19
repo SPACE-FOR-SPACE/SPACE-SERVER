@@ -26,7 +26,7 @@ public record InventoryResponse(
     return InventoryResponse.builder()
         .id(inventory.getId().getValue())
         .name(inventory.getItem().getName())
-        .itemId(inventory.getItem().getId().get().getValue())
+        .itemId(inventory.getItem().getId().getValue())
         .category(inventory.getItem().getCategory())
         .isEquipped(inventory.isEquipped())
         .build();
