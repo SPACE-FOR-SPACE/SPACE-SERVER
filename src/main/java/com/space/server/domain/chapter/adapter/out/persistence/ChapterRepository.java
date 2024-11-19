@@ -7,5 +7,5 @@ import java.util.List;
 
 @Repository
 public interface ChapterRepository extends JpaRepository<ChapterJpaEntity, Long> {
-  List<ChapterJpaEntity> findAllByOrderById(Long chapterId);
+  List<ChapterJpaEntity> findAllByOrderById();
 }
