@@ -18,7 +18,7 @@ public class ItemMapper {
 
   public ItemJpaEntity mapToItemJpaEntity(Item item) {
     return ItemJpaEntity.builder()
-        .id(item.getId().get().getValue())
+        .id(item.getId().getValue())
         .name(item.getName())
         .price(item.getPrice())
         .image(item.getImage())
