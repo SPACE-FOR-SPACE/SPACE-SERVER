@@ -4,6 +4,7 @@ import com.space.server.common.annotation.PersistenceAdapter;
 import com.space.server.domain.inventory.application.port.out.LoadInventoriesPort;
 import com.space.server.domain.inventory.domain.Inventory;
 import com.space.server.domain.user.domain.repository.UserRepository;
+import com.space.server.domain.user.exception.UserExistedException;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -18,7 +19,8 @@ public class InventoriesGetAdapter implements LoadInventoriesPort {
 
   @Override
   public List<Inventory> loadInventories(Long userId) {
-    return inventoryRepository.findByUser(userRepository.findById(userId).get()).stream()
+    return inventoryRepository.findByUser(userRepository.findById(userId)
+            .orElseThrow(UserExistedException::new)).stream()
         .map(inventoryMapper::mapToInventory)
         .toList();
   }
