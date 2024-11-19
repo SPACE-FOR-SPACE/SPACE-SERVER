@@ -1,6 +1,6 @@
 package com.space.server.domain.quiz.presentation.dto.response;
 
-import com.space.server.domain.chapter.presentation.dto.response.ChapterResponse;
+import com.space.server.domain.chapter.adapter.in.web.dto.response.ChapterResponse;
 import com.space.server.domain.quiz.domain.Quiz;
 import com.space.server.domain.quiz.domain.value.CharacterDirection;
 import io.swagger.v3.oas.annotations.media.Schema;

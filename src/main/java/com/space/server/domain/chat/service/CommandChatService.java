@@ -16,7 +16,6 @@ import com.space.server.domain.chat.service.implementation.ChatReader;
 import com.space.server.domain.chat.service.implementation.AiResponseJsonParsing;
 import com.space.server.domain.chat.service.implementation.ChatValidator;
 import com.space.server.domain.chapter.domain.Chapter;
-import com.space.server.domain.chapter.service.implementation.ChapterReader;
 import com.space.server.domain.checklist.application.port.in.GetChecklistsByQuizQuery;
 import com.space.server.domain.checklist.domain.Checklist;
 import com.space.server.domain.quiz.domain.Quiz;

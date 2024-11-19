@@ -14,8 +14,8 @@ public class ItemGetAdapter implements LoadItemPort {
   private final ItemMapper itemMapper;
 
   @Override
-  public Item loadItem(Long id) {
-    return itemRepository.findById(id)
+  public Item loadItem(Long itemId) {
+    return itemRepository.findById(itemId)
         .map(itemMapper::mapToItem)
         .orElseThrow(ItemNotFoundException::new);
   }
