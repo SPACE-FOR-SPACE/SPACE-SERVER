@@ -31,7 +31,7 @@ public class EmailService {
             Context context = new Context();
             context.setVariable("verificationLink", serverUrl + "/verify?token=" + token);
 
-            String process = templateEngine.process("mailTemplate", context);
+            String process = templateEngine.process("verification-mail", context);
 
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
