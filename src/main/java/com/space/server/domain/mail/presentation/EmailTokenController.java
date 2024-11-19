@@ -3,6 +3,7 @@ package com.space.server.domain.mail.presentation;
 import com.space.server.domain.mail.exception.value.EmailVerificationStatus;
 import com.space.server.domain.mail.presentation.dto.request.EmailVerificationRequest;
 import com.space.server.domain.mail.service.EmailTokenService;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -25,13 +26,14 @@ public class EmailTokenController {
         emailTokenService.sendVerificationEmail(request.email());
     }
 
+    @Hidden
     @GetMapping("/verify")
-    public ResponseEntity<Void> verifyEmail(@RequestParam String token) {
+    public ModelAndView verifyEmail(@RequestParam String token) {
         emailTokenService.verifyEmail(token);
 
         ModelAndView modelAndView = new ModelAndView("verification-result");
-        modelAndView.addObject("status", EmailVerificationStatus.SUCCESS);
+        modelAndView.addObject("status", EmailVerificationStatus.SUCCESS.name());
 
-        return ResponseEntity.ok().build();
+        return modelAndView;
     }
 }
