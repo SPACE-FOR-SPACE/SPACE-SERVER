@@ -16,8 +16,7 @@ public class ItemsGetAdapter implements LoadItemsPort {
 
   @Override
   public List<Item> loadItems() {
-    return itemRepository.findAll()
-        .stream()
+    return itemRepository.findAll().stream()
         .map(itemMapper::mapToItem)
         .toList();
   }
