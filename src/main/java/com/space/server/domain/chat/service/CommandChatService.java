@@ -8,6 +8,7 @@ import com.space.server.domain.ai.service.dto.response.gpt.AiRunsResponse;
 import com.space.server.domain.ai.service.dto.response.gpt.AiThreadResponse;
 import com.space.server.domain.ai.service.implementation.ChatCompleter;
 import com.space.server.domain.ai.service.implementation.PromptCreator;
+import com.space.server.domain.chapter.application.port.in.GetChapterQuery;
 import com.space.server.domain.chat.domain.Chat;
 import com.space.server.domain.chat.domain.value.Type;
 import com.space.server.domain.chat.presentation.dto.request.CreateChatRequest;
@@ -43,12 +44,12 @@ public class CommandChatService {
     private final StateReader stateReader;
     private final StateCreator stateCreator;
     private final QuizReader quizReader;
+    private final GetChapterQuery getChapterQuery;
     private final UserReader userReader;
     private final ChatReader chatReader;
     private final ChatCreator chatCreator;
     private final ChatValidator chatValidator;
     private final GetChecklistsByQuizQuery getChecklistsByQuizQuery;
-    private final ChapterReader chapterReader;
     private final ChatCompleter chatCompleter;
     private final StateUpdater stateUpdater;
     private final AiResponseJsonParsing aiResponseJsonParsing;
@@ -57,7 +58,7 @@ public class CommandChatService {
         Quiz quiz = quizReader.findById(quizId);
         Users user = userReader.findById(userId);
         List<Checklist> checklists = getChecklistsByQuizQuery.getChecklistsByQuiz(quizId);
-        Chapter chapter = chapterReader.findById(quiz.getChapter().getId());
+        Chapter chapter = getChapterQuery.getChapter(quiz.getChapter().getId());
 
         Optional<State> state = stateReader.findByQuizIdAndUserId(quiz, user);
 
