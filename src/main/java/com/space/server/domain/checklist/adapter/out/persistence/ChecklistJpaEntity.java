@@ -1,6 +1,6 @@
 package com.space.server.domain.checklist.adapter.out.persistence;
 
-import com.space.server.domain.chapter.domain.Chapter;
+import com.space.server.domain.chapter.adapter.out.persistence.ChapterJpaEntity;
 import com.space.server.domain.quiz.domain.Quiz;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -26,7 +26,7 @@ public class ChecklistJpaEntity {
 
   @JoinColumn
   @ManyToOne(fetch = FetchType.LAZY)
-  private Chapter chapter;
+  private ChapterJpaEntity chapter;
 
   @Column
   private String content;
