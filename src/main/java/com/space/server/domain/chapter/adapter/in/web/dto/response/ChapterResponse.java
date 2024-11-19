@@ -1,4 +1,4 @@
-package com.space.server.domain.chapter.presentation.dto.response;
+package com.space.server.domain.chapter.adapter.in.web.dto.response;
 
 import com.space.server.domain.chapter.domain.Chapter;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -19,6 +19,6 @@ public record ChapterResponse(
     Map<String, String> mapObjectImage
 ) {
   public static ChapterResponse from(Chapter chapter) {
-    return new ChapterResponse(chapter.getId(), chapter.getExplanation(), chapter.getMapObject(), chapter.getMapObjectImage());
+    return new ChapterResponse(chapter.getId().getValue(), chapter.getExplanation(), chapter.getMapObject(), chapter.getMapObjectImage());
   }
 }
