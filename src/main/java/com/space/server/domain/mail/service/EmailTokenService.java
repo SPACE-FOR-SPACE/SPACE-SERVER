@@ -64,8 +64,4 @@ public class EmailTokenService {
         return emailToken != null;
     }
 
-    @Scheduled(cron = "0 0 0 * * ?")
-    public void cleanupExpiredTokens() {
-        emailTokenRepository.deleteByExpiryDateBefore(LocalDateTime.now());
-    }
 }
