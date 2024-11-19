@@ -2,7 +2,6 @@ package com.space.server.domain.chapter.adapter.out.persistence;
 
 import io.hypersistence.utils.hibernate.type.basic.PostgreSQLHStoreType;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,12 +27,10 @@ public class ChapterJpaEntity {
 
   @Type(PostgreSQLHStoreType.class)
   @Column(columnDefinition = "hstore")
-  @NotNull
   private Map<String, String> mapObject;
 
   @Type(PostgreSQLHStoreType.class)
   @Column(columnDefinition = "hstore")
-  @NotNull
   private Map<String, String> mapObjectImage;
 
 }
