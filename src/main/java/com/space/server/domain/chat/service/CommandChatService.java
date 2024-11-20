@@ -19,8 +19,9 @@ import com.space.server.domain.chat.service.implementation.ChatValidator;
 import com.space.server.domain.chapter.domain.Chapter;
 import com.space.server.domain.checklist.application.port.in.GetChecklistsByQuizQuery;
 import com.space.server.domain.checklist.domain.Checklist;
+import com.space.server.domain.quiz.adapter.out.persistence.QuizMapper;
+import com.space.server.domain.quiz.application.port.in.GetQuizQuery;
 import com.space.server.domain.quiz.domain.Quiz;
-import com.space.server.domain.quiz.service.implementation.QuizReader;
 import com.space.server.domain.state.domain.State;
 import com.space.server.domain.state.domain.value.Status;
 import com.space.server.domain.state.service.implementation.StateCreator;
@@ -43,7 +44,7 @@ public class CommandChatService {
 
     private final StateReader stateReader;
     private final StateCreator stateCreator;
-    private final QuizReader quizReader;
+    private final GetQuizQuery getQuizQuery;
     private final GetChapterQuery getChapterQuery;
     private final UserReader userReader;
     private final ChatReader chatReader;
@@ -53,12 +54,13 @@ public class CommandChatService {
     private final ChatCompleter chatCompleter;
     private final StateUpdater stateUpdater;
     private final AiResponseJsonParsing aiResponseJsonParsing;
+    private final QuizMapper quizMapper;
 
     public AiResponse create(Long quizId, CreateChatRequest request, Long userId) {
-        Quiz quiz = quizReader.findById(quizId);
+        Quiz quiz = getQuizQuery.getQuiz(quizId);
         Users user = userReader.findById(userId);
         List<Checklist> checklists = getChecklistsByQuizQuery.getChecklistsByQuiz(quizId);
-        Chapter chapter = getChapterQuery.getChapter(quiz.getChapter().getId());
+        Chapter chapter = getChapterQuery.getChapter(quiz.getChapter().getId().getValue());
 
         Optional<State> state = stateReader.findByQuizIdAndUserId(quiz, user);
 
@@ -139,7 +141,7 @@ public class CommandChatService {
 
             stateCreator.create(State.createBuilder()
                     .user(user)
-                    .quiz(quiz)
+                    .quiz(quizMapper.mapToQuizJpaEntity(quiz))
                     .status(botChat.isSuccess() == true ? Status.SUCCESS : Status.FAIL)
                     .move(botChat.move())
                     .score(botChat.score())
