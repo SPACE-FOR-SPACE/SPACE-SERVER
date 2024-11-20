@@ -1,6 +1,6 @@
 package com.space.server.domain.state.domain;
 
-import com.space.server.domain.quiz.domain.Quiz;
+import com.space.server.domain.quiz.adapter.out.persistence.QuizJpaEntity;
 import com.space.server.domain.state.domain.value.Status;
 import com.space.server.domain.user.domain.Users;
 import io.hypersistence.utils.hibernate.type.array.IntArrayType;
@@ -27,7 +27,7 @@ public class State {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "quiz_id")
-    private Quiz quiz;
+    private QuizJpaEntity quiz;
 
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -43,7 +43,7 @@ public class State {
     private String threadId;
 
     @Builder(builderMethodName = "createBuilder")
-    public State(Users user, Quiz quiz, Status status, String[] move, Long[] score, String threadId) {
+    public State(Users user, QuizJpaEntity quiz, Status status, String[] move, Long[] score, String threadId) {
         this.user = user;
         this.quiz = quiz;
         this.status = status;
