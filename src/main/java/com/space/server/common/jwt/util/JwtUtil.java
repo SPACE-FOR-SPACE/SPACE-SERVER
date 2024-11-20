@@ -1,5 +1,6 @@
 package com.space.server.common.jwt.util;
 
+import com.space.server.common.jwt.exception.RefreshTokenNotFoundException;
 import com.space.server.domain.auth.domain.Refresh;
 import com.space.server.domain.auth.domain.repository.RefreshRepository;
 import com.space.server.common.jwt.exception.ExpiredRefreshTokenException;
@@ -9,8 +10,10 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
 
@@ -41,7 +44,11 @@ public class JwtUtil {
     }
 
     public String getCategory(String token) {
-        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("category", String.class);
+        try {
+            return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("category", String.class);
+        } catch (ExpiredJwtException e) {
+            return e.getClaims().get("category", String.class);
+        }
     }
 
     public Role getRole(String token) {
@@ -50,7 +57,11 @@ public class JwtUtil {
     }
 
     public String getLoginType(String token) {
-        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("loginType", String.class);
+        try {
+            return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("loginType", String.class);
+        } catch (ExpiredJwtException e) {
+            return e.getClaims().get("loginType", String.class);
+        }
     }
 
     public void isExpired(String token) {
@@ -61,10 +72,29 @@ public class JwtUtil {
         }
     }
 
-    public void isExpiredRefresh(String token) {
+    public void isExpiredRefresh(String token, HttpServletResponse response) {
         try {
             Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration().before(new Date());
         } catch (ExpiredJwtException e) {
+
+            Boolean isExist = refreshRepository.existsByRefreshToken(token);
+            if (!isExist) {
+                throw new RefreshTokenNotFoundException();
+            }
+
+            refreshRepository.deleteByRefreshToken(token);
+
+            String loginType = getLoginType(token);
+
+            String accessTokenName = "access_" + loginType.toLowerCase();
+            String refreshTokenName = "refresh_" + loginType.toLowerCase();
+
+            ResponseCookie invalidAccessCookie = invalidCookie(accessTokenName);
+            ResponseCookie invalidRefreshCookie = invalidCookie(refreshTokenName);
+
+            response.addHeader(HttpHeaders.SET_COOKIE, invalidAccessCookie.toString());
+            response.addHeader(HttpHeaders.SET_COOKIE, invalidRefreshCookie.toString());
+
             throw new ExpiredRefreshTokenException();
         }
     }
