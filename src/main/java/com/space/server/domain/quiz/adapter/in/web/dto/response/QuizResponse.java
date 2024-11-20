@@ -1,4 +1,4 @@
-package com.space.server.domain.quiz.presentation.dto.response;
+package com.space.server.domain.quiz.adapter.in.web.dto.response;
 
 import com.space.server.domain.chapter.adapter.in.web.dto.response.ChapterResponse;
 import com.space.server.domain.quiz.domain.Quiz;
@@ -36,7 +36,7 @@ public record QuizResponse(
 ) {
   public static QuizResponse from(Quiz quiz) {
     return new QuizResponse(
-        quiz.getId(),
+        quiz.getId().getValue(),
         ChapterResponse.from(quiz.getChapter()),
         quiz.getTitle(),
         quiz.getContent(),

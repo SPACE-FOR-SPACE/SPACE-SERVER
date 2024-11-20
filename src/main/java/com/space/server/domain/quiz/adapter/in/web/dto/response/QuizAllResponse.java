@@ -1,4 +1,4 @@
-package com.space.server.domain.quiz.presentation.dto.response;
+package com.space.server.domain.quiz.adapter.in.web.dto.response;
 
 import com.space.server.domain.quiz.domain.Quiz;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -9,6 +9,6 @@ public record QuizAllResponse(
     Long id
     ) {
     public static QuizAllResponse from(Quiz quiz) {
-        return new QuizAllResponse(quiz.getId());
+        return new QuizAllResponse(quiz.getId().getValue());
     }
 }
