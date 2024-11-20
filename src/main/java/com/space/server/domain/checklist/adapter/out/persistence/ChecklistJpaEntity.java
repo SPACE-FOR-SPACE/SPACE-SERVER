@@ -1,7 +1,7 @@
 package com.space.server.domain.checklist.adapter.out.persistence;
 
 import com.space.server.domain.chapter.adapter.out.persistence.ChapterJpaEntity;
-import com.space.server.domain.quiz.domain.Quiz;
+import com.space.server.domain.quiz.adapter.out.persistence.QuizJpaEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,7 +22,7 @@ public class ChecklistJpaEntity {
 
   @JoinColumn
   @ManyToOne(fetch = FetchType.LAZY)
-  private Quiz quiz;
+  private QuizJpaEntity quiz;
 
   @JoinColumn
   @ManyToOne(fetch = FetchType.LAZY)
