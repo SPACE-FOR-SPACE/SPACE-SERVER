@@ -20,7 +20,7 @@ public record ChecklistResponse(
   public static ChecklistResponse from(Checklist checklist) {
     return new ChecklistResponse(
         checklist.getId().getValue(),
-        checklist.getQuiz().getId(),
+        checklist.getQuiz().getId().getValue(),
         checklist.getChapter().getId().getValue(),
         checklist.getContent()
     );
