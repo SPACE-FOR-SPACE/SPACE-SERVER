@@ -14,4 +14,13 @@ public class ChapterMapper {
         .mapObjectImage(chapter.getMapObjectImage())
         .build();
   }
+
+  public ChapterJpaEntity mapToChapterJpaEntity(Chapter chapter) {
+    return ChapterJpaEntity.builder()
+        .id(chapter.getId() == null ? null : chapter.getId().getValue())
+        .explanation(chapter.getExplanation())
+        .mapObject(chapter.getMapObject())
+        .mapObjectImage(chapter.getMapObjectImage())
+        .build();
+  }
 }
