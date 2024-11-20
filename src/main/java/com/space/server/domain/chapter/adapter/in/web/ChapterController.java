@@ -2,6 +2,7 @@ package com.space.server.domain.chapter.adapter.in.web;
 
 import com.space.server.domain.chapter.adapter.in.web.dto.response.ChapterResponse;
 import com.space.server.domain.chapter.application.port.in.GetChapterQuery;
+import com.space.server.domain.chapter.application.port.in.GetChaptersQuery;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,6 +17,7 @@ import java.util.List;
 @Tag(name = "Chapter", description = "챕터 API")
 public class ChapterController {
 
+  private final GetChaptersQuery getChaptersQuery;
   private final GetChapterQuery getChapterQuery;
 
   @GetMapping("{chapter-id}")
@@ -24,11 +26,11 @@ public class ChapterController {
     return ChapterResponse.from(getChapterQuery.getChapter(chapterId));
   }
 
-//  @GetMapping
-//  @Operation(summary = "모든 챕터 조회", description = "모든 챕터를 조회합니다.")
-//  public List<ChapterResponse> readAll() {
-//    return queryChapterService.readAll().stream()
-//        .map(ChapterResponse::from)
-//        .toList();
-//  }
+  @GetMapping
+  @Operation(summary = "모든 챕터 조회", description = "모든 챕터를 조회합니다.")
+  public List<ChapterResponse> readAll() {
+    return getChaptersQuery.getChapters().stream()
+        .map(ChapterResponse::from)
+        .toList();
+  }
 }
