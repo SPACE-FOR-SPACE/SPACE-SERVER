@@ -29,7 +29,7 @@ public class ReIssuer {
             throw new RefreshTokenNotFoundException();
         }
 
-        jwtUtil.isExpiredRefresh(refresh);
+        jwtUtil.isExpiredRefresh(refresh, response);
 
         String category = jwtUtil.getCategory(refresh);
 
