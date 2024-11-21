@@ -3,7 +3,6 @@ package com.space.server.common.aop;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
 import java.util.logging.Logger;
@@ -14,19 +13,7 @@ public class TimerAop {
 
   private final Logger logger = Logger.getLogger(getClass().getName());
 
-  @Pointcut("execution(* com.space.server.core..service..*(..))")
-  public void serviceLayer() {}
-
-  @Pointcut("execution(* com.space.server.chat.service..*(..))")
-  public void chatLayer() {}
-
-  @Pointcut("execution(* com.space.server.state.service..*(..))")
-  public void stateLayer() {}
-
-  @Pointcut("execution(* com.space.server.ai..*(..))")
-  public void aiLayer() {}
-
-  @Around("serviceLayer() || chatLayer() || stateLayer() || aiLayer()")
+  @Around("execution(* com.space.server..service..*(..))")
   public Object measureMethodExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
     long start = System.nanoTime();
     Object proceed = joinPoint.proceed();
