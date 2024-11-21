@@ -1,0 +1,149 @@
+package com.space.server.domain.ai.service.implementation;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.space.server.domain.ai.service.dto.request.gpt.AiChat;
+import com.space.server.domain.ai.service.dto.request.gpt.chatTune.AiChatTune;
+import com.space.server.domain.ai.service.dto.response.AiResponse;
+import com.space.server.domain.ai.service.dto.response.chatTune.AiChatTuneResponse;
+import com.space.server.domain.chapter.domain.Chapter;
+import com.space.server.domain.chapter.service.implementation.ChapterReader;
+import com.space.server.domain.chat.domain.Chat;
+import com.space.server.domain.chat.domain.value.Type;
+import com.space.server.domain.chat.presentation.dto.request.CreateChatRequest;
+import com.space.server.domain.chat.service.implementation.AiResponseJsonParsing;
+import com.space.server.domain.chat.service.implementation.ChatCreator;
+import com.space.server.domain.chat.service.implementation.ChatReader;
+import com.space.server.domain.chat.service.implementation.ChatValidator;
+import com.space.server.domain.checklist.domain.Checklist;
+import com.space.server.domain.checklist.service.implementation.ChecklistReader;
+import com.space.server.domain.quiz.domain.Quiz;
+import com.space.server.domain.quiz.service.implementation.QuizReader;
+import com.space.server.domain.state.domain.State;
+import com.space.server.domain.state.domain.value.Status;
+import com.space.server.domain.state.service.implementation.StateCreator;
+import com.space.server.domain.state.service.implementation.StateReader;
+import com.space.server.domain.state.service.implementation.StateUpdater;
+import com.space.server.domain.user.domain.Users;
+import com.space.server.domain.user.service.implementation.UserReader;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
+
+@Service
+@RequiredArgsConstructor
+@Transactional
+public class ChatTune {
+    @Value("${gpt.api.key}")
+    private String apiKey;
+
+    private final RestTemplate restTemplate;
+    private final String baseUrl = "https://api.openai.com/v1/chat/completions";
+
+    private final StateReader stateReader;
+    private final StateCreator stateCreator;
+    private final QuizReader quizReader;
+    private final UserReader userReader;
+    private final ChatReader chatReader;
+    private final ChatCreator chatCreator;
+    private final ChatValidator chatValidator;
+    private final ChecklistReader checklistReader;
+    private final ChapterReader chapterReader;
+    private final StateUpdater stateUpdater;
+    private final AiResponseJsonParsing aiResponseJsonParsing;
+
+    public AiResponse chatTuneCreator(Long quizId, CreateChatRequest request, Long userId) throws IOException {
+        Quiz quiz = quizReader.findById(quizId);
+        Users user = userReader.findById(userId);
+        List<Checklist> checklists = checklistReader.findByQuiz(quiz);
+        Chapter chapter = chapterReader.findById(quiz.getChapter().getId());
+
+        Optional<State> state = stateReader.findByQuizIdAndUserId(quiz, user);
+
+        String userChat = request.userChat();
+        chatValidator.validateBadWords(userChat);
+        chatValidator.validateEnglish(userChat);
+
+        PromptCreator promptCreator = new PromptCreator();
+        AiChat aiChat = new AiChat("user", promptCreator.create(request.type(), quiz, checklists, chapter, request.userChat()));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "application/json");
+        headers.set("Authorization", "Bearer " + apiKey);
+
+        String systemInstruction = Files.readString(Paths.get("../../../../resources/SystemInstruction.txt"));
+
+        List<AiChat> messages = new ArrayList<>();
+        messages.add(new AiChat("system", systemInstruction));
+        messages.add(new AiChat("user", aiChat.toString()));
+        AiChatTune aiChatTune = new AiChatTune("gpt-4o", messages, 0.5, 1.0);
+        HttpEntity<AiChatTune> httpEntity = new HttpEntity<>(aiChatTune, headers);
+
+        try {
+            ResponseEntity<String> responseEntity = restTemplate.exchange(
+                    baseUrl,
+                    HttpMethod.POST,
+                    httpEntity,
+                    String.class
+            );
+
+            //completion.choices[0].message.content
+            String responseBody = responseEntity.getBody();
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            AiChatTuneResponse responseMap = objectMapper.readValue(responseBody, AiChatTuneResponse.class);
+
+            Map<String, String> totalMapObject = new HashMap<>();
+            totalMapObject.putAll(quiz.getMapObject());
+            totalMapObject.putAll(chapter.getMapObject());
+
+            AiResponse botChat = aiResponseJsonParsing.jsonCreator(String.valueOf(responseMap.choices().get(0).message().content()), totalMapObject);
+
+            if(state.isPresent()){
+                chatCreator.create(Chat.builder()
+                        .state(state.get())
+                        .userChat(request.userChat())
+                        .botChat(botChat.feedback())
+                        .type(Type.CODE)
+                        .request_order(chatReader.findMaxOrderByState(state.get()) + 1)
+                        .build());
+
+                stateUpdater.update(State.updateBuilder()
+                        .status(botChat.isSuccess() ? Status.SUCCESS : Status.FAIL)
+                        .score(botChat.score())
+                        .move(botChat.move())
+                        .build(), state.get());
+            } else {
+                stateCreator.create(State.createBuilder()
+                        .user(user)
+                        .quiz(quiz)
+                        .status(botChat.isSuccess() ? Status.SUCCESS : Status.FAIL)
+                        .move(botChat.move())
+                        .score(botChat.score())
+                        .threadId(null)
+                        .build());
+                chatCreator.create(Chat.builder()
+                        .state(stateReader.findByQuizIdAndUserId(quiz, user).get())
+                        .userChat(request.userChat())
+                        .botChat(botChat.feedback())
+                        .type(Type.CODE)
+                        .request_order(chatReader.findMaxOrderByState(stateReader.findByQuizIdAndUserId(quiz, user).get()) + 1)
+                        .build());
+            }
+
+            return botChat;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+}
