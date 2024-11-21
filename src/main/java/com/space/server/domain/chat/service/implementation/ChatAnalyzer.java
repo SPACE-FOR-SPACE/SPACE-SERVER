@@ -17,13 +17,10 @@ public class ChatAnalyzer {
   public List<String> analyzeText(String text) {
     CharSequence normalized = OpenKoreanTextProcessorJava.normalize(text);
 
-    // 토큰화
     Seq<KoreanTokenizer.KoreanToken> tokens = OpenKoreanTextProcessorJava.tokenize(normalized);
 
-    // Scala Seq를 Java List로 변환
     List<KoreanTokenizer.KoreanToken> tokenList = JavaConverters.seqAsJavaList(tokens);
 
-    // 형태소 분석 및 명사 추출
     List<String> nouns = new ArrayList<>();
     for (KoreanTokenizer.KoreanToken token : tokenList) {
       if (token.pos().toString().equals("Noun")) {
