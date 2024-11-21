@@ -1,5 +1,6 @@
 package com.space.server.domain.chat.service.implementation;
 
+import com.space.server.domain.chat.exception.ChatNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.openkoreantext.processor.OpenKoreanTextProcessorJava;
 import org.openkoreantext.processor.tokenizer.KoreanTokenizer;
@@ -15,6 +16,11 @@ import java.util.List;
 public class ChatAnalyzer {
 
   public List<String> analyzeText(String text) {
+
+    if (text == null || text.isBlank()) {
+      throw new ChatNotFoundException();
+    }
+
     CharSequence normalized = OpenKoreanTextProcessorJava.normalize(text);
 
     Seq<KoreanTokenizer.KoreanToken> tokens = OpenKoreanTextProcessorJava.tokenize(normalized);
