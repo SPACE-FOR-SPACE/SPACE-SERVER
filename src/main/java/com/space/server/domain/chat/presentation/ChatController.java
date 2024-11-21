@@ -1,7 +1,7 @@
 package com.space.server.domain.chat.presentation;
 
 import com.space.server.domain.ai.service.dto.response.AiResponse;
-import com.space.server.domain.ai.service.implementation.ChatTune;
+import com.space.server.domain.ai.service.implementation.ChatTuner;
 import com.space.server.domain.chat.presentation.dto.request.CreateChatRequest;
 import com.space.server.domain.chat.presentation.dto.response.ChatResponse;
 import com.space.server.domain.chat.service.CommandChatService;
@@ -20,7 +20,7 @@ public class ChatController {
 
     private final CommandChatService commandChatService;
     private final QueryChatService queryChatService;
-    private final ChatTune chatTune;
+    private final ChatTuner chatTune;
 
 
     @PostMapping("/assistant-chats/{quiz-id}")

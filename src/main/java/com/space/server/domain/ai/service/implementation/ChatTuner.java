@@ -43,7 +43,7 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class ChatTune {
+public class ChatTuner {
     @Value("${gpt.api.key}")
     private String apiKey;
 
