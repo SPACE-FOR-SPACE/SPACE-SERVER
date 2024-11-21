@@ -99,6 +99,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/login","/join", "/reissue","/swagger-ui/**", "/v3/api-docs/**", "/hc", "/env", "/mails", "/verify", "/favicon.ico", "/logout").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/users").permitAll()
                         .requestMatchers(HttpMethod.POST,"/users").hasRole("GUEST")
                         .anyRequest().hasRole("USER"))
                 ;
