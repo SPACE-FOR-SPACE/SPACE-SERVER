@@ -56,4 +56,5 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 	implementation 'org.springframework.boot:spring-boot-starter-aop'
+	implementation group: 'org.openkoreantext', name: 'open-korean-text', version: '2.3.1'
 }
