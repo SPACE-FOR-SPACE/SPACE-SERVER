@@ -1,8 +1,9 @@
 package com.space.server.common.jwt.filter;
 
+import com.space.server.common.jwt.exception.InvalidTokenException;
+import com.space.server.common.jwt.exception.RefreshTokenNotFoundException;
 import com.space.server.domain.auth.domain.repository.RefreshRepository;
 import com.space.server.common.jwt.util.JwtUtil;
-import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
@@ -44,28 +45,20 @@ public class CustomLogoutFilter extends GenericFilterBean {
         } else if (refreshSocial != null) {
             processLogout(refreshSocial, "refresh_social", response);
         } else {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            throw new RefreshTokenNotFoundException();
         }
     }
 
     private void processLogout(String refreshToken, String cookieName, HttpServletResponse response) {
-        try {
-            jwtUtil.isExpired(refreshToken);
-        } catch (ExpiredJwtException e) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            return;
-        }
 
         String category = jwtUtil.getCategory(refreshToken);
         if (!category.equals("refresh")) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            return;
+            throw new InvalidTokenException();
         }
 
         Boolean isExist = refreshRepository.existsByRefreshToken(refreshToken);
         if (!isExist) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            return;
+            throw new RefreshTokenNotFoundException();
         }
 
         refreshRepository.deleteByRefreshToken(refreshToken);
