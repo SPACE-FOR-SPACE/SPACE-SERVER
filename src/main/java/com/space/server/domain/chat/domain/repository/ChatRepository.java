@@ -17,4 +17,6 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
     List<Chat> findAllChatByState(@Param("stateId") State state);
 
     void deleteByState(State state);
+
+    Integer countByState(State state);
 }
