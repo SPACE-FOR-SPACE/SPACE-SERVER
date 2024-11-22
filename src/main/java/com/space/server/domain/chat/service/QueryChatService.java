@@ -60,4 +60,11 @@ public class QueryChatService {
             .map(Map.Entry::getKey)
             .collect(Collectors.toList());
     }
+
+    public Integer countChats(Long quizId, Long userId) {
+        State state = stateReader.findByQuizIdAndUserId(quizReader.findById(quizId), userReader.findById(userId))
+            .orElseThrow(StateNotFoundException::new);
+
+        return chatReader.countChatByQuiz(state);
+    }
 }
