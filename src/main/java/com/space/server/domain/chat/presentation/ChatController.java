@@ -2,6 +2,7 @@ package com.space.server.domain.chat.presentation;
 
 import com.space.server.domain.ai.service.dto.response.AiResponse;
 import com.space.server.domain.chat.presentation.dto.request.CreateChatRequest;
+import com.space.server.domain.chat.presentation.dto.request.ReadKeywordsRequest;
 import com.space.server.domain.chat.presentation.dto.response.ChatResponse;
 import com.space.server.domain.chat.service.CommandChatService;
 import com.space.server.domain.chat.service.QueryChatService;
@@ -35,10 +36,8 @@ public class ChatController {
         return queryChatService.readChats(quizId, getMemberId());
     }
 
-    @GetMapping("/visualizations/chats/{quiz-id}")
-    public List<String> readMostKeyWords(
-        @PathVariable("quiz-id") Long quizId
-    ) {
-        return queryChatService.readMostKeyWords(quizId, getMemberId());
+    @PostMapping("/chats/keywords")
+    public List<String> readMostKeyWords(@RequestBody ReadKeywordsRequest request) {
+        return queryChatService.readMostKeyWords(request.quizId(), request.userId());
     }
 }
