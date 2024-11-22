@@ -26,7 +26,10 @@ import com.space.server.domain.state.service.implementation.StateUpdater;
 import com.space.server.domain.user.domain.Users;
 import com.space.server.domain.user.service.implementation.UserReader;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -36,14 +39,17 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
+@Log4j2
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class ChatTuner {
+public class    ChatTuner {
     @Value("${gpt.api.key}")
     private String apiKey;
 
@@ -67,7 +73,6 @@ public class ChatTuner {
         Users user = userReader.findById(userId);
         List<Checklist> checklists = checklistReader.findByQuiz(quiz);
         Chapter chapter = chapterReader.findById(quiz.getChapter().getId());
-
         Optional<State> state = stateReader.findByQuizIdAndUserId(quiz, user);
 
         String userChat = request.userChat();
@@ -81,7 +86,10 @@ public class ChatTuner {
         headers.set("Content-Type", "application/json");
         headers.set("Authorization", "Bearer " + apiKey);
 
-        String systemInstruction = Files.readString(Paths.get("../../../../resources/SystemInstruction.txt"));
+        ClassPathResource systemInstructionFile = new ClassPathResource("SystemInstruction.txt");
+        Path path = systemInstructionFile.getFile().toPath();
+
+        String systemInstruction = Files.readString(path, StandardCharsets.UTF_8);
 
         List<AiChat> messages = new ArrayList<>();
         messages.add(new AiChat("system", systemInstruction));
@@ -89,6 +97,7 @@ public class ChatTuner {
         AiChatTune aiChatTune = new AiChatTune("gpt-4o-mini", messages, 0.5, 1.0);
         HttpEntity<AiChatTune> httpEntity = new HttpEntity<>(aiChatTune, headers);
 
+        log.info("AI 로직 시작");
         try {
             ResponseEntity<String> responseEntity = restTemplate.exchange(
                     baseUrl,
@@ -99,14 +108,17 @@ public class ChatTuner {
 
             //completion.choices[0].message.content
             String responseBody = responseEntity.getBody();
+            log.info("ResponseBody : " + responseBody);
 
             ObjectMapper objectMapper = new ObjectMapper();
             AiChatTuneResponse responseMap = objectMapper.readValue(responseBody, AiChatTuneResponse.class);
+            log.info("ResponseMap : " + responseMap.toString());
 
             Map<String, String> totalMapObject = new HashMap<>();
             totalMapObject.putAll(quiz.getMapObject());
             totalMapObject.putAll(chapter.getMapObject());
 
+            log.info("bot : " + responseMap.choices().get(0).message().content());
             AiResponse botChat = aiResponseJsonParsing.jsonCreator(String.valueOf(responseMap.choices().get(0).message().content()), totalMapObject);
 
             if(state.isPresent()){
@@ -143,6 +155,7 @@ public class ChatTuner {
 
             return botChat;
         } catch (Exception e) {
+            log.error(e.getMessage());
             return null;
         }
     }

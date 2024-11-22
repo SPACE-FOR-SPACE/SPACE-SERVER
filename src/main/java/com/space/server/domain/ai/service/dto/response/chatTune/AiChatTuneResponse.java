@@ -5,12 +5,12 @@ import java.util.Optional;
 
 public record AiChatTuneResponse (
     String id,
-    List<Choices> choices,
+    String object,
     Integer created,
     String model,
-    Optional<Object> service_tier,
+    List<Choices> choices,
+    Object usage,
     String system_fingerprint,
-    String object,
-    Object usage
+    Object service_tier
 ){
 }
