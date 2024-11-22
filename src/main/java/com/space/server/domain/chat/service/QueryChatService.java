@@ -42,7 +42,6 @@ public class QueryChatService {
         State state = stateReader.findByQuizIdAndUserId(quizReader.findById(quizId), userReader.findById(userId))
             .orElseThrow(StateNotFoundException::new);
 
-
         List<Chat> chatList = chatReader.findAllChatByState(state);
 
         List<String> allKeywords = new ArrayList<>();
