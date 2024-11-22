@@ -72,28 +72,33 @@ public class JwtUtil {
         }
     }
 
+    public void deleteAllTokens(HttpServletResponse response, String refreshToken) {
+
+        Boolean isExist = refreshRepository.existsByRefreshToken(refreshToken);
+        if (!isExist) {
+            throw new RefreshTokenNotFoundException();
+        }
+
+        refreshRepository.deleteByRefreshToken(refreshToken);
+
+        String loginType = getLoginType(refreshToken);
+
+        String accessTokenName = "access_" + loginType.toLowerCase();
+        String refreshTokenName = "refresh_" + loginType.toLowerCase();
+
+        ResponseCookie invalidAccessCookie = invalidCookie(accessTokenName);
+        ResponseCookie invalidRefreshCookie = invalidCookie(refreshTokenName);
+
+        response.addHeader(HttpHeaders.SET_COOKIE, invalidAccessCookie.toString());
+        response.addHeader(HttpHeaders.SET_COOKIE, invalidRefreshCookie.toString());
+    }
+
     public void isExpiredRefresh(String token, HttpServletResponse response) {
         try {
             Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration().before(new Date());
         } catch (ExpiredJwtException e) {
 
-            Boolean isExist = refreshRepository.existsByRefreshToken(token);
-            if (!isExist) {
-                throw new RefreshTokenNotFoundException();
-            }
-
-            refreshRepository.deleteByRefreshToken(token);
-
-            String loginType = getLoginType(token);
-
-            String accessTokenName = "access_" + loginType.toLowerCase();
-            String refreshTokenName = "refresh_" + loginType.toLowerCase();
-
-            ResponseCookie invalidAccessCookie = invalidCookie(accessTokenName);
-            ResponseCookie invalidRefreshCookie = invalidCookie(refreshTokenName);
-
-            response.addHeader(HttpHeaders.SET_COOKIE, invalidAccessCookie.toString());
-            response.addHeader(HttpHeaders.SET_COOKIE, invalidRefreshCookie.toString());
+            deleteAllTokens(response, token);
 
             throw new ExpiredRefreshTokenException();
         }

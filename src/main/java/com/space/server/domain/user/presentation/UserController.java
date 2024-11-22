@@ -7,6 +7,8 @@ import com.space.server.domain.user.service.CommandUserService;
 import com.space.server.domain.user.service.QueryUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,8 +37,8 @@ public class UserController {
 
     @DeleteMapping
     @Operation(summary = "유저 삭제", description = "유저의 정보를 삭제합니다.")
-    public void delete() {
-        commandUserService.deleteUser(getMemberId());
+    public void delete(HttpServletRequest request, HttpServletResponse response) {
+        commandUserService.deleteUser(request, response, getMemberId());
     }
 
 }
