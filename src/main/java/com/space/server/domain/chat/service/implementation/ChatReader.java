@@ -19,4 +19,8 @@ public class ChatReader {
     }
 
     public List<Chat> findAllChatByState(State state) { return chatRepository.findAllChatByState(state); }
+
+    public Integer countChatByQuiz(State state) {
+        return chatRepository.countByState(state);
+    }
 }

@@ -3,7 +3,7 @@ package com.space.server.domain.chat.presentation;
 import com.space.server.domain.ai.service.dto.response.AiResponse;
 import com.space.server.domain.ai.service.implementation.ChatTuner;
 import com.space.server.domain.chat.presentation.dto.request.CreateChatRequest;
-import com.space.server.domain.chat.presentation.dto.request.ReadKeywordsRequest;
+import com.space.server.domain.chat.presentation.dto.request.ReadQuizAndUserRequest;
 import com.space.server.domain.chat.presentation.dto.response.ChatResponse;
 import com.space.server.domain.chat.service.CommandChatService;
 import com.space.server.domain.chat.service.QueryChatService;
@@ -48,7 +48,12 @@ public class ChatController {
     }
 
     @PostMapping("/chats/keywords")
-    public List<String> readMostKeyWords(@RequestBody ReadKeywordsRequest request) {
+    public List<String> readMostKeyWords(@RequestBody ReadQuizAndUserRequest request) {
         return queryChatService.readMostKeyWords(request.quizId(), request.userId());
+    }
+
+    @PostMapping("/chats/count")
+    public Integer countChatByQuiz(@RequestBody ReadQuizAndUserRequest request) {
+        return queryChatService.countChats(request.quizId(), request.userId());
     }
 }
