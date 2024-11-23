@@ -5,6 +5,7 @@ import com.space.server.domain.ai.service.implementation.ChatTuner;
 import com.space.server.domain.chat.presentation.dto.request.CreateChatRequest;
 import com.space.server.domain.chat.presentation.dto.request.ReadQuizAndUserRequest;
 import com.space.server.domain.chat.presentation.dto.response.ChatResponse;
+import com.space.server.domain.chat.presentation.dto.response.ReadKeyWordsResponse;
 import com.space.server.domain.chat.service.CommandChatService;
 import com.space.server.domain.chat.service.QueryChatService;
 import lombok.RequiredArgsConstructor;
@@ -48,8 +49,12 @@ public class ChatController {
     }
 
     @PostMapping("/chats/keywords")
-    public List<String> readMostKeyWords(@RequestBody ReadQuizAndUserRequest request) {
-        return queryChatService.readMostKeyWords(request.quizId(), request.userId());
+    public ReadKeyWordsResponse readMostKeyWords(@RequestBody ReadQuizAndUserRequest request) {
+        return ReadKeyWordsResponse.of(
+            request.userId(),
+            request.quizId(),
+            queryChatService.readMostKeyWords(request.quizId(), request.userId())
+        );
     }
 
     @PostMapping("/chats/count")
