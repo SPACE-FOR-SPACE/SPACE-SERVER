@@ -5,6 +5,7 @@ import com.space.server.domain.ai.service.implementation.ChatTuner;
 import com.space.server.domain.chat.presentation.dto.request.CreateChatRequest;
 import com.space.server.domain.chat.presentation.dto.request.ReadQuizAndUserRequest;
 import com.space.server.domain.chat.presentation.dto.response.ChatResponse;
+import com.space.server.domain.chat.presentation.dto.response.CountChatResponse;
 import com.space.server.domain.chat.presentation.dto.response.ReadKeyWordsResponse;
 import com.space.server.domain.chat.service.CommandChatService;
 import com.space.server.domain.chat.service.QueryChatService;
@@ -58,7 +59,11 @@ public class ChatController {
     }
 
     @PostMapping("/chats/count")
-    public Integer countChatByQuiz(@RequestBody ReadQuizAndUserRequest request) {
-        return queryChatService.countChats(request.quizId(), request.userId());
+    public CountChatResponse countChatByQuiz(@RequestBody ReadQuizAndUserRequest request) {
+        return CountChatResponse.of(
+            request.userId(),
+            request.userId(),
+            queryChatService.countChats(request.quizId(), request.userId())
+        );
     }
 }
