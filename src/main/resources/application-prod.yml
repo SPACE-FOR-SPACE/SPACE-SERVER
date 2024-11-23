@@ -27,3 +27,9 @@ logging:
     org.springframework.security: ERROR
     org.hibernate.SQL: ERROR
     root: ERROR
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
