@@ -32,11 +32,11 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
     disable-swagger-default-url: true
-    config-url: /api/v3/api-docs/swagger-config
-    url: /api/v3/api-docs
+    config-url: /v3/api-docs/swagger-config
+    url: /v3/api-docs
   api-docs:
     path: /v3/api-docs
   paths-to-match:
-    - /**  # 모든 엔드포인트를 매칭
+    - /**
   default-consumes-media-type: application/json
   default-produces-media-type: application/json
