@@ -27,9 +27,8 @@ public class QueryStateService {
     public State findSuccessByQuizIdAndUserId(Long quizId, Long userId) {
         Quiz quiz = quizReader.findById(quizId);
         Users user = userReader.findById(userId);
-        State state = stateReader.findByQuizIdAndUserId(quiz, user)
+        return stateReader.findByQuizIdAndUserId(quiz, user)
+            .filter(state -> state.getFirstTime() != null)
             .orElseThrow(StateNotSuccessException::new);
-        if(state.getFirstTime() == null) throw new StateNotSuccessException();
-        else return state;
     }
 }
