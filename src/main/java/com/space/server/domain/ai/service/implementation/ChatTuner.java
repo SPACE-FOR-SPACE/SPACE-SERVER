@@ -26,7 +26,6 @@ import com.space.server.domain.state.service.implementation.StateUpdater;
 import com.space.server.domain.user.domain.Users;
 import com.space.server.domain.user.service.implementation.UserReader;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
@@ -42,7 +41,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Log4j2
@@ -135,6 +134,14 @@ public class    ChatTuner {
                         .score(botChat.score())
                         .move(botChat.move())
                         .build(), state.get());
+
+                if (state.get().getFirstTime() == null && botChat.isSuccess()) {
+                    LocalDateTime firstChatTime = chatReader.findFirstChatTimeByState(state.get());
+                    LocalDateTime lastChatTime = chatReader.findLastChatTimeByState(state.get());
+                    Integer successCount = chatReader.countChatByQuiz(state.get());
+                    stateUpdater.updateSuccess(state.get(), firstChatTime, lastChatTime, successCount);
+                }
+
             } else {
                 stateCreator.create(State.createBuilder()
                         .user(user)
@@ -151,6 +158,13 @@ public class    ChatTuner {
                         .type(Type.CODE)
                         .request_order(chatReader.findMaxOrderByState(stateReader.findByQuizIdAndUserId(quiz, user).get()) + 1)
                         .build());
+
+                if (botChat.isSuccess()) {
+                    LocalDateTime firstChatTime = chatReader.findFirstChatTimeByState(stateReader.findByQuizIdAndUserId(quiz, user).get());
+                    LocalDateTime lastChatTime = chatReader.findLastChatTimeByState(stateReader.findByQuizIdAndUserId(quiz, user).get());
+                    Integer successCount = chatReader.countChatByQuiz(stateReader.findByQuizIdAndUserId(quiz, user).get());
+                    stateUpdater.updateSuccess(stateReader.findByQuizIdAndUserId(quiz, user).get(), firstChatTime, lastChatTime, successCount);
+                }
             }
 
             return botChat;
