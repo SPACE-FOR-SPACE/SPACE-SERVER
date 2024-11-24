@@ -6,6 +6,7 @@ import com.space.server.domain.state.domain.State;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -22,5 +23,13 @@ public class ChatReader {
 
     public Integer countChatByQuiz(State state) {
         return chatRepository.countByState(state);
+    }
+
+    public LocalDateTime findFirstChatTimeByState(State state) {
+        return chatRepository.findFirstByStateOrderByCreatedAtAsc(state).getCreatedAt();
+    }
+
+    public LocalDateTime findLastChatTimeByState(State state) {
+        return chatRepository.findFirstByStateOrderByCreatedAtDesc(state).getCreatedAt();
     }
 }
