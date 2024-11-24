@@ -19,4 +19,8 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
     void deleteByState(State state);
 
     Integer countByState(State state);
+
+    Chat findFirstByStateOrderByCreatedAtAsc(State state);
+
+    Chat findFirstByStateOrderByCreatedAtDesc(State state);
 }
