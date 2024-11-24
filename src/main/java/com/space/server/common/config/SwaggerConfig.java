@@ -76,6 +76,6 @@ public class SwaggerConfig {
                     .description("엑세스 토큰과 리프레시 토큰은 HttpOnly 쿠키로 설정됩니다. "
                         + "API 호출 시 클라이언트는 쿠키로 인증이 진행됩니다.")))
 
-            .addServersItem(new Server().url("/"));
+            .addServersItem(new Server().url("/api"));
     }
 }
