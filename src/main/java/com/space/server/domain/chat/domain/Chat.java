@@ -7,10 +7,15 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Chat {
 
     @Id
@@ -29,6 +34,9 @@ public class Chat {
     private Type type;
 
     private Integer request_order;
+
+    @CreatedDate
+    private LocalDateTime createdAt;
 
     @Builder
     public Chat(State state, String botChat, String userChat, Type type, Integer request_order) {
