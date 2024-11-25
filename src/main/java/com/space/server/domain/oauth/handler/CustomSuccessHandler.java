@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -25,6 +26,9 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
+
+    @Value("${server.url}")
+    private String redirectUrl;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -78,11 +82,10 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         if (isNewUser) {
             log.warn("오어스 성공 핸들러 새로운 유저");
-            response.sendRedirect("https://space.oyunchan.com/additional-info");
-//            response.sendRedirect("http://localhost:3000/additional-info");
+            response.sendRedirect(redirectUrl+"/additional-info");
         } else {
             log.warn("오어스 성공 핸들러 원래 있던 유저");
-            response.sendRedirect("https://space.oyunchan.com");
+            response.sendRedirect(redirectUrl);
         }
     }
 
