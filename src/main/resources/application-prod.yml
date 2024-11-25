@@ -15,20 +15,18 @@ spring:
       ddl-auto: none
     properties:
       hibernate:
-        format_sql: false
-        show_sql: false
+        format_sql: true
+        show_sql: true
+
+logging:
+  level:
+    org.springframework.security: DEBUG
 
 server:
   serverAddress: ${PROD_SERVER_HOST}
   url: ${PROD_SERVER_URL}
   proxy:
     url: ${PROD_PROXY_SERVER_URL}
-
-logging:
-  level:
-    org.springframework.security: ERROR
-    org.hibernate.SQL: ERROR
-    root: ERROR
 
 springdoc:
   swagger-ui:
