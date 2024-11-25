@@ -20,7 +20,7 @@ public class EmailService {
     private final JavaMailSender mailSender;
     private final TemplateEngine templateEngine;
 
-    @Value("${server.url}")
+    @Value("${server.proxy.url}")
     private String serverUrl;
 
     @Value("${spring.mail.username}")
