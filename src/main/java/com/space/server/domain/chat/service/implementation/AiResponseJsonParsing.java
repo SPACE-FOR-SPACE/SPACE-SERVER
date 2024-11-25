@@ -39,12 +39,9 @@ public class AiResponseJsonParsing {
             log.warn("score : "+score);
             move = moveStringCreator(jsonObject.get("move").toString());
             log.warn("move : "+move);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (ParseException | NullPointerException e) {
+            throw new ChatJsonParseException();
         }
-//        catch (ParseException | NullPointerException e) {
-//            throw new ChatJsonParseException();
-//        }
 
         log.info("json : " + jsonObject.toJSONString());
         return new AiResponse(
