@@ -25,8 +25,6 @@ import com.space.server.domain.state.service.implementation.StateReader;
 import com.space.server.domain.state.service.implementation.StateUpdater;
 import com.space.server.domain.user.domain.Users;
 import com.space.server.domain.user.service.implementation.UserReader;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
@@ -38,16 +36,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 
 @Log4j2
 @Service
-@RequiredArgsConstructor
 @Transactional
 public class    ChatTuner {
     @Value("${gpt.api.key}")
@@ -68,6 +64,39 @@ public class    ChatTuner {
     private final StateUpdater stateUpdater;
     private final AiResponseJsonParsing aiResponseJsonParsing;
 
+    private final String systemInstruction;
+
+    public ChatTuner(@Value("${gpt.api.key}") String apiKey,
+                     RestTemplate restTemplate,
+                     StateReader stateReader,
+                     StateCreator stateCreator,
+                     QuizReader quizReader,
+                     UserReader userReader,
+                     ChatReader chatReader,
+                     ChatCreator chatCreator,
+                     ChatValidator chatValidator,
+                     ChecklistReader checklistReader,
+                     ChapterReader chapterReader,
+                     StateUpdater stateUpdater,
+                     AiResponseJsonParsing aiResponseJsonParsing) throws IOException {
+        this.apiKey = apiKey;
+        this.restTemplate = restTemplate;
+        this.stateReader = stateReader;
+        this.stateCreator = stateCreator;
+        this.quizReader = quizReader;
+        this.userReader = userReader;
+        this.chatReader = chatReader;
+        this.chatCreator = chatCreator;
+        this.chatValidator = chatValidator;
+        this.checklistReader = checklistReader;
+        this.chapterReader = chapterReader;
+        this.stateUpdater = stateUpdater;
+        this.aiResponseJsonParsing = aiResponseJsonParsing;
+
+        // systemInstruction 초기화
+        this.systemInstruction = loadSystemInstruction();
+    }
+
     public AiResponse chatTuneCreator(Long quizId, CreateChatRequest request, Long userId) throws IOException {
         Quiz quiz = quizReader.findById(quizId);
         Users user = userReader.findById(userId);
@@ -85,11 +114,6 @@ public class    ChatTuner {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", "application/json");
         headers.set("Authorization", "Bearer " + apiKey);
-
-        ClassPathResource systemInstructionFile = new ClassPathResource("SystemInstruction.txt");
-        Path path = systemInstructionFile.getFile().toPath();
-
-        String systemInstruction = Files.readString(path, StandardCharsets.UTF_8);
 
         List<AiChat> messages = new ArrayList<>();
         messages.add(new AiChat("system", systemInstruction));
@@ -159,4 +183,16 @@ public class    ChatTuner {
             return null;
         }
     }
+
+    private String loadSystemInstruction() throws IOException {
+        ClassPathResource systemInstructionFile = new ClassPathResource("SystemInstruction.txt");
+        StringBuilder systemInstruction = new StringBuilder();
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(systemInstructionFile.getInputStream(), StandardCharsets.UTF_8))) {
+            reader.lines().forEach(line -> systemInstruction.append(line).append(System.lineSeparator()));
+        }
+
+        return systemInstruction.toString().trim();
+    }
+
 }

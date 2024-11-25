@@ -21,6 +21,8 @@ spring:
 server:
   serverAddress: ${PROD_SERVER_HOST}
   url: ${PROD_SERVER_URL}
+  proxy:
+    url: ${PROD_PROXY_SERVER_URL}
 
 logging:
   level:
