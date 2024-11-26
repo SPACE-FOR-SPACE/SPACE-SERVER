@@ -70,11 +70,13 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
+                log.warn("쿠키 탐색 : "+cookie.getName());
                 if ("JSESSIONID".equals(cookie.getName())) {
                     cookie.setValue("");
                     cookie.setPath("/");
                     cookie.setMaxAge(0);
                     response.addCookie(cookie);
+                    log.warn("JSESSIONID 발견");
                     break;
                 }
             }
