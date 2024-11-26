@@ -47,6 +47,7 @@ public class SwaggerConfig {
                         + "| 401 | REFRESH_TOKEN_NOT_FOUND | 리프레시 토큰이 존재하지 않습니다. |\n"
                         + "| 401 | UNAUTHENTICATED_ACCESS | 인증이 필요합니다. |\n"
                         + "| 401 | SECURITY_UNKNOWN | 시큐리티에서 알 수 없는 에러가 발생했습니다. |\n"
+                        + "| 401 | INVALID_CREDENTIALS | 잘못된 이메일 또는 비밀번호입니다. |\n"
                         + "| 403 | ACCESS_DENIED | 권한이 필요합니다. |\n"
                         + "| 404 | CHAPTER_NOT_FOUND | 챕터를 찾을 수 없습니다. |\n"
                         + "| 404 | CHECKLIST_NOT_FOUND | 체크리스트를 찾을 수 없습니다. |\n"
