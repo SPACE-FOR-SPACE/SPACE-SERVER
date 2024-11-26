@@ -7,8 +7,10 @@ import com.space.server.domain.chat.presentation.dto.request.ReadQuizAndUserRequ
 import com.space.server.domain.chat.presentation.dto.response.ChatResponse;
 import com.space.server.domain.chat.presentation.dto.response.CountChatResponse;
 import com.space.server.domain.chat.presentation.dto.response.ReadKeyWordsResponse;
+import com.space.server.domain.chat.presentation.dto.response.ReadSuccessChatResponse;
 import com.space.server.domain.chat.service.CommandChatService;
 import com.space.server.domain.chat.service.QueryChatService;
+import com.space.server.domain.state.service.QueryStateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +26,7 @@ public class ChatController {
     private final CommandChatService commandChatService;
     private final QueryChatService queryChatService;
     private final ChatTuner chatTune;
+    private final QueryStateService queryStateService;
 
     @PostMapping("/assistant-chats/{quiz-id}")
     public AiResponse createAssistantChat(
@@ -65,5 +68,10 @@ public class ChatController {
             request.userId(),
             queryChatService.countChats(request.quizId(), request.userId())
         );
+    }
+
+    @PostMapping("/chats/success")
+    public ReadSuccessChatResponse readSuccess(@RequestBody ReadQuizAndUserRequest request) {
+        return ReadSuccessChatResponse.from(queryStateService.findSuccessByQuizIdAndUserId(request.quizId(), request.userId()));
     }
 }

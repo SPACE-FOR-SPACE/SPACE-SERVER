@@ -12,6 +12,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 
+import java.time.LocalDateTime;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -31,6 +33,12 @@ public class State {
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    private LocalDateTime firstTime;
+
+    private LocalDateTime lastTime;
+
+    private Integer successCount;
 
     @Type(StringArrayType.class)
     @Column(columnDefinition = "varchar[]")
@@ -63,5 +71,11 @@ public class State {
         this.status = state.getStatus();
         this.move = state.getMove();
         this.score = state.getScore();
+    }
+
+    public void updateSuccess(LocalDateTime firstTime, LocalDateTime lastChatTime, Integer successCount) {
+        this.firstTime = firstTime;
+        this.lastTime = lastChatTime;
+        this.successCount = successCount;
     }
 }
