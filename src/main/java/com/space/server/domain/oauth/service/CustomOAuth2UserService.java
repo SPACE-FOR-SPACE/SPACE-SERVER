@@ -1,5 +1,6 @@
 package com.space.server.domain.oauth.service;
 
+import com.space.server.domain.oauth.exception.SocialUserExistedException;
 import com.space.server.domain.oauth.service.dto.*;
 import com.space.server.domain.user.domain.Users;
 import com.space.server.domain.user.domain.repository.UserRepository;
@@ -64,7 +65,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
             if (existData.getType().equals("normal")) {
                 log.warn("이미 존재합니다.");
-                throw new OAuth2AuthenticationException("Normal user already exists");
+                throw new SocialUserExistedException();
             }
 
             existData.updateSocial(oAuth2Response.getEmail(), type);
