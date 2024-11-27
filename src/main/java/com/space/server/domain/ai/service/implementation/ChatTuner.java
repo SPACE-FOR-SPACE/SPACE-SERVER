@@ -40,8 +40,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -147,6 +145,7 @@ public class    ChatTuner {
 
             log.info("bot : " + responseMap.choices().get(0).message().content());
             AiResponse botChat = aiResponseJsonParsing.jsonCreator(String.valueOf(responseMap.choices().get(0).message().content()), totalMapObject);
+            LocalDateTime lastChatTime = LocalDateTime.now();
 
             if(state.isPresent()){
                 chatCreator.create(Chat.builder()
@@ -165,7 +164,6 @@ public class    ChatTuner {
 
                 if (state.get().getFirstTime() == null && botChat.isSuccess()) {
                     LocalDateTime firstChatTime = chatReader.findFirstChatTimeByState(state.get());
-                    LocalDateTime lastChatTime = chatReader.findLastChatTimeByState(state.get());
                     Integer successCount = chatReader.countChatByQuiz(state.get());
                     stateUpdater.updateSuccess(state.get(), firstChatTime, lastChatTime, successCount);
                 }
@@ -189,7 +187,6 @@ public class    ChatTuner {
 
                 if (botChat.isSuccess()) {
                     LocalDateTime firstChatTime = chatReader.findFirstChatTimeByState(stateReader.findByQuizIdAndUserId(quiz, user).get());
-                    LocalDateTime lastChatTime = chatReader.findLastChatTimeByState(stateReader.findByQuizIdAndUserId(quiz, user).get());
                     Integer successCount = chatReader.countChatByQuiz(stateReader.findByQuizIdAndUserId(quiz, user).get());
                     stateUpdater.updateSuccess(stateReader.findByQuizIdAndUserId(quiz, user).get(), firstChatTime, lastChatTime, successCount);
                 }
