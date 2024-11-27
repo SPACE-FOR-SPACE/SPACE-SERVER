@@ -7,15 +7,21 @@ import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "Email", description = "이메일 인증 API")
 public class EmailTokenController {
+
+    @Value("${server.url}")
+    private String baseUrl;
+
     private final EmailTokenService emailTokenService;
 
     @ResponseStatus(HttpStatus.OK)
@@ -33,6 +39,7 @@ public class EmailTokenController {
 
         ModelAndView modelAndView = new ModelAndView("verification-result");
         modelAndView.addObject("status", EmailVerificationStatus.SUCCESS.name());
+        modelAndView.addObject("baseUrl", baseUrl);
 
         return modelAndView;
     }
