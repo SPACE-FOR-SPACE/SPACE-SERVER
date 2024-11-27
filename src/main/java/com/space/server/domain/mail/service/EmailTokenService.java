@@ -8,11 +8,8 @@ import com.space.server.domain.mail.exception.ExpiredEmailTokenException;
 import com.space.server.domain.user.domain.repository.UserRepository;
 import com.space.server.domain.user.exception.UserExistedException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -27,11 +24,7 @@ public class EmailTokenService {
             throw new UserExistedException();
         }
 
-        EmailToken existingToken =
-                emailTokenRepository.findByEmailAndIsVerifiedFalse(email);
-        if (existingToken != null) {
-            emailTokenRepository.delete(existingToken);
-        }
+        emailTokenRepository.deleteByEmail(email);
 
         EmailToken emailToken = EmailToken.builder()
                 .email(email)

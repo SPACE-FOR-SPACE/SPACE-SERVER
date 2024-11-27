@@ -35,10 +35,10 @@
         </div>
 
         <div class="mt-8 space-y-4">
-            <a href="http://localhost:5173" class="block w-full px-6 py-3 text-white bg-blue-600 rounded-lg hover:bg-blue-700 text-center transition-colors duration-200">
+            <a th:href="${baseUrl}" class="block w-full px-6 py-3 text-white bg-blue-600 rounded-lg hover:bg-blue-700 text-center transition-colors duration-200">
                 홈으로 돌아가기
             </a>
-            <a href="http://localhost:5173/login" class="block w-full px-6 py-3 text-blue-600 bg-white border-2 border-blue-600 rounded-lg hover:bg-blue-50 text-center transition-colors duration-200">
+            <a th:href="${baseUrl} + '/login'" class="block w-full px-6 py-3 text-blue-600 bg-white border-2 border-blue-600 rounded-lg hover:bg-blue-50 text-center transition-colors duration-200">
                 로그인하기
             </a>
         </div>

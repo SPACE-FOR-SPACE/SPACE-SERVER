@@ -55,8 +55,8 @@ public class UserJoiner {
 
         userRepository.save(user);
 
-        Item head = itemReader.findById(1L);
-        Item theme = itemReader.findById(2L);
+        Item head = itemReader.findByName("기본 머리");
+        Item theme = itemReader.findByName("기본 테마");
 
         Inventory In_head = new Inventory(head, user);
         Inventory In_theme = new Inventory(theme, user);
