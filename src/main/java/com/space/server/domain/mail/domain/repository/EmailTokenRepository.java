@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 public interface EmailTokenRepository extends JpaRepository<EmailToken, Long> {
     EmailToken findByToken(String token);
     EmailToken findByEmailAndIsVerifiedFalse(String email);
+    void deleteByEmail(String email);
     EmailToken findByEmailAndIsVerified(String email, boolean verified);
     void deleteByExpiryDateBefore(LocalDateTime now);
 }
