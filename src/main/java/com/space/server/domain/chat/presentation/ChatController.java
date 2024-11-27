@@ -53,11 +53,10 @@ public class ChatController {
     }
 
     @PostMapping("/chats/keywords")
-    public ReadKeyWordsResponse readMostKeyWords(@RequestBody ReadQuizAndUserRequest request) {
+    public ReadKeyWordsResponse readMostKeyWords() {
         return ReadKeyWordsResponse.of(
-            request.userId(),
-            request.quizId(),
-            queryChatService.readMostKeyWords(request.quizId(), request.userId())
+            getMemberId(),
+            queryChatService.readMostKeyWords(getMemberId())
         );
     }
 

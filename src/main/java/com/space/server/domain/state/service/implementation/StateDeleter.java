@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -23,12 +25,15 @@ public class StateDeleter {
     }
 
     public void deleteByUser(Users user) {
-        stateReader.findByUserId(user).ifPresentOrElse(
-                deletableState -> {
-                    log.warn("State 삭제: " + deletableState);
-                    delete(deletableState);
-                },
-                () -> log.warn("해당 유저에는 State가 없습니다.: " + user)
-        );
+        List<State> states = stateReader.findByUserId(user);
+
+        if (states.isEmpty()) {
+          log.warn("해당 유저에는 State가 없습니다.: " + user);
+        } else {
+          states.forEach(state -> {
+            log.warn("State 삭제: " + state);
+            delete(state);
+          });
+        }
     }
 }
