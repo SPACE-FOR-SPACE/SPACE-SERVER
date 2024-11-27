@@ -8,6 +8,7 @@ import com.space.server.domain.user.domain.Users;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,7 +26,7 @@ public class StateReader {
         return stateRepository.findByQuizAndUser(quiz, user);
     }
 
-    public Optional<State> findByUserId(Users user) {
+    public List<State> findByUserId(Users user) {
         return stateRepository.findByUser(user);
     }
 }

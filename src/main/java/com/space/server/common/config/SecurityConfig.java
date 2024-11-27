@@ -1,6 +1,9 @@
 package com.space.server.common.config;
 
+import jakarta.servlet.http.Cookie;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.space.server.common.exception.ErrorResponse;
+import com.space.server.common.exception.security.SpaceSecurityException;
 import com.space.server.domain.auth.domain.repository.RefreshRepository;
 import com.space.server.common.exception.security.SpaceSecurityExceptionFilter;
 import com.space.server.common.jwt.exception.CustomAccessDeniedException;
@@ -12,9 +15,11 @@ import com.space.server.common.jwt.util.JwtUtil;
 import com.space.server.domain.oauth.handler.CustomSuccessHandler;
 import com.space.server.domain.oauth.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -26,10 +31,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.filter.CorsFilter;
+
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+@Slf4j
 @Configuration
 @EnableWebSecurity(debug = true)
 @RequiredArgsConstructor
@@ -91,7 +99,39 @@ public class SecurityConfig {
                 .oauth2Login((oauth2) -> oauth2
                         .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
                                 .userService(customOAuth2UserService))
-                        .successHandler(customSuccessHandler));
+                        .successHandler(customSuccessHandler)
+                        .failureHandler((request, response, exception) -> {
+                            if (exception instanceof SpaceSecurityException) {
+                                SpaceSecurityException e = (SpaceSecurityException) exception;
+                                response.setStatus(e.getStatus().value());
+                                response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                                response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+
+                                ErrorResponse errorResponse = ErrorResponse.from(
+                                        e.getStatus().value(),
+                                        e.getErrorCode(),
+                                        e.getMessage()
+                                );
+                                log.warn("소셜 스페이스 익셉션 동작");
+                                response.getWriter().write(objectMapper.writeValueAsString(errorResponse));
+                            } else {
+                                response.sendRedirect("/login?error");
+                            }
+                            Cookie[] cookies = request.getCookies();
+                            if (cookies != null) {
+                                for (Cookie cookie : cookies) {
+                                    log.warn("쿠키 탐색 : "+cookie.getName());
+                                    if ("JSESSIONID".equals(cookie.getName())) {
+                                        cookie.setValue("");
+                                        cookie.setPath("/");
+                                        cookie.setMaxAge(0);
+                                        response.addCookie(cookie);
+                                        log.warn("JSESSIONID 발견");
+                                        break;
+                                    }
+                                }
+                            }
+                        }));
 
         http
                 .logout((auth) -> auth.disable());
@@ -129,8 +169,6 @@ public class SecurityConfig {
         http
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
-
 
         return http.build();
     }

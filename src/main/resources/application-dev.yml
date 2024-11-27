@@ -24,7 +24,7 @@ server:
   port: 8081
   serverAddress: localhost
   serverName: local_server
-  url: http://localhost:3000
+  url: http://localhost:5173
   proxy:
     url: http://localhost:8081
 

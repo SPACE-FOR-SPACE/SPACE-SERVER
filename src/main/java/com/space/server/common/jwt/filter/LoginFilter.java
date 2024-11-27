@@ -1,6 +1,8 @@
 package com.space.server.common.jwt.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.space.server.domain.auth.exception.AuthUserNotFoundException;
+import com.space.server.domain.auth.exception.InvalidCredentialsException;
 import com.space.server.domain.auth.service.dto.CustomUserDetails;
 import com.space.server.common.jwt.dto.LoginRequest;
 import com.space.server.common.jwt.util.JwtUtil;
@@ -71,7 +73,15 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed){
 
-        response.setStatus(401);
+        log.warn("로그인 실패 로그 : "+failed.getMessage());
+        if (failed.getMessage().contains("자격 증명에 실패하였습니다.")) {
+            throw new InvalidCredentialsException();
+        } else if (failed.getMessage().contains("UserDetailsService returned null")) {
+            throw new AuthUserNotFoundException();
+        } else {
+            response.setStatus(401);
+        }
+
     }
 
 }

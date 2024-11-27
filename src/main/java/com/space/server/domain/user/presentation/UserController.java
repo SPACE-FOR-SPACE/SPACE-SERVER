@@ -1,6 +1,5 @@
 package com.space.server.domain.user.presentation;
 
-
 import com.space.server.domain.user.presentation.dto.request.UserRequest;
 import com.space.server.domain.user.presentation.dto.response.UserResponse;
 import com.space.server.domain.user.service.CommandUserService;
@@ -23,9 +22,15 @@ public class UserController {
     private final CommandUserService commandUserService;
     private final QueryUserService queryUserService;
 
+    @GetMapping("{user-id}")
+    @Operation(summary = "유저Id로 조회", description = "유저의 정보를 조회합니다.")
+    public UserResponse readOne(@PathVariable("user-id") Long userId) {
+        return UserResponse.from(queryUserService.readOne(userId));
+    }
+
     @GetMapping
-    @Operation(summary = "유저 조회", description = "유저의 정보를 조회합니다.")
-    public UserResponse readOne() {
+    @Operation(summary = "유저(자신) 조회", description = "유저의 정보를 조회합니다.")
+    public UserResponse readMine() {
         return UserResponse.from(queryUserService.readOne(getMemberId()));
     }
 
