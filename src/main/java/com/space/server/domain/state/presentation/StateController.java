@@ -1,5 +1,6 @@
 package com.space.server.domain.state.presentation;
 
+import com.space.server.domain.state.presentation.dto.request.CheckStateRequest;
 import com.space.server.domain.state.presentation.dto.response.CheckStateResponse;
 import com.space.server.domain.state.presentation.dto.response.StateResponse;
 import com.space.server.domain.state.service.CommandStateService;
@@ -31,9 +32,9 @@ public class StateController {
         commandStateService.delete(stateId);
     }
 
-    @GetMapping("/checkStates/{user-id}")
-    public List<CheckStateResponse> findAllByUserId(@PathVariable(name = "user-id") Long userId) {
-        return queryStateService.findAllByUserId(userId).stream()
+    @GetMapping("/checkStates")
+    public List<CheckStateResponse> findByChapterUserId(CheckStateRequest request) {
+        return queryStateService.findByChapterUserId(request.chapterId(), request.userId()).stream()
             .map(CheckStateResponse::from)
             .toList();
     }
