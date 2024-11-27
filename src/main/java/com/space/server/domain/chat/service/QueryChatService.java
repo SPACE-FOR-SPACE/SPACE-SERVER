@@ -39,30 +39,26 @@ public class QueryChatService {
             .collect(Collectors.toList());
     }
 
-    public Map<String, Long> readMostKeyWords(Long quizId, Long userId) {
-        return stateReader.findByQuizIdAndUserId(
-                quizReader.findById(quizId),
-                userReader.findById(userId)
-            )
-            .map(state -> chatReader.findAllChatByState(state).stream()
-                .flatMap(chat -> chatAnalyzer.analyzeText(chat.getUserChat()).stream())
-                .collect(Collectors.groupingBy(
-                    Function.identity(),
-                    Collectors.counting()
-                ))
-            )
-            .map(frequencyMap -> frequencyMap.entrySet().stream()
-                .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
-                .limit(5)
-                .collect(Collectors.toMap(
-                    Map.Entry::getKey,
-                    Map.Entry::getValue,
-                    (e1, e2) -> e1,
-                    LinkedHashMap::new
-                ))
-            )
-            .orElseThrow(StateNotFoundException::new);
+    public Map<String, Long> readMostKeyWords(Long userId) {
+        List<State> states = stateReader.findByUserId(userReader.findById(userId));
+
+        List<Chat> chats = chatReader.findAllChatByStates(states);
+
+        Map<String, Long> frequencyMap = chats.stream()
+            .flatMap(chat -> chatAnalyzer.analyzeText(chat.getUserChat()).stream())
+            .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+
+        return frequencyMap.entrySet().stream()
+            .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
+            .limit(5)
+            .collect(Collectors.toMap(
+                Map.Entry::getKey,
+                Map.Entry::getValue,
+                (e1, e2) -> e1,
+                LinkedHashMap::new
+            ));
     }
+
 
     public Integer countChats(Long quizId, Long userId) {
         State state = stateReader.findByQuizIdAndUserId(quizReader.findById(quizId), userReader.findById(userId))

@@ -4,10 +4,9 @@ import java.util.Map;
 
 public record ReadKeyWordsResponse(
     Long userId,
-    Long quizId,
     Map<String, Long> keyWords
 ) {
-  public static ReadKeyWordsResponse of(Long userId, Long quizId, Map<String, Long> keyWords) {
-    return new ReadKeyWordsResponse(userId, quizId, keyWords);
+  public static ReadKeyWordsResponse of(Long userId, Map<String, Long> keyWords) {
+    return new ReadKeyWordsResponse(userId, keyWords);
   }
 }
