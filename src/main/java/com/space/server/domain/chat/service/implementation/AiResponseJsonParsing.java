@@ -33,7 +33,7 @@ public class AiResponseJsonParsing {
 
         try {
             log.warn("result : "+result);
-            jsonObject = (JSONObject) parser.parse(result.replace("'", "\"").replace("False", "false").replace("True", "true"));
+            jsonObject = (JSONObject) parser.parse(result.replace("False", "false").replace("True", "true"));
             log.warn("jsonObject : "+jsonObject);
             score = successCheckListIntegerCreator(jsonObject.get("score").toString());
             log.warn("score : "+score);
