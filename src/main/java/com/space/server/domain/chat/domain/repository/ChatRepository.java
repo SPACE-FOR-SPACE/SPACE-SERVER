@@ -21,6 +21,4 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
     Integer countByState(State state);
 
     Chat findFirstByStateOrderByCreatedAtAsc(State state);
-
-    Chat findFirstByStateOrderByCreatedAtDesc(State state);
 }
