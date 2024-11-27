@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,27 +39,29 @@ public class QueryChatService {
             .collect(Collectors.toList());
     }
 
-    public List<String> readMostKeyWords(Long quizId, Long userId) {
-        State state = stateReader.findByQuizIdAndUserId(quizReader.findById(quizId), userReader.findById(userId))
+    public Map<String, Long> readMostKeyWords(Long quizId, Long userId) {
+        return stateReader.findByQuizIdAndUserId(
+                quizReader.findById(quizId),
+                userReader.findById(userId)
+            )
+            .map(state -> chatReader.findAllChatByState(state).stream()
+                .flatMap(chat -> chatAnalyzer.analyzeText(chat.getUserChat()).stream())
+                .collect(Collectors.groupingBy(
+                    Function.identity(),
+                    Collectors.counting()
+                ))
+            )
+            .map(frequencyMap -> frequencyMap.entrySet().stream()
+                .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
+                .limit(5)
+                .collect(Collectors.toMap(
+                    Map.Entry::getKey,
+                    Map.Entry::getValue,
+                    (e1, e2) -> e1,
+                    LinkedHashMap::new
+                ))
+            )
             .orElseThrow(StateNotFoundException::new);
-
-        List<Chat> chatList = chatReader.findAllChatByState(state);
-
-        List<String> allKeywords = new ArrayList<>();
-        for (Chat chat : chatList) {
-            allKeywords.addAll(chatAnalyzer.analyzeText(chat.getUserChat()));
-        }
-
-        Map<String, Integer> frequencyMap = new HashMap<>();
-        for (String keyword : allKeywords) {
-            frequencyMap.put(keyword, frequencyMap.getOrDefault(keyword, 0) + 1);
-        }
-
-        return frequencyMap.entrySet().stream()
-            .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
-            .limit(5)
-            .map(Map.Entry::getKey)
-            .collect(Collectors.toList());
     }
 
     public Integer countChats(Long quizId, Long userId) {
