@@ -29,4 +29,8 @@ public class StateReader {
     public List<State> findByUserId(Users user) {
         return stateRepository.findByUser(user);
     }
+
+    public List<State> findAllByUser(Users user) {
+        return stateRepository.findAllByUser(user);
+    }
 }
