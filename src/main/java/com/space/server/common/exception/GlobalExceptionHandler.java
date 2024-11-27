@@ -4,6 +4,7 @@ import com.space.server.common.exception.mail.SpaceMailException;
 import com.space.server.common.exception.security.SpaceSecurityException;
 import com.space.server.common.logging.LoggingUtils;
 import com.space.server.domain.mail.exception.value.EmailVerificationStatus;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -12,6 +13,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+
+    @Value("${server.url}")
+    private String baseUrl;
+
 
     @ExceptionHandler(SpaceException.class)
     public ResponseEntity<ErrorResponse> handleApplicationException(SpaceException exception) {
@@ -60,6 +66,7 @@ public class GlobalExceptionHandler {
         }
 
         modelAndView.addObject("status", status);
+        modelAndView.addObject("baseUrl", baseUrl);
 
         return modelAndView;
     }
