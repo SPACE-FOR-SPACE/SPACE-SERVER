@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -22,6 +24,11 @@ public class QueryStateService {
 
     public State readOne(Long stateId) {
         return stateReader.findById(stateId);
+    }
+
+    public List<State> findAllByUserId(Long userId) {
+        Users user = userReader.findById(userId);
+        return stateReader.findAllByUser(user);
     }
 
     public State findSuccessByQuizIdAndUserId(Long quizId, Long userId) {
