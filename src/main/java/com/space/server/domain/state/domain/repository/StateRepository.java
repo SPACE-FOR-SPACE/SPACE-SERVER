@@ -14,4 +14,6 @@ public interface StateRepository extends JpaRepository<State, Long> {
     Optional<State> findByQuizAndUser(Quiz quiz, Users user);
 
     List<State> findByUser(Users user);
+
+    List<State> findAllByUser(Users user);
 }
