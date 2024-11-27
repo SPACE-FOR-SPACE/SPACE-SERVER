@@ -28,8 +28,4 @@ public class ChatReader {
     public LocalDateTime findFirstChatTimeByState(State state) {
         return chatRepository.findFirstByStateOrderByCreatedAtAsc(state).getCreatedAt();
     }
-
-    public LocalDateTime findLastChatTimeByState(State state) {
-        return chatRepository.findFirstByStateOrderByCreatedAtDesc(state).getCreatedAt();
-    }
 }
