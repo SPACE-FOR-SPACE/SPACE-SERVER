@@ -20,6 +20,10 @@ public class ItemReader {
         .orElseThrow(ItemNotFoundException::new);
   }
 
+  public Item findByName(String itemName) {
+    return itemRepository.findByName(itemName);
+  }
+
   public List<Item> findAll() {
     return itemRepository.findAll();
   }
