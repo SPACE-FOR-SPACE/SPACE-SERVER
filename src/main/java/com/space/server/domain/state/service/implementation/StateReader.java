@@ -1,5 +1,6 @@
 package com.space.server.domain.state.service.implementation;
 
+import com.space.server.domain.chapter.domain.Chapter;
 import com.space.server.domain.quiz.domain.Quiz;
 import com.space.server.domain.state.domain.repository.StateRepository;
 import com.space.server.domain.state.domain.State;
@@ -26,7 +27,15 @@ public class StateReader {
         return stateRepository.findByQuizAndUser(quiz, user);
     }
 
+    public List<State> findByChapterUserId(Chapter chapter, Users user) {
+        return stateRepository.findByChapterAndUser(chapter, user);
+    }
+
     public List<State> findByUserId(Users user) {
         return stateRepository.findByUser(user);
+    }
+
+    public List<State> findAllByUser(Users user) {
+        return stateRepository.findAllByUser(user);
     }
 }
