@@ -67,7 +67,7 @@ public class CommandChatService {
         chatValidator.validateEnglish(userChat);
 
         PromptCreator promptCreator = new PromptCreator();
-        AiChat aiChat = new AiChat("user", promptCreator.create(request.type(), quiz, checklists, chapter, request.userChat()));
+        AiChat aiChat = new AiChat("user", promptCreator.create(request.type(), quiz, checklists, chapter, request.userChat(), user.getId()));
         AiResponse botChat = null;
 
         // state 있다면 대화 로직

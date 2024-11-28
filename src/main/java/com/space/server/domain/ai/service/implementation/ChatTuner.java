@@ -40,8 +40,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -49,9 +47,7 @@ import java.util.*;
 @Service
 @Transactional
 public class    ChatTuner {
-    @Value("${gpt.api.key}")
-    private String apiKey;
-
+    private final String apiKey;
     private final RestTemplate restTemplate;
     private final String baseUrl = "https://api.openai.com/v1/chat/completions";
 
@@ -100,7 +96,7 @@ public class    ChatTuner {
         this.systemInstruction = loadSystemInstruction();
     }
 
-    public AiResponse chatTuneCreator(Long quizId, CreateChatRequest request, Long userId) throws IOException {
+    public AiResponse chatTuneCreator(Long quizId, CreateChatRequest request, Long userId) {
         Quiz quiz = quizReader.findById(quizId);
         Users user = userReader.findById(userId);
         List<Checklist> checklists = checklistReader.findByQuiz(quiz);
@@ -112,7 +108,7 @@ public class    ChatTuner {
         chatValidator.validateEnglish(userChat);
 
         PromptCreator promptCreator = new PromptCreator();
-        AiChat aiChat = new AiChat("user", promptCreator.create(request.type(), quiz, checklists, chapter, request.userChat()));
+        AiChat aiChat = new AiChat("user", promptCreator.create(request.type(), quiz, checklists, chapter, request.userChat(), user.getId()));
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", "application/json");
@@ -133,7 +129,6 @@ public class    ChatTuner {
                     String.class
             );
 
-            //completion.choices[0].message.content
             String responseBody = responseEntity.getBody();
             log.info("ResponseBody : " + responseBody);
 
@@ -145,10 +140,20 @@ public class    ChatTuner {
             totalMapObject.putAll(quiz.getMapObject());
             totalMapObject.putAll(chapter.getMapObject());
 
-            log.info("bot : " + responseMap.choices().get(0).message().content());
-            AiResponse botChat = aiResponseJsonParsing.jsonCreator(String.valueOf(responseMap.choices().get(0).message().content()), totalMapObject);
+            String content = responseMap.choices().get(0).message().content();
+            log.info("bot : " + content);
+            AiResponse botChat = aiResponseJsonParsing.jsonCreator(content, totalMapObject);
 
-            if(state.isPresent()){
+            if(request.type().toString().equals("HINT")) {
+                chatCreator.create(Chat.builder()
+                        .state(state.get())
+                        .userChat(request.userChat())
+                        .botChat(botChat.feedback())
+                        .type(Type.HINT)
+                        .request_order(chatReader.findMaxOrderByState(state.get()) + 1)
+                        .build());
+            }
+            else if(state.isPresent()){
                 chatCreator.create(Chat.builder()
                         .state(state.get())
                         .userChat(request.userChat())
@@ -169,7 +174,6 @@ public class    ChatTuner {
                     Integer successCount = chatReader.countChatByQuiz(state.get());
                     stateUpdater.updateSuccess(state.get(), firstChatTime, lastChatTime, successCount);
                 }
-
             } else {
                 stateCreator.create(State.createBuilder()
                         .user(user)
