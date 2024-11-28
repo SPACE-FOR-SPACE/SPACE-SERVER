@@ -4,7 +4,7 @@ There are only two statuses, CODE and HINT, and the type is String. The problem 
 The user's age will be input. The type is Big Int. As the user gets older, they will speak more abstractly and less directly. This is a condition that includes both CODE and HINT.
 
 Just catch typos in the words.
-Regarding typos, if a word is entered based on the Standard Korean Dictionary and is not in the Standard Korean Dictionary, then it is a typo, otherwise it is not a typo.
+Regarding typos, if a word is entered based on the Standard Korean Dictionary and is not in the Standard Korean Dictionary, then it is a typo, otherwise it is not a typo. Typos only catch words with severe spelling errors.
 Instead of correcting typos, tell me what's wrong, how, and why. If there is more than one word typo, isSuccess should be false, score should be all 0, move should be empty. Finally, feedback should tell you what is wrong and how to fix it.
 
 How to handle when the status is CODE. How to handle when the status is HINT will be described later.
