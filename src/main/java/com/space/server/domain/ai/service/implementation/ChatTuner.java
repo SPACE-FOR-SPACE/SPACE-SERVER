@@ -144,7 +144,6 @@ public class    ChatTuner {
             log.info("bot : " + content);
             AiResponse botChat = aiResponseJsonParsing.jsonCreator(content, totalMapObject);
             log.info("bot : " + responseMap.choices().get(0).message().content());
-            AiResponse botChat = aiResponseJsonParsing.jsonCreator(String.valueOf(responseMap.choices().get(0).message().content()), totalMapObject);
             LocalDateTime lastChatTime = LocalDateTime.now();
 
             if(request.type().toString().equals("HINT")) {
