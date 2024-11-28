@@ -143,6 +143,8 @@ public class    ChatTuner {
             String content = responseMap.choices().get(0).message().content();
             log.info("bot : " + content);
             AiResponse botChat = aiResponseJsonParsing.jsonCreator(content, totalMapObject);
+            log.info("bot : " + responseMap.choices().get(0).message().content());
+            LocalDateTime lastChatTime = LocalDateTime.now();
 
             if(request.type().toString().equals("HINT")) {
                 chatCreator.create(Chat.builder()
@@ -169,7 +171,6 @@ public class    ChatTuner {
 
                 if (state.get().getFirstTime() == null && botChat.isSuccess()) {
                     LocalDateTime firstChatTime = chatReader.findFirstChatTimeByState(state.get());
-                    LocalDateTime lastChatTime = chatReader.findLastChatTimeByState(state.get());
                     Integer successCount = chatReader.countChatByQuiz(state.get());
                     stateUpdater.updateSuccess(state.get(), firstChatTime, lastChatTime, successCount);
                 }
@@ -192,7 +193,6 @@ public class    ChatTuner {
 
                 if (botChat.isSuccess()) {
                     LocalDateTime firstChatTime = chatReader.findFirstChatTimeByState(stateReader.findByQuizIdAndUserId(quiz, user).get());
-                    LocalDateTime lastChatTime = chatReader.findLastChatTimeByState(stateReader.findByQuizIdAndUserId(quiz, user).get());
                     Integer successCount = chatReader.countChatByQuiz(stateReader.findByQuizIdAndUserId(quiz, user).get());
                     stateUpdater.updateSuccess(stateReader.findByQuizIdAndUserId(quiz, user).get(), firstChatTime, lastChatTime, successCount);
                 }
