@@ -117,7 +117,7 @@ public class    ChatTuner {
         List<AiChat> messages = new ArrayList<>();
         messages.add(new AiChat("system", systemInstruction));
         messages.add(new AiChat("user", aiChat.toString()));
-        AiChatTune aiChatTune = new AiChatTune("gpt-4o-mini", messages, 0.5, 1.0);
+        AiChatTune aiChatTune = new AiChatTune("gpt-4o", messages, 0.5, 1.0);
         HttpEntity<AiChatTune> httpEntity = new HttpEntity<>(aiChatTune, headers);
 
         log.info("AI 로직 시작");
@@ -152,8 +152,7 @@ public class    ChatTuner {
                         .type(Type.HINT)
                         .request_order(chatReader.findMaxOrderByState(state.get()) + 1)
                         .build());
-            }
-            else if(state.isPresent()){
+            } else if(state.isPresent()){
                 chatCreator.create(Chat.builder()
                         .state(state.get())
                         .userChat(request.userChat())
