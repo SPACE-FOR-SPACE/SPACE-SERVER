@@ -50,7 +50,7 @@ public class SecurityConfig {
     private final CustomOAuth2UserService customOAuth2UserService;
     private final CustomSuccessHandler customSuccessHandler;
 
-    private final List<String> excludedPaths = Arrays.asList("/swagger-ui/**", "/v3/api-docs/**", "/reissue", "/hc", "/env", "/mails", "/verify", "/favicon.ico", "/logout");
+    private final List<String> excludedPaths = Arrays.asList("/swagger-ui/**", "/v3/api-docs/**", "/reissue", "/hc", "/env", "/mails", "/verify", "/favicon.ico", "/logout", "/join");
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
