@@ -4,10 +4,7 @@ import com.space.server.domain.ai.service.dto.response.AiResponse;
 import com.space.server.domain.ai.service.implementation.ChatTuner;
 import com.space.server.domain.chat.presentation.dto.request.CreateChatRequest;
 import com.space.server.domain.chat.presentation.dto.request.ReadQuizAndUserRequest;
-import com.space.server.domain.chat.presentation.dto.response.ChatResponse;
-import com.space.server.domain.chat.presentation.dto.response.CountChatResponse;
-import com.space.server.domain.chat.presentation.dto.response.ReadKeyWordsResponse;
-import com.space.server.domain.chat.presentation.dto.response.ReadSuccessChatResponse;
+import com.space.server.domain.chat.presentation.dto.response.*;
 import com.space.server.domain.chat.service.CommandChatService;
 import com.space.server.domain.chat.service.QueryChatService;
 import com.space.server.domain.state.service.QueryStateService;
@@ -58,6 +55,11 @@ public class ChatController {
             getMemberId(),
             queryChatService.readMostKeyWords(getMemberId())
         );
+    }
+
+    @GetMapping("/chats/typo")
+    public VocabularyFeedbackResponse readTypo() {
+        return queryChatService.findTypo(getMemberId());
     }
 
     @PostMapping("/chats/count")
