@@ -5,6 +5,13 @@ spring:
     username: ${DB_USER}
     password: ${DB_PASSWORD}
 
+  ai:
+    openai:
+      api-key: ${GPT_API_KEY}
+      chat:
+        options:
+          model: gpt-4o
+
   logging:
     level:
       org:
